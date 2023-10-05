@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://bhxcj18y22e7c"]
+
+[ext_resource type="Texture2D" uid="uid://cmpqejlyh8th3" path="res://cannon1.png" id="1_6r84a"]
+[ext_resource type="Script" path="res://cannon.gd" id="1_fdqm6"]
+[ext_resource type="PackedScene" uid="uid://bkiprh8oopk3n" path="res://bullet.tscn" id="3_t75py"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vt2wu"]
+radius = 14.1421
+
+[node name="Cannon" type="StaticBody2D"]
+scale = Vector2(3, 3)
+script = ExtResource("1_fdqm6")
+
+[node name="Bullet" parent="." instance=ExtResource("3_t75py")]
+rotation = 1.5708
+scale = Vector2(0.4, 0.4)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("1_6r84a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_vt2wu")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.4
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
