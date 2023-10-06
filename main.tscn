@@ -30,14 +30,6 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Walls" type="Node2D" parent="."]
 
-[node name="Wall" parent="Walls" instance=ExtResource("1_s44hn")]
-position = Vector2(1240, 198)
-is_static = false
-
-[node name="Wall2" parent="Walls" instance=ExtResource("1_s44hn")]
-position = Vector2(292, 584)
-is_static = false
-
 [node name="Players" type="Node2D" parent="."]
 
 [node name="Player" parent="Players" instance=ExtResource("1_jx6ly")]
