@@ -7,6 +7,8 @@ var rng = RandomNumberGenerator.new()
 @export var max_size: int
 @export var min_grow_speed: float
 @export var max_grow_speed: float
+@export var min_time_inbetween: float
+@export var max_time_inbetween: float
 
 var grow_direction: Enum.GROW_DIRECTION
 var grow_speed: float
@@ -53,8 +55,7 @@ func _process(delta):
 					scale.x -= delta_growth
 				else:
 					scale.x = 0
-					is_growing = false
-					is_initially_growing = true
+					reset_growth()
 		elif grow_direction == Enum.GROW_DIRECTION.VERTICAL:
 			if is_initially_growing:
 				if scale.y < size_to_grow_to:
@@ -67,14 +68,16 @@ func _process(delta):
 					scale.y -= delta_growth
 				else:
 					scale.y = 0
-					is_growing = false
-					is_initially_growing = true
+					reset_growth()
+
+
+func reset_growth():
+	is_growing = false
+	is_initially_growing = true
+	
+	$Timer.wait_time = rng.randi_range(min_time_inbetween, max_time_inbetween)
+	$Timer.start()
 
 
 func _on_timer_timeout():
 	is_growing = true
-	return
-	if grow_direction == Enum.GROW_DIRECTION.HORIZONTAL:
-		scale.x += size_to_grow_to
-	elif grow_direction == Enum.GROW_DIRECTION.VERTICAL:
-		scale.y += size_to_grow_to
