@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://emvstyxbefry"]
+
+[ext_resource type="Script" path="res://scenes/wall.gd" id="1_aexpj"]
+[ext_resource type="Texture2D" uid="uid://beetbsdnktj00" path="res://assets/wall-color.png" id="1_mvqxv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rdk2c"]
+size = Vector2(1, 1)
+
+[node name="Wall" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_aexpj")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.0862745, 0.0862745, 0.0862745, 1)
+texture = ExtResource("1_mvqxv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_rdk2c")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
