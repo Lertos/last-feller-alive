@@ -6,3 +6,4 @@ res://scenes/wall.gd
 res://game_manager.gd
 res://config.gd
 res://arena_manager.gd
+res://enums.gd
