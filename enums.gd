@@ -1,0 +1,3 @@
+extends Node
+
+enum GROW_DIRECTION {HORIZONTAL, VERTICAL}

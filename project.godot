@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Config="*res://config.gd"
+Enum="*res://enums.gd"
 
 [display]
 
