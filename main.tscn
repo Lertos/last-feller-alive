@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://gafs07waarae"]
+[gd_scene load_steps=6 format=3 uid="uid://gafs07waarae"]
 
+[ext_resource type="Script" path="res://arena_manager.gd" id="1_e5q6r"]
 [ext_resource type="PackedScene" uid="uid://4gn3y8vfghc8" path="res://scenes/player.tscn" id="1_jx6ly"]
 [ext_resource type="PackedScene" uid="uid://emvstyxbefry" path="res://scenes/wall.tscn" id="1_s44hn"]
 [ext_resource type="PackedScene" uid="uid://bhxcj18y22e7c" path="res://scenes/cannon.tscn" id="2_lb7vj"]
 [ext_resource type="Script" path="res://scenes/cannons.gd" id="2_mstii"]
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_e5q6r")
 
 [node name="BG" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(1600, 900)
@@ -18,29 +20,19 @@ size_flags_vertical = 3
 color = Color(0.172549, 0.172549, 0.172549, 1)
 metadata/_edit_use_anchors_ = true
 
+[node name="WallLeft" parent="." instance=ExtResource("1_s44hn")]
+
+[node name="WallRight" parent="." instance=ExtResource("1_s44hn")]
+
+[node name="WallTop" parent="." instance=ExtResource("1_s44hn")]
+
+[node name="WallBottom" parent="." instance=ExtResource("1_s44hn")]
+
 [node name="Walls" type="Node2D" parent="."]
-
-[node name="WallLeft" parent="Walls" instance=ExtResource("1_s44hn")]
-position = Vector2(20, 450)
-scale = Vector2(40, 900)
-
-[node name="WallRight" parent="Walls" instance=ExtResource("1_s44hn")]
-position = Vector2(1580, 450)
-scale = Vector2(40, 900)
-
-[node name="WallBottom" parent="Walls" instance=ExtResource("1_s44hn")]
-position = Vector2(800, 880)
-scale = Vector2(1600, 40)
-
-[node name="WallTop" parent="Walls" instance=ExtResource("1_s44hn")]
-position = Vector2(800, 20)
-scale = Vector2(1600, 40)
 
 [node name="Wall" parent="Walls" instance=ExtResource("1_s44hn")]
 position = Vector2(1240, 198)
 is_static = false
-min_size = 30
-max_size = 150
 
 [node name="Wall2" parent="Walls" instance=ExtResource("1_s44hn")]
 position = Vector2(292, 584)
