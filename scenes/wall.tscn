@@ -10,12 +10,10 @@ size = Vector2(1, 1)
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_aexpj")
-min_size = 30
-max_size = 60
 min_grow_speed = 1.0
 max_grow_speed = 3.0
-min_time_inbetween = 2.0
-max_time_inbetween = 8.0
+min_time_inbetween = 1.0
+max_time_inbetween = 4.0
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

@@ -3,12 +3,13 @@ extends StaticBody2D
 var rng = RandomNumberGenerator.new()
 
 @export var is_static: bool = true
-@export var min_size: int
-@export var max_size: int
 @export var min_grow_speed: float
 @export var max_grow_speed: float
 @export var min_time_inbetween: float
 @export var max_time_inbetween: float
+
+var min_size: int = Config.wall_width
+var max_size: int = Config.wall_width * 3
 
 var grow_direction: Enum.GROW_DIRECTION
 var grow_speed: float
