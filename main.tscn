@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://gafs07waarae"]
+[gd_scene load_steps=5 format=3 uid="uid://gafs07waarae"]
 
 [ext_resource type="Script" path="res://arena_manager.gd" id="1_e5q6r"]
-[ext_resource type="PackedScene" uid="uid://4gn3y8vfghc8" path="res://scenes/player.tscn" id="1_jx6ly"]
 [ext_resource type="PackedScene" uid="uid://emvstyxbefry" path="res://scenes/wall.tscn" id="1_s44hn"]
 [ext_resource type="PackedScene" uid="uid://bhxcj18y22e7c" path="res://scenes/cannon.tscn" id="2_lb7vj"]
 [ext_resource type="Script" path="res://scenes/cannons.gd" id="2_mstii"]
@@ -31,9 +30,6 @@ metadata/_edit_use_anchors_ = true
 [node name="Walls" type="Node2D" parent="."]
 
 [node name="Players" type="Node2D" parent="."]
-
-[node name="Player" parent="Players" instance=ExtResource("1_jx6ly")]
-position = Vector2(680, 527)
 
 [node name="Bullets" type="Node2D" parent="."]
 

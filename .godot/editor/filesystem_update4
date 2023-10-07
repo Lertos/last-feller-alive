@@ -1,1 +1,9 @@
 res://multiplayer_controller.tscn
+res://main.tscn
+res://arena_manager.gd
+res://scenes/player.tscn
+res://scenes/bullet.tscn
+res://scenes/wall.tscn
+res://scenes/cannons.gd
+res://scenes/cannon.gd
+res://scenes/player.gd

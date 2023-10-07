@@ -11,10 +11,16 @@ var is_hurt: bool = false
 
 
 func _ready():
+	#Set the authority so we can do checks on if this is the local players object
+	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 	$AnimationPlayer.play("idle")
 
 
 func get_input():
+	#If this player object is NOT our player, then simply return
+	if $MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
+		return
+		
 	if is_jumping or is_dead or is_hurt:
 		return
 	

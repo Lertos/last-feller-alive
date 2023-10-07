@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://4gn3y8vfghc8"]
+[gd_scene load_steps=12 format=3 uid="uid://4gn3y8vfghc8"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_qk3kd"]
 [ext_resource type="Texture2D" uid="uid://kh0e801gsx1l" path="res://assets/player.png" id="2_rpojb"]
@@ -141,6 +141,12 @@ _data = {
 "run": SubResource("Animation_qhyd8")
 }
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_djuyl"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/0/watch = false
+
 [node name="Player" type="CharacterBody2D"]
 scale = Vector2(3, 3)
 collision_mask = 7
@@ -161,3 +167,6 @@ method_call_mode = 1
 libraries = {
 "": SubResource("AnimationLibrary_hvs6d")
 }
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_djuyl")

@@ -1,6 +1,7 @@
 extends Node2D
 
 const SCENE_WALL = preload("res://scenes/wall.tscn")
+const SCENE_PLAYER = preload("res://scenes/player.tscn")
 
 var min_distance_from_corners = Config.wall_width * 2
 var rng = RandomNumberGenerator.new()
@@ -13,7 +14,7 @@ var open_wall_spots = {
 
 func _ready():
 	setup_arena_walls()
-
+	setup_players()
 
 func setup_arena_walls():
 	create_wall(
@@ -49,6 +50,42 @@ func setup_arena_walls():
 	
 	for i in range(0,30):
 		create_moving_wall()
+
+
+func setup_players():
+	var center_pos = Vector2(Config.arena_width / 2, Config.arena_height / 2)
+	var player_size = SCENE_PLAYER.instantiate().get_node("Sprite2D").texture.get_size()
+	
+	var spot_index = 0
+	
+	for i in GameManager.players:
+		var current_player = SCENE_PLAYER.instantiate()
+		
+		#Set the player objects name as the peer id so we can use this for authority reasons
+		current_player.name = str(GameManager.players[i].id)
+		
+		$Players.add_child(current_player)
+		
+		match spot_index:
+			0:
+				current_player.position = center_pos + Vector2(-player_size.x, 0)
+			1:
+				current_player.position = center_pos + Vector2(-player_size.x, -player_size.y)
+			2:
+				current_player.position = center_pos + Vector2(0, -player_size.y)
+			3:
+				current_player.position = center_pos + Vector2(player_size.x, -player_size.y)
+			4:
+				current_player.position = center_pos + Vector2(player_size.x, 0)
+			5:
+				current_player.position = center_pos + Vector2(player_size.x, player_size.y)
+			6:
+				current_player.position = center_pos + Vector2(0, player_size.y)
+			7:
+				current_player.position = center_pos + Vector2(-player_size.x, player_size.y)
+		
+		spot_index += 1
+
 
 
 func fill_open_wall_spots():
