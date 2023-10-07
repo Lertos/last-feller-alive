@@ -37,7 +37,7 @@ func peer_disconnected(id):
 
 #Gets called only from client-side
 func connected_to_server():
-	send_player_info.rpc_id(1, "", multiplayer.get_unique_id())
+	send_player_info.rpc_id(1, $VB/PlayerName.text, multiplayer.get_unique_id())
 	
 	print("Connected to server")
 
@@ -48,7 +48,7 @@ func connection_failed():
 
 
 #Sends info to all players when connected
-@rpc("any_peer", "call_local")
+@rpc("any_peer")
 func send_player_info(name, id):
 	if !GameManager.players.has(id):
 		GameManager.players[id] = {
@@ -57,8 +57,8 @@ func send_player_info(name, id):
 		}
 	
 	if multiplayer.is_server():
-		for player in GameManager.players:
-			send_player_info(GameManager.players[player].name, player)
+		for i in GameManager.players:
+			send_player_info.rpc(GameManager.players[i].name, i)
 
 
 func _on_host_button_down():
@@ -77,6 +77,8 @@ func _on_host_button_down():
 	multiplayer.set_multiplayer_peer(peer)
 	
 	print("Server has been created. Waiting for players")
+	
+	send_player_info($VB/PlayerName.text, multiplayer.get_unique_id())
 
 
 func _on_join_button_down():
