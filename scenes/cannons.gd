@@ -9,7 +9,8 @@ func _ready():
 
 func _process(delta):
 	for child in get_children():
-		#TODO: Need to do this inside the cannon to see which player is closest
-		var player = player_list.get_child(0)
-		child.look_at(player.position)
-		child.set_target(player)
+		if player_list.get_child_count() > 0:
+			#TODO: Need to do this inside the cannon to see which player is closest
+			var player = player_list.get_child(0)
+			child.look_at(player.position)
+			child.set_target(player)
