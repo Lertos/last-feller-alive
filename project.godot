@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Config="*res://config.gd"
 Enum="*res://enums.gd"
+GameManager="*res://game_manager.gd"
 
 [display]
 
