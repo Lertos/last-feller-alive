@@ -67,7 +67,7 @@ func _on_host_button_down():
 	var error = peer.create_server(port, 8)
 	
 	if error != OK:
-		print("Server creation failed: " + error)
+		print("Server creation failed: " + str(error))
 		return
 	
 	#Makes bandwidth usage a little more efficient
