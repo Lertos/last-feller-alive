@@ -10,8 +10,8 @@ unreliable - uses UDP; fast but unreliable
 unreliable_ordered - same as unreliable - but each piece of data comes in the correct order
 """
 
-@export var address = "localhost"
-@export var port = 8910
+var address
+var port
 
 var peer
 var compression_type = ENetConnection.COMPRESS_RANGE_CODER
@@ -64,6 +64,9 @@ func send_player_info(name, id):
 func _on_host_button_down():
 	peer = ENetMultiplayerPeer.new()
 	
+	if not is_valid_address_and_port():
+		return
+	
 	var error = peer.create_server(port, 8)
 	
 	if error != OK:
@@ -81,8 +84,30 @@ func _on_host_button_down():
 	send_player_info($VB/PlayerName.text, multiplayer.get_unique_id())
 
 
+func is_valid_address_and_port():
+	#Get IP address and port, or assign defaults if debugging
+	address = $VB/ServerIP.text
+	port = $VB/Port.text
+	
+	if address == "":
+		address = "localhost"
+	if port == "":
+		port = "8910"
+		
+	#Check that the port is a valid integer or show an error
+	if not port.is_valid_int():
+		$AcceptDialog.dialog_text = "Well, THAT doesn't seem like a valid port feller"
+		$AcceptDialog.ok_button_text = "Get Me Out"
+		$AcceptDialog.popup_centered()
+		return false
+
+
 func _on_join_button_down():
 	peer = ENetMultiplayerPeer.new()
+	
+	if not is_valid_address_and_port():
+		return
+	
 	peer.create_client(address, port)
 	peer.get_host().compress(compression_type)
 	

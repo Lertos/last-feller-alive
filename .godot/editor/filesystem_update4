@@ -7,3 +7,4 @@ res://scenes/wall.tscn
 res://scenes/cannons.gd
 res://scenes/cannon.gd
 res://scenes/player.gd
+res://multiplayer_controller.gd

@@ -153,8 +153,6 @@ theme = SubResource("Theme_f1ebq")
 script = ExtResource("1_oef5b")
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
-title = ""
-always_on_top = true
 
 [node name="TextureRect" type="TextureRect" parent="."]
 modulate = Color(1, 1, 1, 0.788235)
@@ -181,13 +179,13 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0, 0.423529, 0.129412, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 16
-theme_override_font_sizes/font_size = 80
+theme_override_font_sizes/font_size = 100
 text = "Last Feller Alive"
 horizontal_alignment = 1
 uppercase = true
 
 [node name="Spacer" type="VBoxContainer" parent="VB"]
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 
 [node name="ServerIP" type="LineEdit" parent="VB"]
@@ -221,28 +219,24 @@ caret_blink = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="HB" type="HBoxContainer" parent="VB"]
-layout_mode = 2
-alignment = 1
-
-[node name="Host" type="Button" parent="VB/HB"]
+[node name="Host" type="Button" parent="VB"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Host"
 
-[node name="Join" type="Button" parent="VB/HB"]
+[node name="Join" type="Button" parent="VB"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Join"
 
-[node name="Start" type="Button" parent="VB/HB"]
+[node name="Start" type="Button" parent="VB"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Start"
 
-[connection signal="button_down" from="VB/HB/Host" to="." method="_on_host_button_down"]
-[connection signal="button_down" from="VB/HB/Join" to="." method="_on_join_button_down"]
-[connection signal="button_down" from="VB/HB/Start" to="." method="_on_start_button_down"]
+[connection signal="button_down" from="VB/Host" to="." method="_on_host_button_down"]
+[connection signal="button_down" from="VB/Join" to="." method="_on_join_button_down"]
+[connection signal="button_down" from="VB/Start" to="." method="_on_start_button_down"]
