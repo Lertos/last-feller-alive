@@ -1,3 +1,4 @@
+ColorRect
 Label
 HBoxContainer
 AcceptDialog
@@ -15,5 +16,4 @@ Area2D
 CharacterBody2D
 AnimationPlayer
 AnimatedSprite2D
-ColorRect
 RigidBody2D

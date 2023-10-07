@@ -12,6 +12,7 @@ unreliable_ordered - same as unreliable - but each piece of data comes in the co
 
 var address
 var port
+var player_name
 
 var peer
 var compression_type = ENetConnection.COMPRESS_RANGE_CODER
@@ -65,6 +66,9 @@ func _on_host_button_down():
 
 	if not is_valid_address_and_port():
 		return
+		
+	if not is_name_empty():
+		return
 
 	var error = peer.create_server(port, 8)
 	
@@ -104,12 +108,27 @@ func is_valid_address_and_port() -> bool:
 	return true
 
 
+func is_name_empty() -> bool:
+	player_name = $VB/PlayerName.text
+	
+	if player_name == "":
+		$AcceptDialog.dialog_text = "No nameless people here"
+		$AcceptDialog.ok_button_text = "Accept Oppression"
+		$AcceptDialog.popup_centered()
+		return false
+
+	return true
+
+
 func _on_join_button_down():
 	peer = ENetMultiplayerPeer.new()
 	
 	if not is_valid_address_and_port():
 		return
 	
+	if not is_name_empty():
+		return
+		
 	peer.create_client(address, port)
 	peer.get_host().compress(compression_type)
 	
@@ -128,3 +147,7 @@ func start_game():
 	
 	get_tree().root.add_child(scene)
 	self.hide()
+
+
+func _on_accept_dialog_visibility_changed():
+	$PopupHelper.visible = $AcceptDialog.visible
