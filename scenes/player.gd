@@ -46,10 +46,10 @@ func get_input():
 		$AnimationPlayer.play("idle")
 	else:
 		if input_direction.x > 0 and dir == DIRECTION.LEFT:
-			$Sprite2D.scale.x = 1
+			$Sprite2D.scale.x *= -1
 			dir = DIRECTION.RIGHT
 		elif input_direction.x < 0 and dir == DIRECTION.RIGHT:
-			$Sprite2D.scale.x = -1
+			$Sprite2D.scale.x *= -1
 			dir = DIRECTION.LEFT
 		$AnimationPlayer.play("run")
 

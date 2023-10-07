@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://4gn3y8vfghc8"]
+[gd_scene load_steps=14 format=3 uid="uid://4gn3y8vfghc8"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_qk3kd"]
 [ext_resource type="Texture2D" uid="uid://kh0e801gsx1l" path="res://assets/player.png" id="2_rpojb"]
@@ -159,17 +159,25 @@ properties/3/spawn = true
 properties/3/sync = true
 properties/3/watch = false
 
+[sub_resource type="SystemFont" id="SystemFont_yibyy"]
+font_weight = 100
+
+[sub_resource type="Theme" id="Theme_ndyq3"]
+default_font = SubResource("SystemFont_yibyy")
+default_font_size = 12
+
 [node name="Player" type="CharacterBody2D"]
-scale = Vector2(3, 3)
 collision_mask = 7
 script = ExtResource("1_qk3kd")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2.66666)
+scale = Vector2(3, 3)
 shape = SubResource("CircleShape2D_t8ycq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
 texture = ExtResource("2_rpojb")
 hframes = 5
 vframes = 5
@@ -182,3 +190,20 @@ libraries = {
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_djuyl")
+
+[node name="Name" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -62.0
+offset_right = 70.0
+offset_bottom = -47.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ndyq3")
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true

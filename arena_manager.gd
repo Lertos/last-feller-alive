@@ -63,6 +63,7 @@ func setup_players():
 		
 		#Set the player objects name as the peer id so we can use this for authority reasons
 		current_player.name = str(GameManager.players[i].id)
+		current_player.get_node("Name").text = str(GameManager.players[i].name)
 		
 		$Players.add_child(current_player)
 		

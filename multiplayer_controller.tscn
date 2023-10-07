@@ -228,7 +228,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 placeholder_text = "Player Name"
 alignment = 1
-max_length = 20
+max_length = 16
 caret_blink = true
 
 [node name="Spacer2" type="VBoxContainer" parent="VB"]
