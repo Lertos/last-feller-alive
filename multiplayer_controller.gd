@@ -57,8 +57,8 @@ func send_player_info(name, id):
 		}
 	
 	if multiplayer.is_server():
-		for connected_players in GameManager.players:
-			send_player_info(GameManager.players[i].name, i)
+		for player in GameManager.players:
+			send_player_info(GameManager.players[player].name, player)
 
 
 func _on_host_button_down():
