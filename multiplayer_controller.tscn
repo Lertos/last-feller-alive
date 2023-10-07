@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://cglls2e1in3mg"]
+
+[ext_resource type="Script" path="res://multiplayer_controller.gd" id="1_oef5b"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_oef5b")
+
+[node name="Host" type="Button" parent="."]
+layout_mode = 0
+offset_left = 266.0
+offset_top = 111.0
+offset_right = 434.0
+offset_bottom = 170.0
+text = "Host"
+
+[node name="Join" type="Button" parent="."]
+layout_mode = 0
+offset_left = 267.0
+offset_top = 197.0
+offset_right = 448.0
+offset_bottom = 264.0
+text = "Join"
+
+[node name="Start" type="Button" parent="."]
+layout_mode = 0
+offset_left = 271.0
+offset_top = 288.0
+offset_right = 438.0
+offset_bottom = 353.0
+text = "Start"
+
+[connection signal="button_down" from="Host" to="." method="_on_host_button_down"]
+[connection signal="button_down" from="Join" to="." method="_on_join_button_down"]
+[connection signal="button_down" from="Start" to="." method="_on_start_button_down"]
