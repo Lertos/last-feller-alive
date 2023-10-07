@@ -37,12 +37,28 @@ func peer_disconnected(id):
 
 #Gets called only from client-side
 func connected_to_server():
+	send_player_info.rpc_id(1, "", multiplayer.get_unique_id())
+	
 	print("Connected to server")
 
 
 #Gets called only from client-side
 func connection_failed():
 	print("Connection failed")
+
+
+#Sends info to all players when connected
+@rpc("any_peer", "call_local")
+func send_player_info(name, id):
+	if !GameManager.players.has(id):
+		GameManager.players[id] = {
+			"name": name,
+			"id": id
+		}
+	
+	if multiplayer.is_server():
+		for connected_players in GameManager.players:
+			send_player_info(GameManager.players[i].name, i)
 
 
 func _on_host_button_down():
