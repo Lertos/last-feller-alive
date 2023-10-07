@@ -10,6 +10,9 @@ func _ready():
 
 
 func _on_timer_timeout():
+	if targeted_player == null:
+		return
+		
 	var bullet_node = $Bullet.duplicate()
 	
 	bullet_list.add_child(bullet_node)
