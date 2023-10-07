@@ -101,7 +101,7 @@ func get_wall_position(dir: Enum.GROW_DIRECTION):
 
 func get_empty_spot(dir_name):
 	if open_wall_spots[dir_name].size() == 0:
-		return
+		return -1
 		
 	var rand_index: int = randi_range(0, open_wall_spots[dir_name].size() - 1)
 	var value: int = open_wall_spots[dir_name][rand_index]
