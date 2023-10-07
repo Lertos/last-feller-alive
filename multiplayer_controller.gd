@@ -14,6 +14,9 @@ var address
 var port
 var player_name
 
+@onready var popup_initial_size = $AcceptDialog.size
+@onready var popup_initial_pos = $AcceptDialog.position
+
 var peer
 var compression_type = ENetConnection.COMPRESS_RANGE_CODER
 
@@ -73,8 +76,10 @@ func _on_host_button_down():
 	var error = peer.create_server(port, 8)
 	
 	if error != OK:
-		print("Server creation failed: " + str(error))
+		show_help_msg("Server creation failed!", "Have Mercy")
 		return
+	else:
+		show_help_msg("Server created! Press Start", "Woohoo!")
 	
 	#Makes bandwidth usage a little more efficient
 	peer.get_host().compress(compression_type)
@@ -99,9 +104,7 @@ func is_valid_address_and_port() -> bool:
 		
 	#Check that the port is a valid integer or show an error
 	if not port.is_valid_int():
-		$AcceptDialog.dialog_text = "Well, THAT doesn't seem like a valid port feller"
-		$AcceptDialog.ok_button_text = "Get Me Out"
-		$AcceptDialog.popup_centered()
+		show_help_msg("Well, THAT doesn't seem like a valid port feller", "Get Me Out")
 		return false
 	
 	port = port.to_int()
@@ -112,9 +115,7 @@ func is_name_empty() -> bool:
 	player_name = $VB/PlayerName.text
 	
 	if player_name == "":
-		$AcceptDialog.dialog_text = "No nameless people here"
-		$AcceptDialog.ok_button_text = "Accept Oppression"
-		$AcceptDialog.popup_centered()
+		show_help_msg("You need a name dude", "Be Obedient")
 		return false
 
 	return true
@@ -130,6 +131,14 @@ func _on_join_button_down():
 		return
 		
 	peer.create_client(address, port)
+
+	#Check to make sure the connection could be established
+	if peer.get_host() == null:
+		show_help_msg("Connection could not be established", "Well f***")
+		return
+	else:
+		show_help_msg("Connection success! Waiting for host to start", "Thank the heavens")
+		
 	peer.get_host().compress(compression_type)
 	
 	multiplayer.set_multiplayer_peer(peer)
@@ -151,3 +160,10 @@ func start_game():
 
 func _on_accept_dialog_visibility_changed():
 	$PopupHelper.visible = $AcceptDialog.visible
+
+
+func show_help_msg(message: String, button_text: String):
+	$AcceptDialog.dialog_text = message
+	$AcceptDialog.ok_button_text = button_text
+	$AcceptDialog.reset_size()
+	$AcceptDialog.popup_centered()
