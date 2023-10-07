@@ -22,7 +22,6 @@ func _ready():
 	multiplayer.peer_disconnected.connect(peer_disconnected)
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.connection_failed.connect(connection_failed)
-	pass
 
 
 #Gets called on the server and clients when someone connects
@@ -63,10 +62,10 @@ func send_player_info(name, id):
 
 func _on_host_button_down():
 	peer = ENetMultiplayerPeer.new()
-	
+
 	if not is_valid_address_and_port():
 		return
-	
+
 	var error = peer.create_server(port, 8)
 	
 	if error != OK:
@@ -84,7 +83,7 @@ func _on_host_button_down():
 	send_player_info($VB/PlayerName.text, multiplayer.get_unique_id())
 
 
-func is_valid_address_and_port():
+func is_valid_address_and_port() -> bool:
 	#Get IP address and port, or assign defaults if debugging
 	address = $VB/ServerIP.text
 	port = $VB/Port.text
@@ -100,6 +99,9 @@ func is_valid_address_and_port():
 		$AcceptDialog.ok_button_text = "Get Me Out"
 		$AcceptDialog.popup_centered()
 		return false
+	
+	port = port.to_int()
+	return true
 
 
 func _on_join_button_down():
