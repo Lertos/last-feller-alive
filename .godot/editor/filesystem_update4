@@ -1,8 +1,1 @@
-res://main.tscn
-res://scenes/bullet.tscn
-res://scenes/player.tscn
-res://scenes/wall.tscn
-res://arena_manager.gd
-res://multiplayer_controller.gd
 res://multiplayer_controller.tscn
-res://game_manager.gd

@@ -1,3 +1,7 @@
+TextureRect
+Label
+VBoxContainer
+LineEdit
 Button
 Timer
 CollisionShape2D
