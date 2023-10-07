@@ -1,11 +1,5 @@
 extends Control
 
-@export var address = "localhost"
-@export var port = 8910
-
-var peer
-var compression_type = ENetConnection.COMPRESS_RANGE_CODER
-
 """ RPC breakdown
 any_peer - sends on ALL connected peers (everyone will call that function locally)
 authority - only when the authority calls the function, will it go out for everyone else to call it
@@ -15,6 +9,13 @@ reliable - uses TCP; slower but reliable
 unreliable - uses UDP; fast but unreliable
 unreliable_ordered - same as unreliable - but each piece of data comes in the correct order
 """
+
+@export var address = "localhost"
+@export var port = 8910
+
+var peer
+var compression_type = ENetConnection.COMPRESS_RANGE_CODER
+
 
 func _ready():
 	multiplayer.peer_connected.connect(peer_connected)
