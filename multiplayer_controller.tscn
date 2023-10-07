@@ -1,7 +1,19 @@
-[gd_scene load_steps=13 format=3 uid="uid://cglls2e1in3mg"]
+[gd_scene load_steps=14 format=3 uid="uid://cglls2e1in3mg"]
 
 [ext_resource type="Script" path="res://multiplayer_controller.gd" id="1_oef5b"]
 [ext_resource type="Texture2D" uid="uid://qvegsautc40h" path="res://assets/title-background.png" id="2_aauhg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p4tc8"]
+content_margin_left = 16.0
+content_margin_top = 32.0
+content_margin_right = 16.0
+content_margin_bottom = 32.0
+bg_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 5
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hteqk"]
 
@@ -104,6 +116,8 @@ corner_detail = 5
 [sub_resource type="Theme" id="Theme_f1ebq"]
 default_font = SubResource("SystemFont_n85o1")
 default_font_size = 40
+AcceptDialog/constants/buttons_separation = 10
+AcceptDialog/styles/panel = SubResource("StyleBoxFlat_p4tc8")
 Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
 Button/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
 Button/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
