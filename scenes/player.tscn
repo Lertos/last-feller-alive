@@ -142,7 +142,6 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D"]
-position = Vector2(373, 244)
 scale = Vector2(3, 3)
 collision_mask = 7
 script = ExtResource("1_qk3kd")
