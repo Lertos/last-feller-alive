@@ -10,14 +10,19 @@ var is_hurt: bool = false
 @export var normal_speed = 500
 @export var dashing_speed = 900
 
+var speed
 
 func _ready():
 	#Set the authority so we can do checks on if this is the local players object
 	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 	$AnimationPlayer.play("idle")
 	
+	#setup the proper skin chosen in the lobby for this player object
 	var skin_index = GameManager.players[self.name.to_int()].skin_index
 	$Sprite2D.texture = GameManager.skins[skin_index]
+	
+	#Set the default speed so we can update it later
+	speed = normal_speed
 
 
 func get_input():
@@ -44,13 +49,14 @@ func get_input():
 	
 	if Input.is_action_just_pressed("dash"):
 		is_dashing = true
+		speed = dashing_speed
 		
-		velocity = input_direction * dashing_speed
+		velocity = input_direction * speed
 		
 		$AnimationPlayer.play("dash")
 		return
 	
-	velocity = input_direction * normal_speed
+	velocity = input_direction * speed
 	
 	if input_direction == Vector2.ZERO:
 		$AnimationPlayer.play("idle")
@@ -65,6 +71,8 @@ func get_input():
 
 
 func reset_state():
+	speed = normal_speed
+	
 	is_dashing = false
 	is_hurt = false
 
