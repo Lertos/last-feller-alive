@@ -95,7 +95,6 @@ func _on_host_button_down():
 	
 	if DEBUG:
 		load_lobby()
-		#start_game.rpc()
 
 
 func load_lobby():
@@ -120,14 +119,10 @@ func _on_join_button_down():
 	if peer.get_host() == null:
 		show_help_msg("Connection could not be established", "Well f***")
 		return
-	else:
-		show_help_msg("Connection success! Waiting for host to start", "Thank the heavens")
 		
 	peer.get_host().compress(compression_type)
 	
 	multiplayer.set_multiplayer_peer(peer)
-	
-	print("Server has been created. Waiting for players")
 	
 	load_lobby()
 
