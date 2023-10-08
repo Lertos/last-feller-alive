@@ -93,7 +93,6 @@ offset_bottom = -104.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_ndyq3")
-text = "Dee"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
