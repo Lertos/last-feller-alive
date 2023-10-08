@@ -43,7 +43,6 @@ func peer_disconnected(id):
 #Gets called only from client-side
 func connected_to_server():
 	send_player_info.rpc_id(1, $VB/PlayerName.text, multiplayer.get_unique_id())
-	
 	print("Connected to server")
 
 
@@ -106,6 +105,33 @@ func load_lobby():
 	self.hide()
 
 
+func _on_join_button_down():
+	peer = ENetMultiplayerPeer.new()
+	
+	if not is_valid_address_and_port():
+		return
+	
+	if not is_name_empty():
+		return
+		
+	peer.create_client(address, port)
+
+	#Check to make sure the connection could be established
+	if peer.get_host() == null:
+		show_help_msg("Connection could not be established", "Well f***")
+		return
+	else:
+		show_help_msg("Connection success! Waiting for host to start", "Thank the heavens")
+		
+	peer.get_host().compress(compression_type)
+	
+	multiplayer.set_multiplayer_peer(peer)
+	
+	print("Server has been created. Waiting for players")
+	
+	load_lobby()
+
+
 func is_valid_address_and_port() -> bool:
 	#Get IP address and port, or assign defaults if debugging
 	address = $VB/ServerIP.text
@@ -136,43 +162,6 @@ func is_name_empty() -> bool:
 		return false
 
 	return true
-
-
-func _on_join_button_down():
-	peer = ENetMultiplayerPeer.new()
-	
-	if not is_valid_address_and_port():
-		return
-	
-	if not is_name_empty():
-		return
-		
-	peer.create_client(address, port)
-
-	#Check to make sure the connection could be established
-	if peer.get_host() == null:
-		show_help_msg("Connection could not be established", "Well f***")
-		return
-	else:
-		show_help_msg("Connection success! Waiting for host to start", "Thank the heavens")
-		
-	peer.get_host().compress(compression_type)
-	
-	multiplayer.set_multiplayer_peer(peer)
-	
-	print("Server has been created. Waiting for players")
-
-
-func _on_start_button_down():
-	start_game.rpc()
-
-
-@rpc("any_peer", "call_local")
-func start_game():
-	var scene = load("res://main.tscn").instantiate()
-	
-	get_tree().root.add_child(scene)
-	self.hide()
 
 
 func _on_accept_dialog_visibility_changed():

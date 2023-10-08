@@ -6,6 +6,8 @@ const SPACE_BETWEEN = 16
 
 
 func _ready():
+	$VB/StartButton.visible = multiplayer.is_server()
+	
 	setup_player_spots()
 	
 
@@ -24,3 +26,15 @@ func setup_player_spots():
 			new_player.position.x = (i / 2) * space_per_player
 		elif i % 2 != 0:
 			new_player.position.x -= (floor(i / 2) + 1) * space_per_player
+
+
+@rpc("any_peer", "call_local")
+func start_game():
+	var scene = load("res://main.tscn").instantiate()
+	
+	get_tree().root.add_child(scene)
+	self.hide()
+
+
+func _on_start_button_pressed():
+	start_game.rpc()
