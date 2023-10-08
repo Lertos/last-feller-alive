@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cawsiswxn67yq"]
+[gd_scene load_steps=8 format=3 uid="uid://cawsiswxn67yq"]
 
 [ext_resource type="Script" path="res://scenes/lobby/lobby_player_other.gd" id="1_yhpo2"]
 [ext_resource type="Texture2D" uid="uid://kh0e801gsx1l" path="res://assets/player.png" id="2_haomw"]
@@ -53,8 +53,6 @@ _data = {
 "idle": SubResource("Animation_w4i6p")
 }
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_djuyl"]
-
 [sub_resource type="SystemFont" id="SystemFont_yibyy"]
 font_weight = 100
 
@@ -78,10 +76,6 @@ method_call_mode = 1
 libraries = {
 "": SubResource("AnimationLibrary_hvs6d")
 }
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-root_path = NodePath("")
-replication_config = SubResource("SceneReplicationConfig_djuyl")
 
 [node name="Name" type="Label" parent="."]
 custom_minimum_size = Vector2(140, 20)

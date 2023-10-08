@@ -43,6 +43,7 @@ func peer_disconnected(id):
 #Gets called only from client-side
 func connected_to_server():
 	send_player_info.rpc_id(1, $VB/PlayerName.text, multiplayer.get_unique_id())
+	
 	print("Connected to server")
 
 
@@ -64,6 +65,14 @@ func send_player_info(name, id):
 	if multiplayer.is_server():
 		for i in GameManager.players:
 			send_player_info.rpc(GameManager.players[i].name, i)
+		#After sending all the new player info, then let the client know they can proceed to the lobby
+		goto_lobby.rpc_id(id)
+
+
+@rpc("call_local")
+func goto_lobby():
+	load_lobby()
+	get_tree().root.get_node("Lobby").set_players_to_spots()
 
 
 func _on_host_button_down():
@@ -102,6 +111,7 @@ func load_lobby():
 	var scene = load("res://scenes/lobby/lobby.tscn").instantiate()
 	
 	get_tree().root.add_child(scene)
+	
 	self.hide()
 
 
@@ -124,8 +134,6 @@ func _on_join_button_down():
 	peer.get_host().compress(compression_type)
 	
 	multiplayer.set_multiplayer_peer(peer)
-	
-	load_lobby()
 
 
 func is_valid_address_and_port() -> bool:

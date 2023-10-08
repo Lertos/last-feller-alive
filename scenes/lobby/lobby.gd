@@ -9,6 +9,7 @@ func _ready():
 	$VB/StartButton.visible = multiplayer.is_server()
 	
 	setup_player_spots()
+	set_players_to_spots.rpc()
 	
 
 func setup_player_spots():
@@ -18,14 +19,29 @@ func setup_player_spots():
 	for i in range(0, players_to_setup):
 		var new_player = SCENE_LOBBY_PLAYER_OTHER.instantiate()
 		
-		$VB/Others/Players.add_child(new_player)
+		new_player.visible = false
 		
-		new_player.set_player_name("Player " + str(i))
+		$VB/Others/Players.add_child(new_player)
 		
 		if i % 2 == 0:
 			new_player.position.x = (i / 2) * space_per_player
 		elif i % 2 != 0:
 			new_player.position.x -= (floor(i / 2) + 1) * space_per_player
+
+
+@rpc("any_peer", "call_local")
+func set_players_to_spots():
+	var filled_spots = 0
+
+	for i in GameManager.players:
+		if GameManager.players[i].id != multiplayer.get_unique_id():
+			var player_spot = $VB/Others/Players.get_child(filled_spots)
+			
+			player_spot.set_player_name(GameManager.players[i].name)
+			player_spot.change_skin(GameManager.players[i].skin_index)
+			player_spot.visible = true
+			
+			filled_spots += 1
 
 
 @rpc("any_peer", "call_local")

@@ -11,6 +11,8 @@ var skin_index = 0
 
 func _ready():
 	$AnimationPlayer.play("idle")
+	print(str(GameManager.players))
+	$Name.text = GameManager.players[multiplayer.get_unique_id()].name
 
 
 func _on_previous_pressed():
