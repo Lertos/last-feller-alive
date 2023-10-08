@@ -13,6 +13,7 @@ var open_wall_spots = {
 }
 
 func _ready():
+	print(str(multiplayer.get_unique_id()) + "-" + "xx")
 	setup_arena_walls()
 	setup_players()
 

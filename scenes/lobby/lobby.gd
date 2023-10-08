@@ -47,7 +47,7 @@ func set_players_to_spots():
 @rpc("any_peer", "call_local")
 func start_game():
 	var scene = load("res://main.tscn").instantiate()
-	
+
 	get_tree().root.add_child(scene)
 	self.hide()
 

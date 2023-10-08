@@ -16,3 +16,4 @@ res://scenes/lobby/lobby_player.gd
 res://scenes/lobby/lobby_player_other.gd
 res://scenes/lobby/lobby.gd
 res://scenes/lobby/lobby.tscn
+res://scripts/arena_manager.gd

@@ -66,7 +66,8 @@ func send_player_info(name, id):
 		for i in GameManager.players:
 			send_player_info.rpc(GameManager.players[i].name, i)
 		#After sending all the new player info, then let the client know they can proceed to the lobby
-		goto_lobby.rpc_id(id)
+		if id != 1:
+			goto_lobby.rpc_id(id)
 
 
 @rpc("call_local")
@@ -111,6 +112,8 @@ func load_lobby():
 	var scene = load("res://scenes/lobby/lobby.tscn").instantiate()
 	
 	get_tree().root.add_child(scene)
+	
+	scene.name = "Lobby"
 	
 	self.hide()
 
