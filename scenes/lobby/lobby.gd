@@ -37,11 +37,28 @@ func set_players_to_spots():
 		if GameManager.players[i].id != multiplayer.get_unique_id():
 			var player_spot = $VB/Others/Players.get_child(filled_spots)
 			
+			player_spot.name = str(GameManager.players[i].id)
 			player_spot.set_player_name(GameManager.players[i].name)
 			player_spot.change_skin(GameManager.players[i].skin_index)
 			player_spot.visible = true
 			
 			filled_spots += 1
+
+
+@rpc("any_peer")
+func change_players_skin(id, skin_index):
+	if id == multiplayer.get_unique_id():
+		return
+	
+	for i in $VB/Others/Players.get_children():
+		#If we find an invisible child we know there are no spots left to change
+		if not i.visible:
+			return
+		
+		if i.name == str(id):
+			i.change_skin(skin_index)
+			GameManager.players[id].skin_index = skin_index
+			return
 
 
 @rpc("any_peer", "call_local")

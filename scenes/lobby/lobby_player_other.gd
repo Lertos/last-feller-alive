@@ -1,11 +1,5 @@
 extends Node2D
 
-var skins = [
-	preload("res://assets/player.png"),
-	preload("res://assets/player2.png"),
-	preload("res://assets/player3.png")
-]
-
 var skin_index = 0
 
 
@@ -15,7 +9,7 @@ func _ready():
 
 
 func change_skin(skin_index):
-	$Sprite2D.texture = skins[skin_index]
+	$Sprite2D.texture = GameManager.skins[skin_index]
 
 
 func set_player_name(name: String):

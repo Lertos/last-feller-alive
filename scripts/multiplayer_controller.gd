@@ -42,7 +42,7 @@ func peer_disconnected(id):
 
 #Gets called only from client-side
 func connected_to_server():
-	send_player_info.rpc_id(1, $VB/PlayerName.text, multiplayer.get_unique_id())
+	send_player_info.rpc_id(1, $VB/PlayerName.text, multiplayer.get_unique_id(), 0)
 	
 	print("Connected to server")
 
@@ -54,17 +54,17 @@ func connection_failed():
 
 #Sends info to all players when connected
 @rpc("any_peer")
-func send_player_info(name, id):
+func send_player_info(name, id, skin_index):
 	if !GameManager.players.has(id):
 		GameManager.players[id] = {
 			"name": name,
 			"id": id,
-			"skin_index": 0
+			"skin_index": skin_index
 		}
 	
 	if multiplayer.is_server():
 		for i in GameManager.players:
-			send_player_info.rpc(GameManager.players[i].name, i)
+			send_player_info.rpc(GameManager.players[i].name, i, GameManager.players[i].skin_index)
 		#After sending all the new player info, then let the client know they can proceed to the lobby
 		if id != 1:
 			goto_lobby.rpc_id(id)
@@ -102,7 +102,7 @@ func _on_host_button_down():
 	
 	print("Server has been created. Waiting for players")
 	
-	send_player_info($VB/PlayerName.text, multiplayer.get_unique_id())
+	send_player_info($VB/PlayerName.text, multiplayer.get_unique_id(), 0)
 	
 	if DEBUG:
 		load_lobby()
@@ -112,9 +112,6 @@ func load_lobby():
 	var scene = load("res://scenes/lobby/lobby.tscn").instantiate()
 	
 	get_tree().root.add_child(scene)
-	
-	scene.name = "Lobby"
-	
 	self.hide()
 
 

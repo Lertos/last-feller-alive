@@ -15,6 +15,8 @@ func _ready():
 	#Set the authority so we can do checks on if this is the local players object
 	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 	$AnimationPlayer.play("idle")
+	
+	
 
 
 func get_input():
