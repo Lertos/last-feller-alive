@@ -57,7 +57,8 @@ func send_player_info(name, id):
 	if !GameManager.players.has(id):
 		GameManager.players[id] = {
 			"name": name,
-			"id": id
+			"id": id,
+			"skin_index": 0
 		}
 	
 	if multiplayer.is_server():
