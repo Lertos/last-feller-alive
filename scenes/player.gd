@@ -10,8 +10,6 @@ var is_hurt: bool = false
 @export var normal_speed = 500
 @export var dashing_speed = 900
 
-var speed = normal_speed
-var cnt = 1
 
 func _ready():
 	#Set the authority so we can do checks on if this is the local players object
@@ -49,7 +47,7 @@ func get_input():
 		$AnimationPlayer.play("dash")
 		return
 	
-	velocity = input_direction * speed
+	velocity = input_direction * normal_speed
 	
 	if input_direction == Vector2.ZERO:
 		$AnimationPlayer.play("idle")
