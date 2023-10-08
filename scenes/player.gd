@@ -3,11 +3,14 @@ extends CharacterBody2D
 enum DIRECTION {LEFT, RIGHT}
 
 var dir: DIRECTION = DIRECTION.RIGHT
-var is_jumping: bool = false
+var is_dashing: bool = false
 var is_dead: bool = false
 var is_hurt: bool = false
 
-@export var speed = 500
+@export var normal_speed = 500
+@export var dashing_speed = 900
+
+var speed = normal_speed
 
 
 func _ready():
@@ -21,12 +24,7 @@ func get_input():
 	if $MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
 		return
 		
-	if is_jumping or is_dead or is_hurt:
-		return
-	
-	if Input.is_action_just_pressed("jump"):
-		is_jumping = true
-		$AnimationPlayer.play("jump")
+	if is_dashing or is_dead or is_hurt:
 		return
 	
 	if Input.is_action_just_pressed("death"):
@@ -40,6 +38,15 @@ func get_input():
 		return
 	
 	var input_direction = Input.get_vector("left", "right", "up", "down")
+	
+	if Input.is_action_just_pressed("dash"):
+		is_dashing = true
+		
+		velocity = input_direction * dashing_speed
+		
+		$AnimationPlayer.play("dash")
+		return
+	
 	velocity = input_direction * speed
 	
 	if input_direction == Vector2.ZERO:
@@ -54,8 +61,8 @@ func get_input():
 		$AnimationPlayer.play("run")
 
 
-func stop_jumping():
-	is_jumping = false
+func stop_dashing():
+	is_dashing = false
 
 
 func stop_hurting():
