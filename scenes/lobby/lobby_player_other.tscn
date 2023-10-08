@@ -1,0 +1,95 @@
+[gd_scene load_steps=9 format=3 uid="uid://cawsiswxn67yq"]
+
+[ext_resource type="Script" path="res://scenes/lobby/lobby_player_other.gd" id="1_yhpo2"]
+[ext_resource type="Texture2D" uid="uid://kh0e801gsx1l" path="res://assets/player.png" id="2_haomw"]
+
+[sub_resource type="Animation" id="Animation_0ri68"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+
+[sub_resource type="Animation" id="Animation_w4i6p"]
+resource_name = "idle"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 9]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hvs6d"]
+_data = {
+"RESET": SubResource("Animation_0ri68"),
+"idle": SubResource("Animation_w4i6p")
+}
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_djuyl"]
+
+[sub_resource type="SystemFont" id="SystemFont_yibyy"]
+font_weight = 100
+
+[sub_resource type="Theme" id="Theme_ndyq3"]
+default_font = SubResource("SystemFont_yibyy")
+default_font_size = 18
+
+[node name="LobbyPlayerOther" type="Node2D"]
+script = ExtResource("1_yhpo2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("2_haomw")
+hframes = 5
+vframes = 3
+frame = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+method_call_mode = 1
+libraries = {
+"": SubResource("AnimationLibrary_hvs6d")
+}
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath("")
+replication_config = SubResource("SceneReplicationConfig_djuyl")
+
+[node name="Name" type="Label" parent="."]
+custom_minimum_size = Vector2(140, 20)
+offset_left = -69.0
+offset_top = -89.0
+offset_right = 71.0
+offset_bottom = -55.0
+theme = SubResource("Theme_ndyq3")
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true

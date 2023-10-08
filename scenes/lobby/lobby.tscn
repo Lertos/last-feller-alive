@@ -1,0 +1,77 @@
+[gd_scene load_steps=6 format=3 uid="uid://b22m0k38ym652"]
+
+[ext_resource type="Script" path="res://scenes/lobby/lobby.gd" id="1_4a36r"]
+[ext_resource type="PackedScene" uid="uid://cwcdyhatvgvvu" path="res://scenes/lobby/lobby_player.tscn" id="2_nlr6n"]
+[ext_resource type="Texture2D" uid="uid://dcc2x7v50bqcn" path="res://assets/sky.png" id="3_8fek0"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_af8tq"]
+font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_4bsjc"]
+font_size = 50
+font_color = Color(0, 0.423529, 0.129412, 1)
+
+[node name="Lobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4a36r")
+
+[node name="BG" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.74902)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_8fek0")
+expand_mode = 1
+
+[node name="VB" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Spacer" type="Label" parent="VB"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_af8tq")
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="VB"]
+layout_mode = 2
+text = "Gathering the Fellers"
+label_settings = SubResource("LabelSettings_4bsjc")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="VB"]
+layout_mode = 2
+text = "Awaiting the Host to Start"
+label_settings = SubResource("LabelSettings_af8tq")
+horizontal_alignment = 1
+
+[node name="Player" type="VBoxContainer" parent="VB"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+alignment = 1
+
+[node name="LobbyPlayer" parent="VB/Player" instance=ExtResource("2_nlr6n")]
+
+[node name="Others" type="VBoxContainer" parent="VB"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Players" type="HBoxContainer" parent="VB/Others"]
+layout_mode = 2
+theme_override_constants/separation = 122
+alignment = 1

@@ -100,7 +100,7 @@ func _on_host_button_down():
 
 
 func load_lobby():
-	var scene = load("res://lobby.tscn").instantiate()
+	var scene = load("res://scenes/lobby/lobby.tscn").instantiate()
 	
 	get_tree().root.add_child(scene)
 	self.hide()
