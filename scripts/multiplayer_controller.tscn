@@ -174,7 +174,7 @@ size = Vector2i(83, 180)
 always_on_top = true
 
 [node name="TextureRect" type="TextureRect" parent="."]
-modulate = Color(1, 1, 1, 0.788235)
+modulate = Color(1, 1, 1, 0.498039)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
