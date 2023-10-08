@@ -11,15 +11,15 @@ config_version=5
 [application]
 
 config/name="last-feller-alive"
-run/main_scene="res://multiplayer_controller.tscn"
+run/main_scene="res://scripts/multiplayer_controller.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Config="*res://config.gd"
-Enum="*res://enums.gd"
-GameManager="*res://game_manager.gd"
+Config="*res://scripts/global/config.gd"
+Enum="*res://scripts/global/enums.gd"
+GameManager="*res://scripts/global/game_manager.gd"
 
 [display]
 

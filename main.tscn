@@ -1,12 +1,12 @@
 [gd_scene load_steps=5 format=3 uid="uid://gafs07waarae"]
 
-[ext_resource type="Script" path="res://arena_manager.gd" id="1_e5q6r"]
 [ext_resource type="PackedScene" uid="uid://emvstyxbefry" path="res://scenes/wall.tscn" id="1_s44hn"]
+[ext_resource type="Script" path="res://scripts/arena_manager.gd" id="1_uqrx8"]
 [ext_resource type="PackedScene" uid="uid://bhxcj18y22e7c" path="res://scenes/cannon.tscn" id="2_lb7vj"]
 [ext_resource type="Script" path="res://scenes/cannons.gd" id="2_mstii"]
 
 [node name="Node2D" type="Node2D"]
-script = ExtResource("1_e5q6r")
+script = ExtResource("1_uqrx8")
 
 [node name="BG" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(1600, 900)
