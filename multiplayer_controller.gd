@@ -10,6 +10,8 @@ unreliable - uses UDP; fast but unreliable
 unreliable_ordered - same as unreliable - but each piece of data comes in the correct order
 """
 
+const DEBUG = true
+
 var address
 var port
 var player_name
@@ -79,7 +81,8 @@ func _on_host_button_down():
 		show_help_msg("Server creation failed!", "Have Mercy")
 		return
 	else:
-		show_help_msg("Server created! Press Start", "Woohoo!")
+		if not DEBUG:
+			show_help_msg("Server created! Press Start", "Woohoo!")
 	
 	#Makes bandwidth usage a little more efficient
 	peer.get_host().compress(compression_type)
@@ -90,6 +93,9 @@ func _on_host_button_down():
 	print("Server has been created. Waiting for players")
 	
 	send_player_info($VB/PlayerName.text, multiplayer.get_unique_id())
+	
+	if DEBUG:
+		start_game.rpc()
 
 
 func is_valid_address_and_port() -> bool:
@@ -112,6 +118,9 @@ func is_valid_address_and_port() -> bool:
 
 
 func is_name_empty() -> bool:
+	if DEBUG:
+		return true
+
 	player_name = $VB/PlayerName.text
 	
 	if player_name == "":

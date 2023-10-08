@@ -4,3 +4,4 @@ res://scenes/bullet.tscn
 res://scenes/wall.tscn
 res://multiplayer_controller.tscn
 res://scenes/player.gd
+res://multiplayer_controller.gd
