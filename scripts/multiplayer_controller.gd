@@ -95,7 +95,15 @@ func _on_host_button_down():
 	send_player_info($VB/PlayerName.text, multiplayer.get_unique_id())
 	
 	if DEBUG:
-		start_game.rpc()
+		load_lobby()
+		#start_game.rpc()
+
+
+func load_lobby():
+	var scene = load("res://lobby.tscn").instantiate()
+	
+	get_tree().root.add_child(scene)
+	self.hide()
 
 
 func is_valid_address_and_port() -> bool:

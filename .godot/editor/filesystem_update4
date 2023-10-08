@@ -6,3 +6,7 @@ res://multiplayer_controller.tscn
 res://scenes/player.gd
 res://multiplayer_controller.gd
 res://scripts/multiplayer_controller.tscn
+res://lobby.tscn
+res://scenes/lobby_player.tscn
+res://scenes/lobby_player.gd
+res://scripts/multiplayer_controller.gd
