@@ -38,7 +38,7 @@ default_font_size = 28
 script = ExtResource("1_k40ly")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(6, 6)
+scale = Vector2(5, 5)
 texture = ExtResource("2_s2x8m")
 hframes = 5
 vframes = 3
@@ -58,11 +58,9 @@ replication_config = SubResource("SceneReplicationConfig_djuyl")
 [node name="Name" type="Label" parent="."]
 custom_minimum_size = Vector2(140, 20)
 offset_left = -70.0
-offset_top = -137.0
+offset_top = -119.0
 offset_right = 70.0
-offset_bottom = -104.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_bottom = -85.0
 theme = SubResource("Theme_ndyq3")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -74,10 +72,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -92.5
-offset_top = 110.0
-offset_right = 92.5
-offset_bottom = 150.0
+offset_left = -110.0
+offset_top = 84.0
+offset_right = 110.0
+offset_bottom = 124.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
