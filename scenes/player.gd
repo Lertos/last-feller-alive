@@ -11,7 +11,7 @@ var is_hurt: bool = false
 @export var dashing_speed = 900
 
 var speed = normal_speed
-
+var cnt = 1
 
 func _ready():
 	#Set the authority so we can do checks on if this is the local players object
@@ -25,6 +25,8 @@ func get_input():
 		return
 		
 	if is_dashing or is_dead or is_hurt:
+		if not $AnimationPlayer.is_playing():
+			$AnimationPlayer.play("idle")
 		return
 	
 	if Input.is_action_just_pressed("death"):
@@ -61,11 +63,8 @@ func get_input():
 		$AnimationPlayer.play("run")
 
 
-func stop_dashing():
+func reset_state():
 	is_dashing = false
-
-
-func stop_hurting():
 	is_hurt = false
 
 
