@@ -16,7 +16,8 @@ func _ready():
 	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 	$AnimationPlayer.play("idle")
 	
-	
+	var skin_index = GameManager.players[self.name.to_int()].skin_index
+	$Sprite2D.texture = GameManager.skins[skin_index]
 
 
 func get_input():
