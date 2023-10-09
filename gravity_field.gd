@@ -1,17 +1,22 @@
 extends Node2D
 
+@export var time_to_shrink: float = 1.5
+
+@export var min_scale: float = 2.0
+@export var max_scale: float = 6.0
+
 
 func _ready():
-	var tween = $BG.create_tween().set_loops()
-	tween.tween_property($BG, "rotation", TAU, 3).as_relative()
+	var tween_bg = $BG.create_tween().set_loops()
+	tween_bg.tween_property($BG, "rotation", TAU, 3).as_relative()
 	
-	var tween3 = $FG.create_tween().set_loops()
-	tween3.tween_property($FG, "rotation", TAU, 1).as_relative()
+	var tween_fg = $FG.create_tween().set_loops()
+	tween_fg.tween_property($FG, "rotation", TAU, 1).as_relative()
 
-	var tween2 = self.create_tween().set_loops()
-	tween2.tween_property(self, "scale", Vector2(6,6), 1.5)
-	tween2.tween_property(self, "scale", Vector2(2,2), 1.5)
+	var tween_scale = create_tween().set_loops()
+	tween_scale.tween_property(self, "scale", Vector2(max_scale, max_scale), time_to_shrink)
+	tween_scale.tween_property(self, "scale", Vector2(min_scale, min_scale), time_to_shrink)
 	
-	var tween5 = self.create_tween().set_loops()
-	tween5.tween_property(self, "modulate", Color.html("#ffffff92"), 1.5)
-	tween5.tween_property(self, "modulate", Color.html("#ffffff"), 1.5)
+	var tween_modulate = create_tween().set_loops()
+	tween_modulate.tween_property(self, "modulate", Color.html("#ffffff92"), time_to_shrink)
+	tween_modulate.tween_property(self, "modulate", Color.html("#ffffff"), time_to_shrink)

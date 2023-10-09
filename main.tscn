@@ -31,7 +31,17 @@ metadata/_edit_use_anchors_ = true
 [node name="Walls" type="Node2D" parent="."]
 
 [node name="Node2D" parent="." instance=ExtResource("5_10eho")]
-position = Vector2(558, 353)
+position = Vector2(305, 428)
+
+[node name="Node2D2" parent="." instance=ExtResource("5_10eho")]
+position = Vector2(802, 254)
+min_scale = 3.0
+max_scale = 9.0
+
+[node name="Node2D3" parent="." instance=ExtResource("5_10eho")]
+position = Vector2(702, 603)
+time_to_shrink = 3.0
+min_scale = 1.0
 
 [node name="Players" type="Node2D" parent="."]
 
