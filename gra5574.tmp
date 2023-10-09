@@ -1,0 +1,142 @@
+[gd_scene load_steps=11 format=3 uid="uid://uiuhlbivwavs"]
+
+[ext_resource type="Script" path="res://gravity_field.gd" id="1_35cwa"]
+[ext_resource type="Texture2D" uid="uid://dkq8o4w6ty6ot" path="res://assets/gravity_field_base.png" id="2_lr5uy"]
+[ext_resource type="Texture2D" uid="uid://dk3uxquhsctx7" path="res://assets/gravity_field_fg_1.png" id="3_fmmot"]
+[ext_resource type="Texture2D" uid="uid://bw1a3xrw0b1ie" path="res://assets/gravity_field_fg_2.png" id="4_unr8c"]
+
+[sub_resource type="Animation" id="Animation_cee6m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BG:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FG2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("FG1:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_ijj7j"]
+resource_name = "spin_fg1"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FG1:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="Animation" id="Animation_3ycfj"]
+resource_name = "spin_fg2"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FG2:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="Animation" id="Animation_lvm38"]
+resource_name = "spin_bg"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BG:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cqcqb"]
+_data = {
+"RESET": SubResource("Animation_cee6m"),
+"spin_bg": SubResource("Animation_lvm38"),
+"spin_fg1": SubResource("Animation_ijj7j"),
+"spin_fg2": SubResource("Animation_3ycfj")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iu557"]
+radius = 15.6702
+
+[node name="Node2D" type="Node2D"]
+scale = Vector2(3, 3)
+script = ExtResource("1_35cwa")
+
+[node name="BG" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.352941)
+texture = ExtResource("2_lr5uy")
+
+[node name="FG1" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.470588)
+texture = ExtResource("3_fmmot")
+
+[node name="FG2" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.745098)
+texture = ExtResource("4_unr8c")
+
+[node name="AP_BG" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_cqcqb")
+}
+
+[node name="AP_FG1" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_cqcqb")
+}
+
+[node name="AP_FG2" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_cqcqb")
+}
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_iu557")

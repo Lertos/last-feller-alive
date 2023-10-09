@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://uiuhlbivwavs"]
+
+[ext_resource type="Script" path="res://gravity_field.gd" id="1_35cwa"]
+[ext_resource type="Texture2D" uid="uid://dkq8o4w6ty6ot" path="res://assets/gravity_field_base.png" id="2_lr5uy"]
+[ext_resource type="Texture2D" uid="uid://bw1a3xrw0b1ie" path="res://assets/gravity_field_fg_2.png" id="4_unr8c"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iu557"]
+radius = 15.6702
+
+[node name="Node2D" type="Node2D"]
+modulate = Color(1, 1, 1, 0.572549)
+scale = Vector2(3, 3)
+script = ExtResource("1_35cwa")
+
+[node name="BG" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.352941)
+texture = ExtResource("2_lr5uy")
+
+[node name="FG" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.745098)
+texture = ExtResource("4_unr8c")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_iu557")

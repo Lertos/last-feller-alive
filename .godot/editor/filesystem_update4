@@ -18,3 +18,5 @@ res://scenes/lobby/lobby.gd
 res://scenes/lobby/lobby.tscn
 res://scripts/arena_manager.gd
 res://scripts/global/game_manager.gd
+res://gravity_field.gd
+res://gravity_field.tscn
