@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://5w2p4iseselw"]
 
-[ext_resource type="Script" path="res://pull_field.gd" id="1_xypdw"]
-[ext_resource type="Texture2D" uid="uid://bf58frx1htfw" path="res://assets/pull_field.png" id="2_8oj07"]
+[ext_resource type="Script" path="res://scenes/pull_field.gd" id="1_4your"]
+[ext_resource type="Texture2D" uid="uid://bf58frx1htfw" path="res://assets/pull_field.png" id="2_etpr1"]
 
 [sub_resource type="Animation" id="Animation_22xbf"]
 length = 0.001
@@ -47,10 +47,10 @@ radius = 33.0151
 
 [node name="Node2D" type="Node2D"]
 modulate = Color(1, 1, 1, 0.686275)
-script = ExtResource("1_xypdw")
+script = ExtResource("1_4your")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_8oj07")
+texture = ExtResource("2_etpr1")
 hframes = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
