@@ -19,5 +19,6 @@ func activate(position_to_target: Vector2):
 
 func _on_area_2d_body_entered(body):
 	if body.is_in_group("player"):
-		if not body.is_dashing:
+		if not body.is_dashing and not body.is_dead:
+			body.add_health(-20.0)
 			queue_free()

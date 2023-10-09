@@ -15,6 +15,7 @@ var is_slowed: bool = false
 
 var speed
 var pull_point: Vector2
+var health: float = 100.0
 
 
 func _ready():
@@ -40,16 +41,6 @@ func get_input():
 			$AnimationPlayer.play("idle")
 		return
 	
-	if Input.is_action_just_pressed("death"):
-		is_dead = true
-		$AnimationPlayer.play("death")
-		return
-		
-	if Input.is_action_just_pressed("hurt"):
-		is_hurt = true
-		$AnimationPlayer.play("hurt")
-		return
-	
 	var input_direction = Input.get_vector("left", "right", "up", "down")
 	
 	if Input.is_action_just_pressed("dash"):
@@ -73,6 +64,20 @@ func get_input():
 			$Sprite2D.scale.x *= -1
 			dir = DIRECTION.LEFT
 		$AnimationPlayer.play("run")
+
+
+func add_health(hp: int):
+	health += hp
+	$HPBar.value = min(health, 100.0)
+
+	if health <= 0:
+		is_dead = true
+		$AnimationPlayer.play("death")
+		return
+	else:
+		is_hurt = true
+		$AnimationPlayer.play("hurt")
+		return
 
 
 func reset_state():
