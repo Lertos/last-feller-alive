@@ -115,6 +115,7 @@ func _physics_process(delta):
 	get_input()
 	
 	if not is_dashing and is_being_pulled:
-		velocity += global_position.direction_to(pull_point) * pull_speed
+		if abs(position.x - pull_point.x) > 5 or abs(position.y - pull_point.y) > 5:
+			velocity += global_position.direction_to(pull_point) * pull_speed
 	
 	move_and_slide()
