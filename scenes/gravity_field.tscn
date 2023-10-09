@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://uiuhlbivwavs"]
 
-[ext_resource type="Script" path="res://gravity_field.gd" id="1_35cwa"]
-[ext_resource type="Texture2D" uid="uid://dpej7j6k44wh5" path="res://assets/gravity_field_base.png" id="2_lr5uy"]
-[ext_resource type="Texture2D" uid="uid://bw1a3xrw0b1ie" path="res://assets/gravity_field_fg_2.png" id="4_unr8c"]
+[ext_resource type="Script" path="res://scenes/gravity_field.gd" id="1_biqne"]
+[ext_resource type="Texture2D" uid="uid://dpej7j6k44wh5" path="res://assets/gravity_field_base.png" id="2_jd0n7"]
+[ext_resource type="Texture2D" uid="uid://bw1a3xrw0b1ie" path="res://assets/gravity_field_fg_2.png" id="3_c4q4r"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_iu557"]
 radius = 15.6702
@@ -10,15 +10,15 @@ radius = 15.6702
 [node name="Node2D" type="Node2D"]
 modulate = Color(1, 1, 1, 0.572549)
 scale = Vector2(3, 3)
-script = ExtResource("1_35cwa")
+script = ExtResource("1_biqne")
 
 [node name="BG" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.54902)
-texture = ExtResource("2_lr5uy")
+texture = ExtResource("2_jd0n7")
 
 [node name="FG" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.784314)
-texture = ExtResource("4_unr8c")
+texture = ExtResource("3_c4q4r")
 
 [node name="Area2D" type="Area2D" parent="."]
 

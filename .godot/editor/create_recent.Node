@@ -1,12 +1,12 @@
-CollisionShape2D
 Area2D
+Node2D
+CollisionShape2D
 AnimationPlayer
 Sprite2D
 Button
 TextureRect
 Label
 HBoxContainer
-Node2D
 VBoxContainer
 ColorRect
 AcceptDialog
