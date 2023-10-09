@@ -3,3 +3,5 @@ res://scenes/player.tscn
 res://scenes/gravity_field.tscn
 res://scenes/bullet.tscn
 res://scenes/bullet.gd
+res://pull_field.tscn
+res://pull_field.gd

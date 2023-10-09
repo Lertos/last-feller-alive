@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://gafs07waarae"]
+[gd_scene load_steps=7 format=3 uid="uid://gafs07waarae"]
 
 [ext_resource type="PackedScene" uid="uid://emvstyxbefry" path="res://scenes/wall.tscn" id="1_s44hn"]
 [ext_resource type="Script" path="res://scripts/arena_manager.gd" id="1_uqrx8"]
 [ext_resource type="PackedScene" uid="uid://bhxcj18y22e7c" path="res://scenes/cannon.tscn" id="2_lb7vj"]
 [ext_resource type="Script" path="res://scenes/cannons.gd" id="2_mstii"]
 [ext_resource type="PackedScene" uid="uid://uiuhlbivwavs" path="res://scenes/gravity_field.tscn" id="5_10eho"]
+[ext_resource type="PackedScene" uid="uid://5w2p4iseselw" path="res://pull_field.tscn" id="6_fdfhh"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_uqrx8")
@@ -42,6 +43,10 @@ max_scale = 9.0
 position = Vector2(702, 603)
 time_to_shrink = 3.0
 min_scale = 1.0
+
+[node name="Node2D" parent="." instance=ExtResource("6_fdfhh")]
+position = Vector2(1069, 219)
+scale = Vector2(3, 3)
 
 [node name="Players" type="Node2D" parent="."]
 
