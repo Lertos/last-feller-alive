@@ -125,3 +125,7 @@ func _physics_process(delta):
 			velocity += global_position.direction_to(pull_point) * pull_speed
 	
 	move_and_slide()
+
+
+func player_death():
+	queue_free()
