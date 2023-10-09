@@ -6,6 +6,7 @@ var dir: DIRECTION = DIRECTION.RIGHT
 var is_dashing: bool = false
 var is_dead: bool = false
 var is_hurt: bool = false
+var is_slowed: bool = false
 
 @export var normal_speed = 500
 @export var dashing_speed = 900
@@ -73,8 +74,25 @@ func get_input():
 func reset_state():
 	speed = normal_speed
 	
+	if is_slowed:
+		speed /= 2
+
 	is_dashing = false
 	is_hurt = false
+
+
+func set_player_slowed(val: bool):
+	#If both values are the same, nothing needs to change so just return
+	if is_slowed == val:
+		return
+	
+	#Now we know both values are different 
+	if is_slowed:
+		is_slowed = false
+		speed *= 2
+	else:
+		is_slowed = true
+		speed /= 2
 
 
 func _physics_process(delta):

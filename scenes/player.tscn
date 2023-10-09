@@ -214,7 +214,7 @@ font_weight = 100
 default_font = SubResource("SystemFont_yibyy")
 default_font_size = 12
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_mask = 7
 script = ExtResource("1_qk3kd")
 metadata/_edit_group_ = true

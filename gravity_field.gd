@@ -20,3 +20,13 @@ func _ready():
 	var tween_modulate = create_tween().set_loops()
 	tween_modulate.tween_property(self, "modulate", Color.html("#ffffff92"), time_to_shrink)
 	tween_modulate.tween_property(self, "modulate", Color.html("#ffffff"), time_to_shrink)
+
+
+func _on_area_2d_body_entered(body):
+	if body.is_in_group("player"):
+		body.set_player_slowed(true)
+
+
+func _on_area_2d_body_exited(body):
+	if body.is_in_group("player"):
+		body.set_player_slowed(false)
