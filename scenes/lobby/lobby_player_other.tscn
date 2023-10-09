@@ -78,11 +78,11 @@ libraries = {
 }
 
 [node name="Name" type="Label" parent="."]
-custom_minimum_size = Vector2(140, 20)
-offset_left = -69.0
-offset_top = -89.0
-offset_right = 71.0
-offset_bottom = -55.0
+custom_minimum_size = Vector2(200, 20)
+offset_left = -100.0
+offset_top = -80.0
+offset_right = 100.0
+offset_bottom = -46.0
 theme = SubResource("Theme_ndyq3")
 horizontal_alignment = 1
 vertical_alignment = 1

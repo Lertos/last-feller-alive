@@ -50,10 +50,10 @@ libraries = {
 }
 
 [node name="Name" type="Label" parent="."]
-custom_minimum_size = Vector2(140, 20)
-offset_left = -70.0
-offset_top = -119.0
-offset_right = 70.0
+custom_minimum_size = Vector2(300, 20)
+offset_left = -150.0
+offset_top = -122.0
+offset_right = 150.0
 offset_bottom = -85.0
 theme = SubResource("Theme_ndyq3")
 horizontal_alignment = 1
@@ -80,7 +80,7 @@ layout_mode = 2
 text = "Prev"
 
 [node name="SkinName" type="Label" parent="HB"]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 size_flags_vertical = 1
 theme = SubResource("Theme_ndyq3")

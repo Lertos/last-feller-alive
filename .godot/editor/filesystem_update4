@@ -3,3 +3,5 @@ res://main.tscn
 res://scenes/gravity_field.tscn
 res://scenes/bullet.tscn
 res://scenes/pull_field.tscn
+res://scenes/lobby/lobby_player.tscn
+res://scenes/lobby/lobby_player_other.tscn
