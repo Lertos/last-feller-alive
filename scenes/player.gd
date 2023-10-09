@@ -4,14 +4,18 @@ enum DIRECTION {LEFT, RIGHT}
 
 var dir: DIRECTION = DIRECTION.RIGHT
 var is_dashing: bool = false
+var is_being_pulled: bool = false
 var is_dead: bool = false
 var is_hurt: bool = false
 var is_slowed: bool = false
 
+@export var pull_speed = 300
 @export var normal_speed = 500
 @export var dashing_speed = 900
 
 var speed
+var pull_point: Vector2
+
 
 func _ready():
 	#Set the authority so we can do checks on if this is the local players object
@@ -95,9 +99,22 @@ func set_player_slowed(val: bool):
 		speed /= 2
 
 
+func set_pull_point(pos: Vector2):
+	pull_point = pos
+	is_being_pulled = true
+
+
+func remove_pull():
+	is_being_pulled = false
+
+
 func _physics_process(delta):
 	if is_dead:
 		return
 		
 	get_input()
+	
+	if not is_dashing and is_being_pulled:
+		velocity += global_position.direction_to(pull_point) * pull_speed
+	
 	move_and_slide()

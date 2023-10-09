@@ -5,3 +5,4 @@ res://scenes/bullet.tscn
 res://scenes/bullet.gd
 res://pull_field.tscn
 res://pull_field.gd
+res://scenes/player.gd

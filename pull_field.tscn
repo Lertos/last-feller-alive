@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://5w2p4iseselw"]
+[gd_scene load_steps=7 format=3 uid="uid://5w2p4iseselw"]
 
 [ext_resource type="Script" path="res://pull_field.gd" id="1_xypdw"]
 [ext_resource type="Texture2D" uid="uid://bf58frx1htfw" path="res://assets/pull_field.png" id="2_8oj07"]
@@ -42,6 +42,9 @@ _data = {
 "spin": SubResource("Animation_djo2d")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_o75bq"]
+radius = 33.0151
+
 [node name="Node2D" type="Node2D"]
 modulate = Color(1, 1, 1, 0.686275)
 script = ExtResource("1_xypdw")
@@ -54,3 +57,11 @@ hframes = 3
 libraries = {
 "": SubResource("AnimationLibrary_4iuuh")
 }
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_o75bq")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
