@@ -36,7 +36,7 @@ func get_input():
 	if $MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
 		return
 		
-	if is_dashing or is_dead or is_hurt:
+	if is_dashing or is_dead:
 		if not $AnimationPlayer.is_playing():
 			$AnimationPlayer.play("idle")
 		return
@@ -63,7 +63,8 @@ func get_input():
 		elif input_direction.x < 0 and dir == DIRECTION.RIGHT:
 			$Sprite2D.scale.x *= -1
 			dir = DIRECTION.LEFT
-		$AnimationPlayer.play("run")
+		if not is_hurt:
+			$AnimationPlayer.play("run")
 
 
 func add_health(hp: int):
