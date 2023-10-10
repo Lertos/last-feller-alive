@@ -44,7 +44,9 @@ position = Vector2(702, 603)
 time_to_shrink = 3.0
 min_scale = 1.0
 
-[node name="Node2D" parent="." instance=ExtResource("6_fdfhh")]
+[node name="PullFields" type="Node2D" parent="."]
+
+[node name="Node2D" parent="PullFields" instance=ExtResource("6_fdfhh")]
 position = Vector2(1069, 219)
 scale = Vector2(3, 3)
 
