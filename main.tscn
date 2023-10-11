@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://gafs07waarae"]
+[gd_scene load_steps=8 format=3 uid="uid://gafs07waarae"]
 
 [ext_resource type="PackedScene" uid="uid://emvstyxbefry" path="res://scenes/wall.tscn" id="1_s44hn"]
 [ext_resource type="Script" path="res://scripts/arena_manager.gd" id="1_uqrx8"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scenes/cannons.gd" id="2_mstii"]
 [ext_resource type="PackedScene" uid="uid://uiuhlbivwavs" path="res://scenes/gravity_field.tscn" id="5_10eho"]
 [ext_resource type="PackedScene" uid="uid://5w2p4iseselw" path="res://scenes/pull_field.tscn" id="6_fdfhh"]
+[ext_resource type="PackedScene" uid="uid://b6fsesf4nwil" path="res://bomb.tscn" id="7_nxbtm"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_uqrx8")
@@ -49,6 +50,11 @@ min_scale = 1.0
 [node name="Node2D" parent="PullFields" instance=ExtResource("6_fdfhh")]
 position = Vector2(1069, 219)
 scale = Vector2(3, 3)
+
+[node name="Bombs" type="Node2D" parent="."]
+
+[node name="Bomb" parent="Bombs" instance=ExtResource("7_nxbtm")]
+position = Vector2(552, 283)
 
 [node name="Players" type="Node2D" parent="."]
 
