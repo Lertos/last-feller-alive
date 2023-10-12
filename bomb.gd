@@ -10,6 +10,13 @@ extends Node2D
 func _ready():
 	var time_to_explode = prime_loop_anim_time * prime_count_before_explode
 	var half_prime_anim_time = prime_loop_anim_time / 2.0
+	var timer = Timer.new()
+	
+	add_child(timer)
+	
+	timer.timeout.connect(on_explosion)
+	timer.wait_time = time_to_explode
+	timer.start()
 	
 	var tween_circle_scale = $Circle.create_tween()
 	tween_circle_scale.tween_property($Circle, "scale", Vector2(max_scale, max_scale),time_to_explode)
@@ -24,3 +31,13 @@ func _ready():
 	var tween_bomb_modulate = $Bomb.create_tween().set_loops()
 	tween_bomb_modulate.tween_property($Bomb, "modulate", Color.html("#d72400"), half_prime_anim_time)
 	tween_bomb_modulate.tween_property($Bomb, "modulate", Color.html("#ffffff"), half_prime_anim_time)
+
+
+func on_explosion():
+	#Hide the current sprites
+	$Circle.visible = false
+	$Bomb.visible = false
+	
+	#Handle the explosion
+	$Explosion.visible = true
+	$Explosion.get_node("AnimationPlayer").play("explode")

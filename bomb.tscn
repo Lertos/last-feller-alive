@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b6fsesf4nwil"]
+[gd_scene load_steps=5 format=3 uid="uid://b6fsesf4nwil"]
 
 [ext_resource type="Texture2D" uid="uid://cg7ilfgn6g0gq" path="res://assets/bomb.png" id="1_byuk0"]
 [ext_resource type="Script" path="res://bomb.gd" id="1_kog0m"]
 [ext_resource type="Texture2D" uid="uid://ck66s8ynoexql" path="res://assets/red_circle.png" id="2_iib36"]
+[ext_resource type="PackedScene" uid="uid://b8wub4thl0u3" path="res://explosion.tscn" id="4_oivbr"]
 
 [node name="Bomb" type="Node2D"]
 script = ExtResource("1_kog0m")
@@ -14,3 +15,6 @@ texture = ExtResource("2_iib36")
 [node name="Bomb" type="Sprite2D" parent="."]
 scale = Vector2(2, 2)
 texture = ExtResource("1_byuk0")
+
+[node name="Explosion" parent="." instance=ExtResource("4_oivbr")]
+visible = false
