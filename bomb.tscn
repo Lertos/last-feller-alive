@@ -10,6 +10,7 @@ script = ExtResource("1_kog0m")
 
 [node name="Circle" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0)
+scale = Vector2(0.1, 0.1)
 texture = ExtResource("2_iib36")
 
 [node name="Bomb" type="Sprite2D" parent="."]
