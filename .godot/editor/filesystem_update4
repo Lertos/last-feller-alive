@@ -6,7 +6,6 @@ res://scenes/pull_field.tscn
 res://scenes/lobby/lobby_player.tscn
 res://scenes/lobby/lobby_player_other.tscn
 res://scenes/lobby/lobby.tscn
-res://bomb.tscn
-res://bomb.gd
-res://explosion.tscn
-res://explosion.gd
+res://scenes/bomb.tscn
+res://scenes/explosion.tscn
+res://scripts/multiplayer_controller.tscn

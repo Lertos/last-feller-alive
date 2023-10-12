@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6fsesf4nwil"]
+
+[ext_resource type="Script" path="res://scenes/bomb.gd" id="1_1y0x6"]
+[ext_resource type="Texture2D" uid="uid://ck66s8ynoexql" path="res://assets/red_circle.png" id="2_2gjd0"]
+[ext_resource type="Texture2D" uid="uid://cg7ilfgn6g0gq" path="res://assets/bomb.png" id="3_w3plk"]
+[ext_resource type="PackedScene" uid="uid://c0fy8vmfpq8jj" path="res://scenes/explosion.tscn" id="4_2cand"]
+
+[node name="Bomb" type="Node2D"]
+script = ExtResource("1_1y0x6")
+
+[node name="Circle" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_2gjd0")
+
+[node name="Bomb" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("3_w3plk")
+
+[node name="Explosion" parent="." instance=ExtResource("4_2cand")]
+visible = false
