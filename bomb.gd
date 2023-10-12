@@ -39,5 +39,7 @@ func on_explosion():
 	$Bomb.visible = false
 	
 	#Handle the explosion
-	$Explosion.visible = true
-	$Explosion.get_node("AnimationPlayer").play("explode")
+	var explosion = $Explosion
+	
+	explosion.visible = true
+	explosion.get_node("AnimationPlayer").play("explode")

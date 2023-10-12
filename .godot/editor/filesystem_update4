@@ -9,3 +9,4 @@ res://scenes/lobby/lobby.tscn
 res://bomb.tscn
 res://bomb.gd
 res://explosion.tscn
+res://explosion.gd
