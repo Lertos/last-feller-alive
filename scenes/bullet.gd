@@ -3,7 +3,7 @@ extends Node2D
 var vel = 0
 var speed = 400
 var is_active = false
-var bullet_damage: float = 12.0
+var bullet_damage: float = 7.0
 
 
 func _process(delta):

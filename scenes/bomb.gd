@@ -7,7 +7,7 @@ extends Node2D
 @export var max_bomb_scale: float = 2.3
 @export var max_circle_scale: float = 4
 
-var bomb_damage: float = 30.0
+var bomb_damage: float = 24.0
 
 
 func _ready():
