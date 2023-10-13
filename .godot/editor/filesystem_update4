@@ -9,3 +9,4 @@ res://scenes/lobby/lobby.tscn
 res://scenes/bomb.tscn
 res://scenes/explosion.tscn
 res://scripts/multiplayer_controller.tscn
+res://scenes/bomb.gd
