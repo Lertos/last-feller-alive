@@ -74,4 +74,7 @@ position = Vector2(196, 166)
 [node name="Beam" parent="Beams" instance=ExtResource("8_6j6wr")]
 position = Vector2(547, 431)
 
+[node name="Beam2" parent="Beams" instance=ExtResource("8_6j6wr")]
+position = Vector2(923, 148)
+
 [node name="Bullets" type="Node2D" parent="."]
