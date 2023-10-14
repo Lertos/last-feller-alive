@@ -1,16 +1,16 @@
 extends Node2D
 
-@export var prime_loop_anim_time: float = 1.2
-@export var prime_count_before_explode: int = 3
-
-@export var min_bomb_scale: float = 1.8
-@export var max_bomb_scale: float = 2.3
-@export var max_circle_scale: float = 4
-
 var bomb_damage: float = 24.0
 
 
 func _ready():
+	var prime_loop_anim_time: float = 1.2
+	var prime_count_before_explode: int = 3
+
+	var min_bomb_scale: float = 1.8
+	var max_bomb_scale: float = 2.3
+	var max_circle_scale: float = 4
+	
 	var time_to_explode = prime_loop_anim_time * prime_count_before_explode
 	var half_prime_anim_time = prime_loop_anim_time / 2.0
 	var timer = Timer.new()
