@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://b30oo7trtuogx"]
+[gd_scene load_steps=4 format=3 uid="uid://b30oo7trtuogx"]
 
 [ext_resource type="Script" path="res://beam.gd" id="1_v0yyb"]
 [ext_resource type="Texture2D" uid="uid://clcpmr5852y7n" path="res://assets/beam.png" id="2_p0b3j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dlt07"]
+size = Vector2(2, 2)
 
 [node name="Beam" type="Node2D"]
 script = ExtResource("1_v0yyb")
@@ -9,3 +12,8 @@ script = ExtResource("1_v0yyb")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.454902, 0.00784314, 0, 1)
 texture = ExtResource("2_p0b3j")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_dlt07")
