@@ -69,7 +69,9 @@ position = Vector2(196, 166)
 
 [node name="Players" type="Node2D" parent="."]
 
-[node name="Bullets" type="Node2D" parent="."]
+[node name="Beams" type="Node2D" parent="."]
 
-[node name="Beam" parent="." instance=ExtResource("8_6j6wr")]
+[node name="Beam" parent="Beams" instance=ExtResource("8_6j6wr")]
 position = Vector2(547, 431)
+
+[node name="Bullets" type="Node2D" parent="."]
