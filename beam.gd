@@ -11,7 +11,7 @@ func _ready():
 	var active_time: float = 0.1
 	var disappear_time: float = 0.1
 	
-	var beam_length_scale : float = max(Config.arena_width, Config.arena_height) / 2
+	var beam_length_scale : float = max(Config.arena_width, Config.arena_height)
 	
 	rotation = rng.randf_range(0.0, 359.9)
 	scale = Vector2(0, beam_length_scale)
