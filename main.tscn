@@ -57,10 +57,6 @@ scale = Vector2(3, 3)
 [node name="Bomb" parent="Bombs" instance=ExtResource("7_nxbtm")]
 position = Vector2(552, 283)
 
-[node name="Players" type="Node2D" parent="."]
-
-[node name="Bullets" type="Node2D" parent="."]
-
 [node name="Cannons" type="Node2D" parent="." node_paths=PackedStringArray("player_list")]
 script = ExtResource("2_mstii")
 player_list = NodePath("../Players")
@@ -70,6 +66,10 @@ position = Vector2(1199, 625)
 
 [node name="Cannon2" parent="Cannons" instance=ExtResource("2_lb7vj")]
 position = Vector2(196, 166)
+
+[node name="Players" type="Node2D" parent="."]
+
+[node name="Bullets" type="Node2D" parent="."]
 
 [node name="Beam" parent="." instance=ExtResource("8_6j6wr")]
 position = Vector2(547, 431)
