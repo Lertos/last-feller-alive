@@ -20,3 +20,8 @@ func _ready():
 	tween_scale.tween_property(self, "scale", Vector2(beam_width_scale, beam_length_scale), startup_time)
 	tween_scale.tween_property(self, "scale", Vector2(beam_width_active_scale, beam_length_scale), active_time)
 	tween_scale.tween_property(self, "scale", Vector2(0, beam_length_scale), disappear_time)
+
+	var tween_modulate = create_tween()
+	tween_modulate.tween_property($Sprite2D, "modulate", Color.html("#e50b00"), startup_time)
+	tween_modulate.tween_property($Sprite2D, "modulate", Color.html("#ffffff"), active_time)
+	tween_modulate.tween_property($Sprite2D, "modulate", Color.html("#740200"), disappear_time)
