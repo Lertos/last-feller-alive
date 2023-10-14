@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://gafs07waarae"]
+[gd_scene load_steps=9 format=3 uid="uid://gafs07waarae"]
 
 [ext_resource type="PackedScene" uid="uid://emvstyxbefry" path="res://scenes/wall.tscn" id="1_s44hn"]
 [ext_resource type="Script" path="res://scripts/arena_manager.gd" id="1_uqrx8"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://uiuhlbivwavs" path="res://scenes/gravity_field.tscn" id="5_10eho"]
 [ext_resource type="PackedScene" uid="uid://5w2p4iseselw" path="res://scenes/pull_field.tscn" id="6_fdfhh"]
 [ext_resource type="PackedScene" uid="uid://b6fsesf4nwil" path="res://scenes/bomb.tscn" id="7_nxbtm"]
+[ext_resource type="PackedScene" uid="uid://b30oo7trtuogx" path="res://beam.tscn" id="8_6j6wr"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_uqrx8")
@@ -69,3 +70,6 @@ position = Vector2(1199, 625)
 
 [node name="Cannon2" parent="Cannons" instance=ExtResource("2_lb7vj")]
 position = Vector2(196, 166)
+
+[node name="Beam" parent="." instance=ExtResource("8_6j6wr")]
+position = Vector2(547, 431)
