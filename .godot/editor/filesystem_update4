@@ -1,14 +1,2 @@
-res://main.tscn
-res://scenes/player.tscn
-res://scenes/gravity_field.tscn
-res://scenes/bullet.tscn
-res://scenes/pull_field.tscn
-res://scenes/lobby/lobby_player.tscn
-res://scenes/lobby/lobby_player_other.tscn
-res://scenes/lobby/lobby.tscn
-res://scenes/bomb.tscn
-res://scenes/explosion.tscn
-res://scripts/multiplayer_controller.tscn
-res://beam.tscn
-res://beam.gd
-res://scenes/bomb.gd
+res://scenes/beam.tscn
+res://scripts/arena_manager.gd

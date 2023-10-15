@@ -1,7 +1,14 @@
 extends Node2D
 
-const SCENE_WALL = preload("res://scenes/wall.tscn")
+#Objects to spawn
 const SCENE_PLAYER = preload("res://scenes/player.tscn")
+const SCENE_WALL = preload("res://scenes/wall.tscn")
+const SCENE_BEAM = preload("res://scenes/beam.tscn")
+const SCENE_BOMB = preload("res://scenes/bomb.tscn")
+const SCENE_CANNON = preload("res://scenes/cannon.tscn")
+const SCENE_GRAVITY_FIELD = preload("res://scenes/gravity_field.tscn")
+const SCENE_PULL_FIELD = preload("res://scenes/pull_field.tscn")
+
 
 var min_distance_from_corners = Config.wall_width * 2
 var rng = RandomNumberGenerator.new()
