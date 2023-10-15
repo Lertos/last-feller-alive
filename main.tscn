@@ -12,6 +12,8 @@
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_uqrx8")
 
+[node name="SpawnerTimer" type="Timer" parent="."]
+
 [node name="BG" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(1600, 900)
 offset_right = 1600.0

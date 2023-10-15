@@ -11,17 +11,41 @@ const SCENE_CANNON = preload("res://scenes/cannon.tscn")
 const SCENE_GRAVITY_FIELD = preload("res://scenes/gravity_field.tscn")
 const SCENE_PULL_FIELD = preload("res://scenes/pull_field.tscn")
 
+#Used to dynamically grab the correct settings for the difficulty
+var difficulty_settings = {
+	DIFFICULTY.EASY: {
+		"initial_spawn_time": 8.0,
+		"time_decrease_per_cannon": 0.5,
+		"events_before_cannon": 6
+	}
+	#TODO: Fill this out for other difficulties
+}
+
 #Arena configuration variables
 var chosen_difficulty: DIFFICULTY = DIFFICULTY.EASY
 var distance_from_walls = Config.wall_width * 2
 
+#Variables to keep track of game state
+var current_event_count: int = 0
 
 var rng = RandomNumberGenerator.new()
 
 
 func _ready():
+	#Set the initial time for spawning to start
+	$SpawnerTimer.wait_time = difficulty_settings[chosen_difficulty]["initial_spawn_time"]
+	$SpawnerTimer.timeout.connect(spawn_object)
+	
 	setup_arena_walls()
 	setup_players()
+	
+	$SpawnerTimer.start()
+
+
+func spawn_object():
+	#TODO: Need to check if the cannon should be spawned or a normal event
+	#Also check if special event should occur
+	pass
 
 
 func setup_arena_walls():

@@ -1,3 +1,4 @@
+Timer
 CollisionShape2D
 Area2D
 Node2D
@@ -13,7 +14,6 @@ ColorRect
 AcceptDialog
 MultiplayerSynchronizer
 LineEdit
-Timer
 StaticBody2D
 CharacterBody2D
 AnimatedSprite2D
