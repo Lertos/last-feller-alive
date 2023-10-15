@@ -1,5 +1,7 @@
 extends Node2D
 
+enum DIFFICULTY {EASY, MEDIUM, HARD}
+
 #Objects to spawn
 const SCENE_PLAYER = preload("res://scenes/player.tscn")
 const SCENE_WALL = preload("res://scenes/wall.tscn")
@@ -10,6 +12,7 @@ const SCENE_GRAVITY_FIELD = preload("res://scenes/gravity_field.tscn")
 const SCENE_PULL_FIELD = preload("res://scenes/pull_field.tscn")
 
 #Arena configuration variables
+var chosen_difficulty: DIFFICULTY = DIFFICULTY.EASY
 var distance_from_walls = Config.wall_width * 2
 
 
