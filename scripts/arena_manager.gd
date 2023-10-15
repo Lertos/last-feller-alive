@@ -9,8 +9,10 @@ const SCENE_CANNON = preload("res://scenes/cannon.tscn")
 const SCENE_GRAVITY_FIELD = preload("res://scenes/gravity_field.tscn")
 const SCENE_PULL_FIELD = preload("res://scenes/pull_field.tscn")
 
+#Arena configuration variables
+var distance_from_walls = Config.wall_width * 2
 
-var min_distance_from_corners = Config.wall_width * 2
+
 var rng = RandomNumberGenerator.new()
 
 
