@@ -16,7 +16,8 @@ var difficulty_settings = {
 	DIFFICULTY.EASY: {
 		"initial_spawn_time": 8.0,
 		"time_decrease_per_cannon": 0.5,
-		"events_before_cannon": 6
+		"events_before_cannon": 6,
+		"special_events_per_cannon": 1
 	}
 	#TODO: Fill this out for other difficulties
 }
@@ -26,7 +27,8 @@ var chosen_difficulty: DIFFICULTY = DIFFICULTY.EASY
 var distance_from_walls = Config.wall_width * 2
 
 #Variables to keep track of game state
-var current_event_count: int = 0
+var total_events_since_cannon: int = 0
+var special_events_since_cannon: int = 0
 
 var rng = RandomNumberGenerator.new()
 
@@ -43,9 +45,25 @@ func _ready():
 
 
 func spawn_object():
-	#TODO: Need to check if the cannon should be spawned or a normal event
-	#Also check if special event should occur
-	pass
+	#If the counter is at 0, spawn a cannon. This is so we can keep count and just reset easily
+	if total_events_since_cannon == 0:
+		spawn_cannon()
+	else:
+		#TODO: Spawn random object
+		pass
+
+	if total_events_since_cannon > difficulty_settings[chosen_difficulty]["events_before_cannon"]:
+		total_events_since_cannon = 0
+	else:
+		total_events_since_cannon += 1
+
+
+func spawn_cannon():
+	#TODO logic to spawn cannon
+	
+	$SpawnerTimer.stop()
+	$SpawnerTimer.wait_time = max($SpawnerTimer.wait_time - difficulty_settings[chosen_difficulty]["time_decrease_per_cannon"], 1.0)
+	$SpawnerTimer.start()
 
 
 func setup_arena_walls():

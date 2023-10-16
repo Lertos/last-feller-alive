@@ -1,5 +1,2 @@
-res://scenes/beam.tscn
-res://scripts/arena_manager.gd
 res://main.tscn
-res://scenes/player.tscn
-res://scripts/multiplayer_controller.tscn
+res://scripts/arena_manager.gd
