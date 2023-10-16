@@ -1,6 +1,8 @@
 extends Node2D
 
 enum DIFFICULTY {EASY, MEDIUM, HARD}
+enum EVENT_TYPE {BEAM, BOMB, GRAVITY_FIELD, PULL_FIELD}
+enum SPECIAL_EVENT_TYPE {MULTI_BEAM, BOMB_STRING, ZERO_GRAVITY, CANNON_PULL}
 
 #Objects to spawn
 const SCENE_PLAYER = preload("res://scenes/player.tscn")
@@ -48,10 +50,42 @@ func spawn_object():
 	#If the counter is at 0, spawn a cannon. This is so we can keep count and just reset easily
 	if total_events_since_cannon == 0:
 		spawn_cannon()
+		
+		total_events_since_cannon += 1
+		return
+	
+	#Figure out if it's a special event or normal event, then spawn it
+	var is_special_event: bool = (rng.randi() % 2 == 0)
+	
+	if special_events_since_cannon >= difficulty_settings[chosen_difficulty]["special_events_per_cannon"]:
+		is_special_event = false
+	
+	#If special event
+	if is_special_event:
+		match rng.randi_range(0, SPECIAL_EVENT_TYPE.size() - 1):
+			SPECIAL_EVENT_TYPE.MULTI_BEAM:
+				spawn_special_multi_beam()
+			SPECIAL_EVENT_TYPE.BOMB_STRING:
+				spawn_special_bomb_string()
+			SPECIAL_EVENT_TYPE.ZERO_GRAVITY:
+				spawn_special_zero_gravity()
+			SPECIAL_EVENT_TYPE.CANNON_PULL:
+				spawn_special_cannon_pull()
+				
+		special_events_since_cannon += 1
+	#If normal event
 	else:
-		#TODO: Spawn random object
-		pass
+		match rng.randi_range(0, EVENT_TYPE.size() - 1):
+			EVENT_TYPE.BEAM:
+				spawn_beam()
+			EVENT_TYPE.BOMB:
+				spawn_bomb()
+			EVENT_TYPE.GRAVITY_FIELD:
+				spawn_gravity_field()
+			EVENT_TYPE.PULL_FIELD:
+				spawn_pull_field()
 
+	#Increase the counters
 	if total_events_since_cannon > difficulty_settings[chosen_difficulty]["events_before_cannon"]:
 		total_events_since_cannon = 0
 	else:
@@ -66,35 +100,43 @@ func spawn_cannon():
 	$SpawnerTimer.start()
 
 
+func spawn_beam():
+	pass
+
+
+func spawn_bomb():
+	pass
+
+
+func spawn_gravity_field():
+	pass
+
+
+func spawn_pull_field():
+	pass
+
+
+func spawn_special_multi_beam():
+	pass
+	
+	
+func spawn_special_bomb_string():
+	pass
+	
+	
+func spawn_special_zero_gravity():
+	pass
+	
+	
+func spawn_special_cannon_pull():
+	pass
+	
+
 func setup_arena_walls():
-	create_wall(
-		$WallLeft, 
-		-Config.wall_width / 2, 
-		Config.arena_height / 2, 
-		Config.wall_width, 
-		Config.arena_height
-	)
-	create_wall(
-		$WallRight, 
-		Config.arena_width + Config.wall_width / 2, 
-		Config.arena_height / 2, 
-		Config.wall_width, 
-		Config.arena_height
-	)
-	create_wall(
-		$WallTop, 
-		Config.arena_width / 2, 
-		-Config.wall_width / 2, 
-		Config.arena_width, 
-		Config.wall_width
-	)
-	create_wall(
-		$WallBottom, 
-		Config.arena_width / 2, 
-		Config.arena_height + Config.wall_width / 2, 
-		Config.arena_width, 
-		Config.wall_width
-	)
+	create_wall($WallLeft, -Config.wall_width / 2, Config.arena_height / 2, Config.wall_width, Config.arena_height)
+	create_wall($WallRight, Config.arena_width + Config.wall_width / 2, Config.arena_height / 2, Config.wall_width, Config.arena_height)
+	create_wall($WallTop, Config.arena_width / 2, -Config.wall_width / 2, Config.arena_width, Config.wall_width)
+	create_wall($WallBottom, Config.arena_width / 2, Config.arena_height + Config.wall_width / 2, Config.arena_width, Config.wall_width)
 
 
 func setup_players():
