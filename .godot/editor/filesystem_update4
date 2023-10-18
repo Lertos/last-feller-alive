@@ -1,2 +1,8 @@
 res://main.tscn
 res://scripts/arena_manager.gd
+res://scenes/player.tscn
+res://scripts/multiplayer_controller.tscn
+res://scenes/beam.tscn
+res://scenes/cannon.tscn
+res://scripts/global/config.gd
+res://scenes/cannon.gd

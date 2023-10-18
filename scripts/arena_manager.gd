@@ -13,6 +13,8 @@ const SCENE_CANNON = preload("res://scenes/cannon.tscn")
 const SCENE_GRAVITY_FIELD = preload("res://scenes/gravity_field.tscn")
 const SCENE_PULL_FIELD = preload("res://scenes/pull_field.tscn")
 
+var coordinates_for_cannons: Array[Vector2] = []
+
 #Used to dynamically grab the correct settings for the difficulty
 var difficulty_settings = {
 	DIFFICULTY.EASY: {
@@ -26,7 +28,7 @@ var difficulty_settings = {
 
 #Arena configuration variables
 var chosen_difficulty: DIFFICULTY = DIFFICULTY.EASY
-var distance_from_walls = Config.wall_width * 2
+var distance_from_walls = Config.wall_width
 
 #Variables to keep track of game state
 var total_events_since_cannon: int = 0
@@ -42,6 +44,7 @@ func _ready():
 	
 	setup_arena_walls()
 	setup_players()
+	setup_cannon_spots()
 	
 	$SpawnerTimer.start()
 
@@ -181,3 +184,50 @@ func create_wall(wall_node: Node, posx: int, posy: int, scalex: int, scaley: int
 	
 	wall_node.scale.x = scalex
 	wall_node.scale.y = scaley
+
+
+#Think of breaking the arena into a ninepatchrect; then putting cannons everwhere but the middle
+func setup_cannon_spots():
+	var cannon_sprite_width = SCENE_CANNON.instantiate().get_node("Sprite2D").texture.get_size().x
+	
+	#Get the distance apart from each cannon, for each axis
+	var available_width = Config.arena_width - (distance_from_walls * 2)
+	var available_height = Config.arena_height - (distance_from_walls * 2)
+	
+	#The empty space besides what the cannons would take up, using their sprite size 
+	var empty_non_cannon_width = available_width - (cannon_sprite_width * 3)
+	var empty_non_cannon_height = available_height - (cannon_sprite_width * 3)
+
+	#Find the distance between each cannon, assuming 8 cannons in the outer ring
+	#We are measuring the adjacent empty spots (x's); o's are cannons, x's are empty: (o x o x o )
+	var width_between = empty_non_cannon_width / 2
+	var height_between = empty_non_cannon_height / 2
+
+	#Start populating the cannons
+	var x_coord = distance_from_walls
+	var y_coord = distance_from_walls
+	
+	for row in range(1, 4):
+		x_coord = distance_from_walls
+		
+		for col in range(1, 4):
+			#Skip the middle square
+			if row == 2 and col == 2:
+				#Move the pointer by the cannon sprite
+				x_coord += width_between + cannon_sprite_width
+				continue
+				
+			#Spawn the cannon
+			var new_cannon = SCENE_CANNON.instantiate()
+			
+			$Cannons.add_child(new_cannon)
+			
+			new_cannon.name = str(row) + str(col)
+			new_cannon.position = Vector2(x_coord, y_coord)
+			
+			#Move the pointer by the cannon sprite
+			x_coord += width_between + cannon_sprite_width
+		
+		#Move the pointer by the cannon sprite
+		y_coord += height_between + cannon_sprite_width
+		
