@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://gafs07waarae"]
+[gd_scene load_steps=8 format=3 uid="uid://gafs07waarae"]
 
 [ext_resource type="PackedScene" uid="uid://emvstyxbefry" path="res://scenes/wall.tscn" id="1_s44hn"]
 [ext_resource type="Script" path="res://scripts/arena_manager.gd" id="1_uqrx8"]
-[ext_resource type="PackedScene" uid="uid://bhxcj18y22e7c" path="res://scenes/cannon.tscn" id="2_lb7vj"]
 [ext_resource type="Script" path="res://scenes/cannons.gd" id="2_mstii"]
 [ext_resource type="PackedScene" uid="uid://uiuhlbivwavs" path="res://scenes/gravity_field.tscn" id="5_10eho"]
 [ext_resource type="PackedScene" uid="uid://5w2p4iseselw" path="res://scenes/pull_field.tscn" id="6_fdfhh"]
@@ -62,12 +61,6 @@ position = Vector2(552, 283)
 [node name="Cannons" type="Node2D" parent="." node_paths=PackedStringArray("player_list")]
 script = ExtResource("2_mstii")
 player_list = NodePath("../Players")
-
-[node name="Cannon" parent="Cannons" instance=ExtResource("2_lb7vj")]
-position = Vector2(1199, 625)
-
-[node name="Cannon2" parent="Cannons" instance=ExtResource("2_lb7vj")]
-position = Vector2(196, 166)
 
 [node name="Players" type="Node2D" parent="."]
 
