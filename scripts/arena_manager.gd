@@ -14,6 +14,7 @@ const SCENE_GRAVITY_FIELD = preload("res://scenes/gravity_field.tscn")
 const SCENE_PULL_FIELD = preload("res://scenes/pull_field.tscn")
 
 var coordinates_for_cannons: Array[Vector2] = []
+var available_coordinates_for_cannons: Array[Vector2] = []
 
 #Used to dynamically grab the correct settings for the difficulty
 var difficulty_settings = {
@@ -96,7 +97,15 @@ func spawn_object():
 
 
 func spawn_cannon():
-	#TODO logic to spawn cannon
+	var new_cannon = SCENE_CANNON.instantiate()
+	var rand_index = rng.randi_range(0, available_coordinates_for_cannons.size())
+	var new_spot: Vector2 = available_coordinates_for_cannons[rand_index]
+	
+	$Cannons.add_child(new_cannon)
+	
+	new_cannon.position = new_spot
+	
+	available_coordinates_for_cannons.remove_at(rand_index)
 	
 	$SpawnerTimer.stop()
 	$SpawnerTimer.wait_time = max($SpawnerTimer.wait_time - difficulty_settings[chosen_difficulty]["time_decrease_per_cannon"], 1.0)
@@ -216,18 +225,14 @@ func setup_cannon_spots():
 				#Move the pointer by the cannon sprite
 				x_coord += width_between + cannon_sprite_width
 				continue
-				
-			#Spawn the cannon
-			var new_cannon = SCENE_CANNON.instantiate()
 			
-			$Cannons.add_child(new_cannon)
-			
-			new_cannon.name = str(row) + str(col)
-			new_cannon.position = Vector2(x_coord, y_coord)
+			coordinates_for_cannons.append(Vector2(x_coord, y_coord))
 			
 			#Move the pointer by the cannon sprite
 			x_coord += width_between + cannon_sprite_width
 		
 		#Move the pointer by the cannon sprite
 		y_coord += height_between + cannon_sprite_width
-		
+	
+	#Duplicate cannon spots so we can see where they originally were, and which are left to take
+	available_coordinates_for_cannons = coordinates_for_cannons.duplicate()
