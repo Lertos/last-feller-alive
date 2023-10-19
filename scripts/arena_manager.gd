@@ -49,8 +49,6 @@ func _ready():
 	
 	$SpawnerTimer.start()
 
-	spawn_event(distance_from_walls * 2, SCENE_BEAM, $Beams)
-
 
 func spawn_object():
 	#If the counter is at 0, spawn a cannon. This is so we can keep count and just reset easily
@@ -83,13 +81,13 @@ func spawn_object():
 	else:
 		match rng.randi_range(0, EVENT_TYPE.size() - 1):
 			EVENT_TYPE.BEAM:
-				spawn_beam()
+				spawn_event(distance_from_walls * 2, SCENE_BEAM, $Beams)
 			EVENT_TYPE.BOMB:
-				spawn_bomb()
+				spawn_event(distance_from_walls * 2, SCENE_BOMB, $Bombs)
 			EVENT_TYPE.GRAVITY_FIELD:
-				spawn_gravity_field()
+				spawn_event(distance_from_walls * 2, SCENE_GRAVITY_FIELD, $GravityFields)
 			EVENT_TYPE.PULL_FIELD:
-				spawn_pull_field()
+				spawn_event(distance_from_walls * 2, SCENE_PULL_FIELD, $PullFields)
 
 	#Increase the counters
 	if total_events_since_cannon > difficulty_settings[chosen_difficulty]["events_before_cannon"]:
