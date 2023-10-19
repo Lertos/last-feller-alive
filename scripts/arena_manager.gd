@@ -98,7 +98,7 @@ func spawn_object():
 
 func spawn_cannon():
 	var new_cannon = SCENE_CANNON.instantiate()
-	var rand_index = rng.randi_range(0, available_coordinates_for_cannons.size())
+	var rand_index = rng.randi_range(0, available_coordinates_for_cannons.size() - 1)
 	var new_spot: Vector2 = available_coordinates_for_cannons[rand_index]
 	
 	$Cannons.add_child(new_cannon)
