@@ -132,15 +132,18 @@ func spawn_special_multi_beam():
 		spawn_event(distance_from_walls * 2, SCENE_BEAM, $Beams)
 		await get_tree().create_timer(0.2).timeout
 	
-	
+
+#Spawns bombs in a square pattern - direction is based on whether it's in the middle or not
 func spawn_special_bomb_string():
 	pass
 	
-	
+
+#Spawns gravity in the outer ring, or the inner ring - randomly
 func spawn_special_zero_gravity():
 	pass
 	
-	
+
+#Spawns pull fields under each cannon to try to pull players towards them
 func spawn_special_cannon_pull():
 	pass
 	
