@@ -126,8 +126,11 @@ func spawn_event(padding: int, event_scene: PackedScene, parent_node: Node):
 	new_event.position = Vector2(x, y)
 
 
+#Spawns multiple beams back to back with a slight time inbetween
 func spawn_special_multi_beam():
-	pass
+	for i in range (0,4):
+		spawn_event(distance_from_walls * 2, SCENE_BEAM, $Beams)
+		await get_tree().create_timer(0.2).timeout
 	
 	
 func spawn_special_bomb_string():
