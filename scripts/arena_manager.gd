@@ -49,6 +49,8 @@ func _ready():
 	
 	$SpawnerTimer.start()
 
+	spawn_event(distance_from_walls * 2, SCENE_BEAM, $Beams)
+
 
 func spawn_object():
 	#If the counter is at 0, spawn a cannon. This is so we can keep count and just reset easily
@@ -110,6 +112,20 @@ func spawn_cannon():
 	$SpawnerTimer.stop()
 	$SpawnerTimer.wait_time = max($SpawnerTimer.wait_time - difficulty_settings[chosen_difficulty]["time_decrease_per_cannon"], 1.0)
 	$SpawnerTimer.start()
+
+
+func spawn_event(padding: int, event_scene: PackedScene, parent_node: Node):
+	var left_top_corner = Vector2(padding, padding)
+	var bottom_right_corner = Vector2(Config.arena_width - padding, Config.arena_height - padding)
+	
+	var x = rng.randi_range(left_top_corner.x, bottom_right_corner.x)
+	var y = rng.randi_range(left_top_corner.y, bottom_right_corner.y)
+	
+	var new_event = event_scene.instantiate()
+
+	parent_node.add_child(new_event)
+	
+	new_event.position = Vector2(x, y)
 
 
 func spawn_beam():
