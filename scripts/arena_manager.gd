@@ -113,7 +113,19 @@ func spawn_cannon():
 
 
 func spawn_beam():
-	pass
+	#Simply want to spawn it in the inner square, inside the ring of cannons
+	var padding = distance_from_walls * 2
+	var left_top_corner = Vector2(padding, padding)
+	var bottom_right_corner = Vector2(Config.arena_width - padding, Config.arena_height - padding)
+	
+	var x = rng.randi_range(left_top_corner.x, bottom_right_corner.x)
+	var y = rng.randi_range(left_top_corner.y, bottom_right_corner.y)
+	
+	var new_beam = SCENE_BEAM.instantiate()
+
+	$Beams.add_child(new_beam)
+	
+	new_beam.position = Vector2(x, y)
 
 
 func spawn_bomb():
