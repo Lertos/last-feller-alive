@@ -48,6 +48,8 @@ func _ready():
 	setup_cannon_spots()
 	
 	$SpawnerTimer.start()
+	
+	spawn_special_bomb_string()
 
 
 func spawn_object():
@@ -143,9 +145,15 @@ func spawn_special_multi_beam():
 
 #Spawns bombs in a square pattern - direction is based on whether it's in the middle or not
 func spawn_special_bomb_string():
+	var x = Config.arena_width / 2
+	var y = Config.arena_height / 2
+	
+	var x_to_add = 64 * (1 if rng.randi() % 2 == 0 else -1)
+	var y_to_add = 64 * (1 if rng.randi() % 2 == 0 else -1)
+	
 	for i in range (0,4):
-		spawn_event_at_random(distance_from_walls * 2, SCENE_BOMB, $Bombs)
-		await get_tree().create_timer(0.4).timeout
+		spawn_event_at_pos(Vector2(x + (x_to_add * i), y + (y_to_add * i)), SCENE_BOMB, $Bombs)
+		await get_tree().create_timer(0.3).timeout
 	
 
 #Spawns gravity in the outer ring, or the inner ring - randomly
