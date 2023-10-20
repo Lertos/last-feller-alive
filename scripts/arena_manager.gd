@@ -81,13 +81,13 @@ func spawn_object():
 	else:
 		match rng.randi_range(0, EVENT_TYPE.size() - 1):
 			EVENT_TYPE.BEAM:
-				spawn_event(distance_from_walls * 2, SCENE_BEAM, $Beams)
+				spawn_event_at_random(distance_from_walls * 2, SCENE_BEAM, $Beams)
 			EVENT_TYPE.BOMB:
-				spawn_event(distance_from_walls * 2, SCENE_BOMB, $Bombs)
+				spawn_event_at_random(distance_from_walls * 2, SCENE_BOMB, $Bombs)
 			EVENT_TYPE.GRAVITY_FIELD:
-				spawn_event(distance_from_walls * 2, SCENE_GRAVITY_FIELD, $GravityFields)
+				spawn_event_at_random(distance_from_walls * 2, SCENE_GRAVITY_FIELD, $GravityFields)
 			EVENT_TYPE.PULL_FIELD:
-				spawn_event(distance_from_walls * 2, SCENE_PULL_FIELD, $PullFields)
+				spawn_event_at_random(distance_from_walls * 2, SCENE_PULL_FIELD, $PullFields)
 
 	#Increase the counters
 	if total_events_since_cannon > difficulty_settings[chosen_difficulty]["events_before_cannon"]:
@@ -112,7 +112,7 @@ func spawn_cannon():
 	$SpawnerTimer.start()
 
 
-func spawn_event(padding: int, event_scene: PackedScene, parent_node: Node):
+func spawn_event_at_random(padding: int, event_scene: PackedScene, parent_node: Node):
 	var left_top_corner = Vector2(padding, padding)
 	var bottom_right_corner = Vector2(Config.arena_width - padding, Config.arena_height - padding)
 	
@@ -124,18 +124,28 @@ func spawn_event(padding: int, event_scene: PackedScene, parent_node: Node):
 	parent_node.add_child(new_event)
 	
 	new_event.position = Vector2(x, y)
+	
+
+func spawn_event_at_pos(pos: Vector2, event_scene: PackedScene, parent_node: Node):
+	var new_event = event_scene.instantiate()
+
+	parent_node.add_child(new_event)
+	
+	new_event.position = pos
 
 
 #Spawns multiple beams back to back with a slight time inbetween
 func spawn_special_multi_beam():
 	for i in range (0,4):
-		spawn_event(distance_from_walls * 2, SCENE_BEAM, $Beams)
+		spawn_event_at_random(distance_from_walls * 2, SCENE_BEAM, $Beams)
 		await get_tree().create_timer(0.2).timeout
 	
 
 #Spawns bombs in a square pattern - direction is based on whether it's in the middle or not
 func spawn_special_bomb_string():
-	pass
+	for i in range (0,4):
+		spawn_event_at_random(distance_from_walls * 2, SCENE_BOMB, $Bombs)
+		await get_tree().create_timer(0.4).timeout
 	
 
 #Spawns gravity in the outer ring, or the inner ring - randomly
