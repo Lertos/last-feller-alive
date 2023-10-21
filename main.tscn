@@ -34,6 +34,8 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Bombs" type="Node2D" parent="."]
 
+[node name="Bullets" type="Node2D" parent="."]
+
 [node name="Cannons" type="Node2D" parent="." node_paths=PackedStringArray("player_list")]
 script = ExtResource("2_mstii")
 player_list = NodePath("../Players")
@@ -41,5 +43,3 @@ player_list = NodePath("../Players")
 [node name="Players" type="Node2D" parent="."]
 
 [node name="Beams" type="Node2D" parent="."]
-
-[node name="Bullets" type="Node2D" parent="."]
