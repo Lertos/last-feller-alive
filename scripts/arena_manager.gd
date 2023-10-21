@@ -48,8 +48,6 @@ func _ready():
 	setup_cannon_spots()
 	
 	$SpawnerTimer.start()
-	
-	spawn_special_bomb_string()
 
 
 func spawn_object():
@@ -158,7 +156,8 @@ func spawn_special_bomb_string():
 
 #Spawns gravity in the outer ring, or the inner ring - randomly
 func spawn_special_zero_gravity():
-	pass
+	for cannon in coordinates_for_cannons:
+		spawn_event_at_pos(cannon, SCENE_GRAVITY_FIELD, $GravityFields)
 	
 
 #Spawns pull fields under each cannon to try to pull players towards them
