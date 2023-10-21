@@ -48,7 +48,6 @@ func _ready():
 	setup_cannon_spots()
 	
 	$SpawnerTimer.start()
-	spawn_special_cannon_pull()
 
 
 func spawn_object():
@@ -157,8 +156,20 @@ func spawn_special_bomb_string():
 
 #Spawns gravity in the outer ring, or the inner ring - randomly
 func spawn_special_zero_gravity():
-	pass
+	var x = Config.arena_width / 2
+	var y = Config.arena_height / 2
+	var to_add = 140
 	
+	spawn_event_at_pos(Vector2(x, y - to_add), SCENE_GRAVITY_FIELD, $GravityFields)
+	spawn_event_at_pos(Vector2(x, y + to_add), SCENE_GRAVITY_FIELD, $GravityFields)
+	spawn_event_at_pos(Vector2(x + to_add, y - to_add), SCENE_GRAVITY_FIELD, $GravityFields)
+	spawn_event_at_pos(Vector2(x + to_add, y + to_add), SCENE_GRAVITY_FIELD, $GravityFields)
+	spawn_event_at_pos(Vector2(x + to_add, y), SCENE_GRAVITY_FIELD, $GravityFields)
+	spawn_event_at_pos(Vector2(x - to_add, y + to_add), SCENE_GRAVITY_FIELD, $GravityFields)
+	spawn_event_at_pos(Vector2(x - to_add, y), SCENE_GRAVITY_FIELD, $GravityFields)
+	spawn_event_at_pos(Vector2(x - to_add, y - to_add), SCENE_GRAVITY_FIELD, $GravityFields)
+	spawn_event_at_pos(Vector2(x, y), SCENE_GRAVITY_FIELD, $GravityFields)
+
 
 #Spawns pull fields under each cannon to try to pull players towards them
 func spawn_special_cannon_pull():
