@@ -13,6 +13,7 @@ const SCENE_CANNON = preload("res://scenes/cannon.tscn")
 const SCENE_GRAVITY_FIELD = preload("res://scenes/gravity_field.tscn")
 const SCENE_PULL_FIELD = preload("res://scenes/pull_field.tscn")
 
+var cannon_list: Array[Node] = []
 var coordinates_for_cannons: Array[Vector2] = []
 var available_coordinates_for_cannons: Array[Vector2] = []
 
@@ -21,7 +22,7 @@ var difficulty_settings = {
 	DIFFICULTY.EASY: {
 		"initial_spawn_time": 2.0,
 		"time_decrease_per_cannon": 0.5,
-		"events_before_cannon": 6,
+		"events_before_cannon": 2,
 		"special_events_per_cannon": 1
 	}
 	#TODO: Fill this out for other difficulties
@@ -107,6 +108,12 @@ func spawn_cannon():
 	
 	available_coordinates_for_cannons.remove_at(rand_index)
 	
+	#Upgrade all current cannons
+	for cannon in cannon_list:
+		cannon.upgrade_cannon()
+		
+	cannon_list.append(new_cannon)
+	
 	$SpawnerTimer.stop()
 	$SpawnerTimer.wait_time = max($SpawnerTimer.wait_time - difficulty_settings[chosen_difficulty]["time_decrease_per_cannon"], 1.0)
 	$SpawnerTimer.start()
@@ -119,11 +126,7 @@ func spawn_event_at_random(padding: int, event_scene: PackedScene, parent_node: 
 	var x = rng.randi_range(left_top_corner.x, bottom_right_corner.x)
 	var y = rng.randi_range(left_top_corner.y, bottom_right_corner.y)
 	
-	var new_event = event_scene.instantiate()
-
-	parent_node.add_child(new_event)
-	
-	new_event.position = Vector2(x, y)
+	spawn_event_at_pos(Vector2(x, y), event_scene, parent_node)
 	
 
 func spawn_event_at_pos(pos: Vector2, event_scene: PackedScene, parent_node: Node):
