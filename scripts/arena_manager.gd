@@ -91,7 +91,7 @@ func spawn_object():
 				spawn_event_at_random(distance_from_walls * 2, SCENE_PULL_FIELD, $PullFields)
 
 	#Increase the counters
-	if total_events_since_cannon > difficulty_settings[chosen_difficulty]["events_before_cannon"]:
+	if total_events_since_cannon >= difficulty_settings[chosen_difficulty]["events_before_cannon"]:
 		total_events_since_cannon = 0
 	else:
 		total_events_since_cannon += 1
