@@ -46,3 +46,5 @@ func on_active_beam():
 		if body.is_in_group("player"):
 			if not body.is_dashing and not body.is_dead:
 				body.add_health(-beam_damage)
+	
+	queue_free()
