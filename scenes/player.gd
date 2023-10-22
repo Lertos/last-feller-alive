@@ -12,10 +12,9 @@ var is_slowed: bool = false
 @export var pull_speed = 300
 @export var normal_speed = 500
 @export var dashing_speed = 900
-
-var speed
-var pull_point: Vector2
-var health: float = 100.0
+@export var pull_point: Vector2
+@export var speed: float
+@export var health: float = 100.0
 
 
 func _ready():
