@@ -32,13 +32,13 @@ func _ready():
 
 
 func get_input():
-	#If this player object is NOT our player, then simply return
-	if $MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
-		return
-		
 	if is_dashing or is_dead:
 		if not $AnimationPlayer.is_playing():
 			$AnimationPlayer.play("idle")
+		return
+		
+	#If this player object is NOT our player, then simply return
+	if $MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
 		return
 	
 	var input_direction = Input.get_vector("left", "right", "up", "down")
@@ -54,7 +54,7 @@ func get_input():
 	
 	velocity = input_direction * speed
 	
-	if input_direction == Vector2.ZERO:
+	if input_direction == Vector2.ZERO and not is_hurt:
 		$AnimationPlayer.play("idle")
 	else:
 		if input_direction.x > 0 and dir == DIRECTION.LEFT:
@@ -74,14 +74,14 @@ func add_health(hp: int):
 	if health <= 0:
 		is_dead = true
 		$AnimationPlayer.play("death")
-		return
 	else:
 		is_hurt = true
 		$AnimationPlayer.play("hurt")
-		return
 
 
 func reset_state():
+	$Sprite2D.modulate = Color.html("ffffff")
+	
 	speed = normal_speed
 	
 	if is_slowed:

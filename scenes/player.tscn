@@ -280,7 +280,7 @@ ProgressBar/styles/background = SubResource("StyleBoxFlat_4rdga")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_elqhp")
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
-collision_mask = 7
+collision_mask = 6
 script = ExtResource("1_qk3kd")
 metadata/_edit_group_ = true
 

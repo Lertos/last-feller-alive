@@ -10,3 +10,4 @@ res://scenes/beam.gd
 res://scenes/gravity_field.gd
 res://scenes/pull_field.gd
 res://scenes/gravity_field.tscn
+res://scenes/player.gd
