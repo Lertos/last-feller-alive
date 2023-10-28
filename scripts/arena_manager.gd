@@ -74,30 +74,25 @@ func queue_next_event():
 		if special_events_since_cannon >= difficulty_settings[chosen_difficulty]["special_events_per_cannon"]:
 			is_special_event = false
 		
-		#Keep track of the event position(s)
-		var event_positions
-		
 		#If special event
 		if is_special_event:
-			next_special_event_enum = rng.randi_range(0, SPECIAL_EVENT_TYPE.size() - 1)
-			
+			next_special_event_enum = rng.randi_range(1, SPECIAL_EVENT_TYPE.size() - 1)
+
 			match next_special_event_enum:
 				SPECIAL_EVENT_TYPE.MULTI_BEAM:
-					event_positions = await spawn_special_multi_beam()
+					queue_special_multi_beam()
 				SPECIAL_EVENT_TYPE.BOMB_STRING:
-					event_positions = await spawn_special_bomb_string()
+					queue_special_bomb_string()
 				SPECIAL_EVENT_TYPE.ZERO_GRAVITY:
-					event_positions = await spawn_special_zero_gravity()
+					queue_special_zero_gravity()
 				SPECIAL_EVENT_TYPE.CANNON_PULL:
-					event_positions = await spawn_special_cannon_pull()
-			
-			next_event_pos.append(event_positions)
-			
+					queue_special_cannon_pull()
+
 			special_events_since_cannon += 1
 		#If normal event
 		else:
-			next_normal_event_enum = rng.randi_range(0, EVENT_TYPE.size() - 1)
-			
+			next_normal_event_enum = rng.randi_range(1, EVENT_TYPE.size() - 1)
+
 			match next_normal_event_enum:
 				EVENT_TYPE.BEAM:
 					queue_event_at_random(distance_from_walls * 2)
@@ -111,6 +106,7 @@ func queue_next_event():
 		#Increase the counters
 		if total_events_since_cannon >= difficulty_settings[chosen_difficulty]["events_before_cannon"]:
 			total_events_since_cannon = 0
+			special_events_since_cannon = 0
 		else:
 			total_events_since_cannon += 1
 
@@ -118,7 +114,7 @@ func queue_next_event():
 func spawn_object():
 	#If special event
 	if next_special_event_enum != SPECIAL_EVENT_TYPE.NONE:
-		match rng.randi_range(0, SPECIAL_EVENT_TYPE.size() - 1):
+		match next_special_event_enum:
 			SPECIAL_EVENT_TYPE.MULTI_BEAM:
 				spawn_special_multi_beam()
 			SPECIAL_EVENT_TYPE.BOMB_STRING:
@@ -127,11 +123,9 @@ func spawn_object():
 				spawn_special_zero_gravity()
 			SPECIAL_EVENT_TYPE.CANNON_PULL:
 				spawn_special_cannon_pull()
-				
-		special_events_since_cannon += 1
 	#If normal event
 	elif next_normal_event_enum != EVENT_TYPE.NONE:
-		match rng.randi_range(0, EVENT_TYPE.size() - 1):
+		match next_normal_event_enum:
 			EVENT_TYPE.BEAM:
 				spawn_event_at_pos(next_event_pos, SCENE_BEAM, $Beams)
 			EVENT_TYPE.BOMB:
@@ -147,7 +141,7 @@ func spawn_object():
 	#Reset the variables so we know what to spawn next
 	next_normal_event_enum = EVENT_TYPE.NONE
 	next_special_event_enum = SPECIAL_EVENT_TYPE.NONE
-	next_event_pos = []
+	next_event_pos.clear()
 	
 	#Will only run on the host
 	queue_next_event()
@@ -164,15 +158,19 @@ func queue_cannon():
 
 
 func spawn_cannon():
+	#Upgrade all current cannons
+	for cannon in cannon_list:
+		cannon.upgrade_cannon()
+		
+	if available_coordinates_for_cannons.size() == 0 and next_event_pos.size() == 0:
+		return
+		
+	var cannon_pos = next_event_pos[0]
 	var new_cannon = SCENE_CANNON.instantiate()
 
 	$Cannons.add_child(new_cannon)
 	
-	new_cannon.position = next_event_pos[0]
-	
-	#Upgrade all current cannons
-	for cannon in cannon_list:
-		cannon.upgrade_cannon()
+	new_cannon.position = cannon_pos
 		
 	cannon_list.append(new_cannon)
 	
@@ -201,15 +199,22 @@ func spawn_event_at_pos(positions: Array[Vector2], event_scene: PackedScene, par
 
 
 #Spawns multiple beams back to back with a slight time inbetween
-func spawn_special_multi_beam():
+func queue_special_multi_beam():
 	for i in range (0,4):
-		#TODO: FIX
-		#spawn_event_at_random(distance_from_walls * 2, SCENE_BEAM, $Beams)
-		await get_tree().create_timer(0.2).timeout
+		queue_event_at_random(distance_from_walls * 2)
+
+
+#Spawns multiple beams back to back with a slight time inbetween
+func spawn_special_multi_beam():
+	var spawn_positions = next_event_pos.duplicate()
 	
+	for index in range(0, spawn_positions.size()):
+		spawn_event_at_pos([spawn_positions[index]], SCENE_BEAM, $Beams)
+		await get_tree().create_timer(0.2).timeout
+
 
 #Spawns bombs in a square pattern - direction is based on whether it's in the middle or not
-func spawn_special_bomb_string():
+func queue_special_bomb_string():
 	var x = Config.arena_width / 2
 	var y = Config.arena_height / 2
 	
@@ -217,38 +222,55 @@ func spawn_special_bomb_string():
 	var y_to_add = 64 * (1 if rng.randi() % 2 == 0 else -1)
 	
 	for i in range (0,4):
-		#TODO: FIX
-		#spawn_event_at_pos(Vector2(x + (x_to_add * i), y + (y_to_add * i)), SCENE_BOMB, $Bombs)
-		await get_tree().create_timer(0.3).timeout
+		next_event_pos.append(Vector2(x + (x_to_add * i), y + (y_to_add * i)))
+
+
+#Spawns bombs in a square pattern - direction is based on whether it's in the middle or not
+func spawn_special_bomb_string():
+	var spawn_positions = next_event_pos.duplicate()
 	
+	for index in range(0, spawn_positions.size()):
+		spawn_event_at_pos([spawn_positions[index]], SCENE_BOMB, $Bombs)
+		await get_tree().create_timer(0.2).timeout
+
 
 #Spawns gravity in the outer ring, or the inner ring - randomly
-func spawn_special_zero_gravity():
+func queue_special_zero_gravity():
 	var x = Config.arena_width / 2
 	var y = Config.arena_height / 2
 	var to_add = 140
 	
-	#TODO: FIX
-	"""
-	spawn_event_at_pos(Vector2(x, y - to_add), SCENE_GRAVITY_FIELD, $GravityFields)
-	spawn_event_at_pos(Vector2(x, y + to_add), SCENE_GRAVITY_FIELD, $GravityFields)
-	spawn_event_at_pos(Vector2(x + to_add, y - to_add), SCENE_GRAVITY_FIELD, $GravityFields)
-	spawn_event_at_pos(Vector2(x + to_add, y + to_add), SCENE_GRAVITY_FIELD, $GravityFields)
-	spawn_event_at_pos(Vector2(x + to_add, y), SCENE_GRAVITY_FIELD, $GravityFields)
-	spawn_event_at_pos(Vector2(x - to_add, y + to_add), SCENE_GRAVITY_FIELD, $GravityFields)
-	spawn_event_at_pos(Vector2(x - to_add, y), SCENE_GRAVITY_FIELD, $GravityFields)
-	spawn_event_at_pos(Vector2(x - to_add, y - to_add), SCENE_GRAVITY_FIELD, $GravityFields)
-	spawn_event_at_pos(Vector2(x, y), SCENE_GRAVITY_FIELD, $GravityFields)
-	"""
+	next_event_pos.append(Vector2(x, y - to_add))
+	next_event_pos.append(Vector2(x, y + to_add))
+	next_event_pos.append(Vector2(x + to_add, y - to_add))
+	next_event_pos.append(Vector2(x + to_add, y + to_add))
+	next_event_pos.append(Vector2(x + to_add, y))
+	next_event_pos.append(Vector2(x - to_add, y + to_add))
+	next_event_pos.append(Vector2(x - to_add, y))
+	next_event_pos.append(Vector2(x - to_add, y - to_add))
+	next_event_pos.append(Vector2(x, y))
+
+
+func spawn_special_zero_gravity():
+	var spawn_positions = next_event_pos.duplicate()
+	
+	for index in range(0, spawn_positions.size()):
+		spawn_event_at_pos([spawn_positions[index]], SCENE_GRAVITY_FIELD, $GravityFields)
+
+
+#Spawns pull fields under each cannon to try to pull players towards them
+func queue_special_cannon_pull():
+	for cannon_pos in coordinates_for_cannons:
+		next_event_pos.append(cannon_pos)
 
 
 #Spawns pull fields under each cannon to try to pull players towards them
 func spawn_special_cannon_pull():
-	for cannon_pos in coordinates_for_cannons:
-		#TODO: FIX
-		pass
-		#spawn_event_at_pos(cannon_pos, SCENE_PULL_FIELD, $PullFields)
+	var spawn_positions = next_event_pos.duplicate()
 	
+	for index in range(0, spawn_positions.size()):
+		spawn_event_at_pos([spawn_positions[index]], SCENE_PULL_FIELD, $PullFields)
+
 
 func setup_arena_walls():
 	create_wall($WallLeft, -Config.wall_width / 2, Config.arena_height / 2, Config.wall_width, Config.arena_height)
