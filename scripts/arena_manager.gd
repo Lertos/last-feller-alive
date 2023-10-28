@@ -53,6 +53,8 @@ func _ready():
 	setup_players()
 	setup_cannon_spots()
 	
+	queue_next_event()
+	
 	$SpawnerTimer.start()
 
 
@@ -61,7 +63,7 @@ func queue_next_event():
 	if multiplayer.get_unique_id() == 1:
 		#If the counter is at 0, spawn a cannon. This is so we can keep count and just reset easily
 		if total_events_since_cannon == 0:
-			spawn_cannon()
+			queue_cannon()
 			
 			total_events_since_cannon += 1
 			return
@@ -89,7 +91,7 @@ func queue_next_event():
 				SPECIAL_EVENT_TYPE.CANNON_PULL:
 					event_positions = await spawn_special_cannon_pull()
 			
-			next_event_pos = event_positions
+			next_event_pos.append(event_positions)
 			
 			special_events_since_cannon += 1
 		#If normal event
@@ -98,15 +100,13 @@ func queue_next_event():
 			
 			match next_normal_event_enum:
 				EVENT_TYPE.BEAM:
-					event_positions = await spawn_event_at_random(distance_from_walls * 2, SCENE_BEAM, $Beams)
+					queue_event_at_random(distance_from_walls * 2)
 				EVENT_TYPE.BOMB:
-					event_positions = await spawn_event_at_random(distance_from_walls * 2, SCENE_BOMB, $Bombs)
+					queue_event_at_random(distance_from_walls * 2)
 				EVENT_TYPE.GRAVITY_FIELD:
-					event_positions = await spawn_event_at_random(distance_from_walls * 2, SCENE_GRAVITY_FIELD, $GravityFields)
+					queue_event_at_random(distance_from_walls * 2)
 				EVENT_TYPE.PULL_FIELD:
-					event_positions = await spawn_event_at_random(distance_from_walls * 2, SCENE_PULL_FIELD, $PullFields)
-
-			next_event_pos = event_positions
+					queue_event_at_random(distance_from_walls * 2)
 
 		#Increase the counters
 		if total_events_since_cannon >= difficulty_settings[chosen_difficulty]["events_before_cannon"]:
@@ -133,16 +133,16 @@ func spawn_object():
 	elif next_normal_event_enum != EVENT_TYPE.NONE:
 		match rng.randi_range(0, EVENT_TYPE.size() - 1):
 			EVENT_TYPE.BEAM:
-				spawn_event_at_random(distance_from_walls * 2, SCENE_BEAM, $Beams)
+				spawn_event_at_pos(next_event_pos, SCENE_BEAM, $Beams)
 			EVENT_TYPE.BOMB:
-				spawn_event_at_random(distance_from_walls * 2, SCENE_BOMB, $Bombs)
+				spawn_event_at_pos(next_event_pos, SCENE_BOMB, $Bombs)
 			EVENT_TYPE.GRAVITY_FIELD:
-				spawn_event_at_random(distance_from_walls * 2, SCENE_GRAVITY_FIELD, $GravityFields)
+				spawn_event_at_pos(next_event_pos, SCENE_GRAVITY_FIELD, $GravityFields)
 			EVENT_TYPE.PULL_FIELD:
-				spawn_event_at_random(distance_from_walls * 2, SCENE_PULL_FIELD, $PullFields)
+				spawn_event_at_pos(next_event_pos, SCENE_PULL_FIELD, $PullFields)
 	#If a cannon is spawning
 	else:
-		pass
+		spawn_cannon()
 	
 	#Reset the variables so we know what to spawn next
 	next_normal_event_enum = EVENT_TYPE.NONE
@@ -153,19 +153,22 @@ func spawn_object():
 	queue_next_event()
 
 
-func spawn_cannon():
+func queue_cannon():
 	if available_coordinates_for_cannons.size() == 0:
 		return
 	
-	var new_cannon = SCENE_CANNON.instantiate()
 	var rand_index = rng.randi_range(0, available_coordinates_for_cannons.size() - 1)
-	var new_spot: Vector2 = available_coordinates_for_cannons[rand_index]
 	
+	next_event_pos.append(available_coordinates_for_cannons[rand_index])
+	available_coordinates_for_cannons.remove_at(rand_index)
+
+
+func spawn_cannon():
+	var new_cannon = SCENE_CANNON.instantiate()
+
 	$Cannons.add_child(new_cannon)
 	
-	new_cannon.position = new_spot
-	
-	available_coordinates_for_cannons.remove_at(rand_index)
+	new_cannon.position = next_event_pos[0]
 	
 	#Upgrade all current cannons
 	for cannon in cannon_list:
@@ -178,28 +181,30 @@ func spawn_cannon():
 	$SpawnerTimer.start()
 
 
-func spawn_event_at_random(padding: int, event_scene: PackedScene, parent_node: Node):
+func queue_event_at_random(padding: int):
 	var left_top_corner = Vector2(padding, padding)
 	var bottom_right_corner = Vector2(Config.arena_width - padding, Config.arena_height - padding)
 	
 	var x = rng.randi_range(left_top_corner.x, bottom_right_corner.x)
 	var y = rng.randi_range(left_top_corner.y, bottom_right_corner.y)
 	
-	spawn_event_at_pos(Vector2(x, y), event_scene, parent_node)
-	
+	next_event_pos.append(Vector2(x, y))
 
-func spawn_event_at_pos(pos: Vector2, event_scene: PackedScene, parent_node: Node):
-	var new_event = event_scene.instantiate()
 
-	parent_node.add_child(new_event)
-	
-	new_event.position = pos
+func spawn_event_at_pos(positions: Array[Vector2], event_scene: PackedScene, parent_node: Node):
+	for event in positions:
+		var new_event = event_scene.instantiate()
+
+		parent_node.add_child(new_event)
+		
+		new_event.position = event
 
 
 #Spawns multiple beams back to back with a slight time inbetween
 func spawn_special_multi_beam():
 	for i in range (0,4):
-		spawn_event_at_random(distance_from_walls * 2, SCENE_BEAM, $Beams)
+		#TODO: FIX
+		#spawn_event_at_random(distance_from_walls * 2, SCENE_BEAM, $Beams)
 		await get_tree().create_timer(0.2).timeout
 	
 
@@ -212,7 +217,8 @@ func spawn_special_bomb_string():
 	var y_to_add = 64 * (1 if rng.randi() % 2 == 0 else -1)
 	
 	for i in range (0,4):
-		spawn_event_at_pos(Vector2(x + (x_to_add * i), y + (y_to_add * i)), SCENE_BOMB, $Bombs)
+		#TODO: FIX
+		#spawn_event_at_pos(Vector2(x + (x_to_add * i), y + (y_to_add * i)), SCENE_BOMB, $Bombs)
 		await get_tree().create_timer(0.3).timeout
 	
 
@@ -222,6 +228,8 @@ func spawn_special_zero_gravity():
 	var y = Config.arena_height / 2
 	var to_add = 140
 	
+	#TODO: FIX
+	"""
 	spawn_event_at_pos(Vector2(x, y - to_add), SCENE_GRAVITY_FIELD, $GravityFields)
 	spawn_event_at_pos(Vector2(x, y + to_add), SCENE_GRAVITY_FIELD, $GravityFields)
 	spawn_event_at_pos(Vector2(x + to_add, y - to_add), SCENE_GRAVITY_FIELD, $GravityFields)
@@ -231,12 +239,15 @@ func spawn_special_zero_gravity():
 	spawn_event_at_pos(Vector2(x - to_add, y), SCENE_GRAVITY_FIELD, $GravityFields)
 	spawn_event_at_pos(Vector2(x - to_add, y - to_add), SCENE_GRAVITY_FIELD, $GravityFields)
 	spawn_event_at_pos(Vector2(x, y), SCENE_GRAVITY_FIELD, $GravityFields)
+	"""
 
 
 #Spawns pull fields under each cannon to try to pull players towards them
 func spawn_special_cannon_pull():
 	for cannon_pos in coordinates_for_cannons:
-		spawn_event_at_pos(cannon_pos, SCENE_PULL_FIELD, $PullFields)
+		#TODO: FIX
+		pass
+		#spawn_event_at_pos(cannon_pos, SCENE_PULL_FIELD, $PullFields)
 	
 
 func setup_arena_walls():
@@ -262,22 +273,14 @@ func setup_players():
 		$Players.add_child(current_player)
 		
 		match spot_index:
-			0:
-				current_player.position = center_pos + Vector2(-player_size.x, 0)
-			1:
-				current_player.position = center_pos + Vector2(-player_size.x, -player_size.y)
-			2:
-				current_player.position = center_pos + Vector2(0, -player_size.y)
-			3:
-				current_player.position = center_pos + Vector2(player_size.x, -player_size.y)
-			4:
-				current_player.position = center_pos + Vector2(player_size.x, 0)
-			5:
-				current_player.position = center_pos + Vector2(player_size.x, player_size.y)
-			6:
-				current_player.position = center_pos + Vector2(0, player_size.y)
-			7:
-				current_player.position = center_pos + Vector2(-player_size.x, player_size.y)
+			0: current_player.position = center_pos + Vector2(-player_size.x, 0)
+			1: current_player.position = center_pos + Vector2(-player_size.x, -player_size.y)
+			2: current_player.position = center_pos + Vector2(0, -player_size.y)
+			3: current_player.position = center_pos + Vector2(player_size.x, -player_size.y)
+			4: current_player.position = center_pos + Vector2(player_size.x, 0)
+			5: current_player.position = center_pos + Vector2(player_size.x, player_size.y)
+			6: current_player.position = center_pos + Vector2(0, player_size.y)
+			7: current_player.position = center_pos + Vector2(-player_size.x, player_size.y)
 		
 		spot_index += 1
 
