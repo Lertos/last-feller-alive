@@ -1,8 +1,8 @@
 extends Node2D
 
 enum DIFFICULTY {EASY, MEDIUM, HARD}
-enum EVENT_TYPE {NONE, BEAM, BOMB, GRAVITY_FIELD, PULL_FIELD}
-enum SPECIAL_EVENT_TYPE {NONE, MULTI_BEAM, BOMB_STRING, ZERO_GRAVITY, CANNON_PULL}
+enum EVENT_TYPE {NONE, BEAM, BOMB, GRAVITY_FIELD} #PULL_FIELD
+enum SPECIAL_EVENT_TYPE {NONE, MULTI_BEAM, BOMB_STRING, ZERO_GRAVITY} #CANNON_PULL
 
 #Objects to spawn
 const SCENE_PLAYER = preload("res://scenes/player.tscn")
@@ -54,8 +54,6 @@ func _ready():
 	setup_players()
 	setup_cannon_spots()
 	
-	queue_next_event()
-	
 	$SpawnerTimer.start()
 
 
@@ -88,8 +86,8 @@ func queue_next_event():
 					queue_special_bomb_string()
 				SPECIAL_EVENT_TYPE.ZERO_GRAVITY:
 					queue_special_zero_gravity()
-				SPECIAL_EVENT_TYPE.CANNON_PULL:
-					queue_special_cannon_pull()
+				#SPECIAL_EVENT_TYPE.CANNON_PULL:
+				#	queue_special_cannon_pull()
 
 			special_events_since_cannon += 1
 		#If normal event
@@ -104,8 +102,8 @@ func queue_next_event():
 					queue_event_at_random(distance_from_walls * 2)
 				EVENT_TYPE.GRAVITY_FIELD:
 					queue_event_at_random(distance_from_walls * 2)
-				EVENT_TYPE.PULL_FIELD:
-					queue_event_at_random(distance_from_walls * 2)
+				#EVENT_TYPE.PULL_FIELD:
+				#	queue_event_at_random(distance_from_walls * 2)
 
 		#Increase the counters
 		if total_events_since_cannon >= difficulty_settings[chosen_difficulty]["events_before_cannon"]:
@@ -135,8 +133,8 @@ func spawn_object():
 				spawn_special_bomb_string()
 			SPECIAL_EVENT_TYPE.ZERO_GRAVITY:
 				spawn_special_zero_gravity()
-			SPECIAL_EVENT_TYPE.CANNON_PULL:
-				spawn_special_cannon_pull()
+			#SPECIAL_EVENT_TYPE.CANNON_PULL:
+			#	spawn_special_cannon_pull()
 	#If normal event
 	elif next_normal_event_enum != EVENT_TYPE.NONE:
 		match next_normal_event_enum:
@@ -146,8 +144,8 @@ func spawn_object():
 				spawn_event_at_pos(next_event_pos, SCENE_BOMB, $Bombs)
 			EVENT_TYPE.GRAVITY_FIELD:
 				spawn_event_at_pos(next_event_pos, SCENE_GRAVITY_FIELD, $GravityFields)
-			EVENT_TYPE.PULL_FIELD:
-				spawn_event_at_pos(next_event_pos, SCENE_PULL_FIELD, $PullFields)
+			#EVENT_TYPE.PULL_FIELD:
+			#	spawn_event_at_pos(next_event_pos, SCENE_PULL_FIELD, $PullFields)
 	#If a cannon is spawning
 	else:
 		spawn_cannon()
@@ -159,6 +157,7 @@ func spawn_object():
 	next_beam_angles.clear()
 	
 	#Will only run on the host
+	await get_tree().create_timer(0.3).timeout
 	queue_next_event()
 
 
