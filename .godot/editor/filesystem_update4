@@ -5,3 +5,4 @@ res://scripts/multiplayer_controller.tscn
 res://scenes/beam.tscn
 res://scenes/cannon.tscn
 res://scenes/pull_field.tscn
+res://scenes/beam.gd

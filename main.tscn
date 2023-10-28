@@ -1,27 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://gafs07waarae"]
+[gd_scene load_steps=7 format=3 uid="uid://gafs07waarae"]
 
 [ext_resource type="PackedScene" uid="uid://emvstyxbefry" path="res://scenes/wall.tscn" id="1_s44hn"]
 [ext_resource type="Script" path="res://scripts/arena_manager.gd" id="1_uqrx8"]
 [ext_resource type="Texture2D" uid="uid://1ymduvleth3y" path="res://assets/tiles_dungeon_v1.1.png" id="2_03o01"]
 [ext_resource type="Script" path="res://scenes/cannons.gd" id="2_mstii"]
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_v8id7"]
-properties/0/path = NodePath("SpawnerTimer:wait_time")
-properties/0/spawn = true
-properties/0/sync = true
-properties/0/watch = false
-properties/1/path = NodePath(".:next_event_pos")
-properties/1/spawn = true
-properties/1/sync = true
-properties/1/watch = false
-properties/2/path = NodePath(".:next_normal_event_enum")
-properties/2/spawn = true
-properties/2/sync = true
-properties/2/watch = false
-properties/3/path = NodePath(".:next_special_event_enum")
-properties/3/spawn = true
-properties/3/sync = true
-properties/3/watch = false
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_muvsu"]
 texture = ExtResource("2_03o01")
@@ -386,10 +368,6 @@ sources/0 = SubResource("TileSetAtlasSource_muvsu")
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_uqrx8")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_interval = 0.1
-replication_config = SubResource("SceneReplicationConfig_v8id7")
 
 [node name="SpawnerTimer" type="Timer" parent="."]
 

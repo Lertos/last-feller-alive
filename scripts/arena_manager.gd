@@ -20,9 +20,9 @@ var available_coordinates_for_cannons: Array[Vector2] = []
 #Used to dynamically grab the correct settings for the difficulty
 var difficulty_settings = {
 	DIFFICULTY.EASY: {
-		"initial_spawn_time": 2.0,
+		"initial_spawn_time": 4.0,
 		"time_decrease_per_cannon": 0.5,
-		"events_before_cannon": 2,
+		"events_before_cannon": 4,
 		"special_events_per_cannon": 1
 	}
 	#TODO: Fill this out for other difficulties
@@ -39,9 +39,10 @@ var special_events_since_cannon: int = 0
 var rng = RandomNumberGenerator.new()
 
 #Keep track of the next event
-@export var next_normal_event_enum: EVENT_TYPE = EVENT_TYPE.NONE
-@export var next_special_event_enum: SPECIAL_EVENT_TYPE = SPECIAL_EVENT_TYPE.NONE
-@export var next_event_pos: Array[Vector2] = []
+var next_normal_event_enum: EVENT_TYPE = EVENT_TYPE.NONE
+var next_special_event_enum: SPECIAL_EVENT_TYPE = SPECIAL_EVENT_TYPE.NONE
+var next_event_pos = []
+var next_beam_angles = []
 
 
 func _ready():
@@ -64,6 +65,8 @@ func queue_next_event():
 		#If the counter is at 0, spawn a cannon. This is so we can keep count and just reset easily
 		if total_events_since_cannon == 0:
 			queue_cannon()
+			
+			sync_variables.rpc(next_normal_event_enum, next_special_event_enum, next_event_pos, next_beam_angles)
 			
 			total_events_since_cannon += 1
 			return
@@ -95,6 +98,7 @@ func queue_next_event():
 
 			match next_normal_event_enum:
 				EVENT_TYPE.BEAM:
+					next_beam_angles.append(rng.randf_range(0.0, 359.9))
 					queue_event_at_random(distance_from_walls * 2)
 				EVENT_TYPE.BOMB:
 					queue_event_at_random(distance_from_walls * 2)
@@ -109,6 +113,16 @@ func queue_next_event():
 			special_events_since_cannon = 0
 		else:
 			total_events_since_cannon += 1
+			
+		sync_variables.rpc(next_normal_event_enum, next_special_event_enum, next_event_pos, next_beam_angles)
+
+
+@rpc("call_remote")
+func sync_variables(normal_event_enum: EVENT_TYPE, special_event_enum: SPECIAL_EVENT_TYPE, event_pos, beam_angles):
+	next_normal_event_enum = normal_event_enum
+	next_special_event_enum = special_event_enum
+	next_event_pos = event_pos
+	next_beam_angles = beam_angles
 
 
 func spawn_object():
@@ -127,7 +141,7 @@ func spawn_object():
 	elif next_normal_event_enum != EVENT_TYPE.NONE:
 		match next_normal_event_enum:
 			EVENT_TYPE.BEAM:
-				spawn_event_at_pos(next_event_pos, SCENE_BEAM, $Beams)
+				spawn_event_at_pos(next_event_pos, SCENE_BEAM, $Beams, [next_beam_angles[0]])
 			EVENT_TYPE.BOMB:
 				spawn_event_at_pos(next_event_pos, SCENE_BOMB, $Bombs)
 			EVENT_TYPE.GRAVITY_FIELD:
@@ -142,6 +156,7 @@ func spawn_object():
 	next_normal_event_enum = EVENT_TYPE.NONE
 	next_special_event_enum = SPECIAL_EVENT_TYPE.NONE
 	next_event_pos.clear()
+	next_beam_angles.clear()
 	
 	#Will only run on the host
 	queue_next_event()
@@ -162,9 +177,9 @@ func spawn_cannon():
 	for cannon in cannon_list:
 		cannon.upgrade_cannon()
 		
-	if available_coordinates_for_cannons.size() == 0 and next_event_pos.size() == 0:
+	if available_coordinates_for_cannons.size() == 0 or next_event_pos.size() == 0:
 		return
-		
+	
 	var cannon_pos = next_event_pos[0]
 	var new_cannon = SCENE_CANNON.instantiate()
 
@@ -189,27 +204,32 @@ func queue_event_at_random(padding: int):
 	next_event_pos.append(Vector2(x, y))
 
 
-func spawn_event_at_pos(positions: Array[Vector2], event_scene: PackedScene, parent_node: Node):
+func spawn_event_at_pos(positions: Array, event_scene: PackedScene, parent_node: Node, spawn_angle = []):
 	for event in positions:
 		var new_event = event_scene.instantiate()
 
 		parent_node.add_child(new_event)
 		
 		new_event.position = event
+		
+		if spawn_angle != []:
+			new_event.rotation = spawn_angle[0]
 
 
 #Spawns multiple beams back to back with a slight time inbetween
 func queue_special_multi_beam():
 	for i in range (0,4):
+		next_beam_angles.append(rng.randf_range(0.0, 359.9))
 		queue_event_at_random(distance_from_walls * 2)
 
 
 #Spawns multiple beams back to back with a slight time inbetween
 func spawn_special_multi_beam():
 	var spawn_positions = next_event_pos.duplicate()
+	var spawn_angles = next_beam_angles.duplicate()
 	
 	for index in range(0, spawn_positions.size()):
-		spawn_event_at_pos([spawn_positions[index]], SCENE_BEAM, $Beams)
+		spawn_event_at_pos([spawn_positions[index]], SCENE_BEAM, $Beams, [spawn_angles[index]])
 		await get_tree().create_timer(0.2).timeout
 
 
