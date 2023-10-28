@@ -1,8 +1,8 @@
 extends Node2D
 
 enum DIFFICULTY {EASY, MEDIUM, HARD}
-enum EVENT_TYPE {BEAM, BOMB, GRAVITY_FIELD, PULL_FIELD}
-enum SPECIAL_EVENT_TYPE {MULTI_BEAM, BOMB_STRING, ZERO_GRAVITY, CANNON_PULL}
+enum EVENT_TYPE {NONE, BEAM, BOMB, GRAVITY_FIELD, PULL_FIELD}
+enum SPECIAL_EVENT_TYPE {NONE, MULTI_BEAM, BOMB_STRING, ZERO_GRAVITY, CANNON_PULL}
 
 #Objects to spawn
 const SCENE_PLAYER = preload("res://scenes/player.tscn")
@@ -39,9 +39,9 @@ var special_events_since_cannon: int = 0
 var rng = RandomNumberGenerator.new()
 
 #Keep track of the next event
-@export var next_normal_event_enum: EVENT_TYPE
-@export var next_special_event_enum: SPECIAL_EVENT_TYPE
-@export var next_event_pos: Vector2
+@export var next_normal_event_enum: EVENT_TYPE = EVENT_TYPE.NONE
+@export var next_special_event_enum: SPECIAL_EVENT_TYPE = SPECIAL_EVENT_TYPE.NONE
+@export var next_event_pos: Array[Vector2] = []
 
 
 func _ready():
@@ -56,22 +56,68 @@ func _ready():
 	$SpawnerTimer.start()
 
 
-func spawn_object():
-	#If the counter is at 0, spawn a cannon. This is so we can keep count and just reset easily
-	if total_events_since_cannon == 0:
-		spawn_cannon()
+func queue_next_event():
+	#Only run if the server host. This "queues" the event, and syncs the variables so everyone spawns it correctly
+	if multiplayer.get_unique_id() == 1:
+		#If the counter is at 0, spawn a cannon. This is so we can keep count and just reset easily
+		if total_events_since_cannon == 0:
+			spawn_cannon()
+			
+			total_events_since_cannon += 1
+			return
 		
-		total_events_since_cannon += 1
-		return
-	
-	#Figure out if it's a special event or normal event, then spawn it
-	var is_special_event: bool = (rng.randi() % 2 == 0)
-	
-	if special_events_since_cannon >= difficulty_settings[chosen_difficulty]["special_events_per_cannon"]:
-		is_special_event = false
-	
+		#Figure out if it's a special event or normal event, then spawn it
+		var is_special_event: bool = (rng.randi() % 2 == 0)
+		
+		if special_events_since_cannon >= difficulty_settings[chosen_difficulty]["special_events_per_cannon"]:
+			is_special_event = false
+		
+		#Keep track of the event position(s)
+		var event_positions
+		
+		#If special event
+		if is_special_event:
+			next_special_event_enum = rng.randi_range(0, SPECIAL_EVENT_TYPE.size() - 1)
+			
+			match next_special_event_enum:
+				SPECIAL_EVENT_TYPE.MULTI_BEAM:
+					event_positions = await spawn_special_multi_beam()
+				SPECIAL_EVENT_TYPE.BOMB_STRING:
+					event_positions = await spawn_special_bomb_string()
+				SPECIAL_EVENT_TYPE.ZERO_GRAVITY:
+					event_positions = await spawn_special_zero_gravity()
+				SPECIAL_EVENT_TYPE.CANNON_PULL:
+					event_positions = await spawn_special_cannon_pull()
+			
+			next_event_pos = event_positions
+			
+			special_events_since_cannon += 1
+		#If normal event
+		else:
+			next_normal_event_enum = rng.randi_range(0, EVENT_TYPE.size() - 1)
+			
+			match next_normal_event_enum:
+				EVENT_TYPE.BEAM:
+					event_positions = await spawn_event_at_random(distance_from_walls * 2, SCENE_BEAM, $Beams)
+				EVENT_TYPE.BOMB:
+					event_positions = await spawn_event_at_random(distance_from_walls * 2, SCENE_BOMB, $Bombs)
+				EVENT_TYPE.GRAVITY_FIELD:
+					event_positions = await spawn_event_at_random(distance_from_walls * 2, SCENE_GRAVITY_FIELD, $GravityFields)
+				EVENT_TYPE.PULL_FIELD:
+					event_positions = await spawn_event_at_random(distance_from_walls * 2, SCENE_PULL_FIELD, $PullFields)
+
+			next_event_pos = event_positions
+
+		#Increase the counters
+		if total_events_since_cannon >= difficulty_settings[chosen_difficulty]["events_before_cannon"]:
+			total_events_since_cannon = 0
+		else:
+			total_events_since_cannon += 1
+
+
+func spawn_object():
 	#If special event
-	if is_special_event:
+	if next_special_event_enum != SPECIAL_EVENT_TYPE.NONE:
 		match rng.randi_range(0, SPECIAL_EVENT_TYPE.size() - 1):
 			SPECIAL_EVENT_TYPE.MULTI_BEAM:
 				spawn_special_multi_beam()
@@ -84,7 +130,7 @@ func spawn_object():
 				
 		special_events_since_cannon += 1
 	#If normal event
-	else:
+	elif next_normal_event_enum != EVENT_TYPE.NONE:
 		match rng.randi_range(0, EVENT_TYPE.size() - 1):
 			EVENT_TYPE.BEAM:
 				spawn_event_at_random(distance_from_walls * 2, SCENE_BEAM, $Beams)
@@ -94,12 +140,17 @@ func spawn_object():
 				spawn_event_at_random(distance_from_walls * 2, SCENE_GRAVITY_FIELD, $GravityFields)
 			EVENT_TYPE.PULL_FIELD:
 				spawn_event_at_random(distance_from_walls * 2, SCENE_PULL_FIELD, $PullFields)
-
-	#Increase the counters
-	if total_events_since_cannon >= difficulty_settings[chosen_difficulty]["events_before_cannon"]:
-		total_events_since_cannon = 0
+	#If a cannon is spawning
 	else:
-		total_events_since_cannon += 1
+		pass
+	
+	#Reset the variables so we know what to spawn next
+	next_normal_event_enum = EVENT_TYPE.NONE
+	next_special_event_enum = SPECIAL_EVENT_TYPE.NONE
+	next_event_pos = []
+	
+	#Will only run on the host
+	queue_next_event()
 
 
 func spawn_cannon():

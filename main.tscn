@@ -388,6 +388,7 @@ sources/0 = SubResource("TileSetAtlasSource_muvsu")
 script = ExtResource("1_uqrx8")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_interval = 0.1
 replication_config = SubResource("SceneReplicationConfig_v8id7")
 
 [node name="SpawnerTimer" type="Timer" parent="."]
