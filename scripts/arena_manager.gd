@@ -38,6 +38,11 @@ var special_events_since_cannon: int = 0
 
 var rng = RandomNumberGenerator.new()
 
+#Keep track of the next event
+@export var next_normal_event_enum: EVENT_TYPE
+@export var next_special_event_enum: SPECIAL_EVENT_TYPE
+@export var next_event_pos: Vector2
+
 
 func _ready():
 	#Set the initial time for spawning to start

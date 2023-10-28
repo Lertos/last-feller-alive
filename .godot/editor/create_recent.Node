@@ -1,3 +1,4 @@
+MultiplayerSynchronizer
 TileMap
 Timer
 CollisionShape2D
@@ -13,7 +14,6 @@ HBoxContainer
 VBoxContainer
 ColorRect
 AcceptDialog
-MultiplayerSynchronizer
 LineEdit
 StaticBody2D
 CharacterBody2D
