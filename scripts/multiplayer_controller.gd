@@ -43,8 +43,12 @@ func peer_disconnected(id):
 #Will send players back to the title screen and allow them to reconnect or host a new server
 func server_disconnected():
 	show()
-	get_tree().root.get_node("Arena").queue_free()
 	
+	if get_tree().root.has_node("Arena"):
+		get_tree().root.get_node("Arena").queue_free()
+	elif get_tree().root.has_node("Lobby"):
+		get_tree().root.get_node("Lobby").queue_free()
+
 	multiplayer.multiplayer_peer = null
 	GameManager.players.clear()
 	
