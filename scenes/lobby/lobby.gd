@@ -31,6 +31,10 @@ func setup_player_spots():
 
 @rpc("any_peer", "call_local")
 func set_players_to_spots():
+	#Hide all of the player models first, to make sure disconnected players get removed
+	for i in $VB/Others/Players.get_children():
+		i.visible = false
+
 	var filled_spots = 0
 
 	for i in GameManager.players:

@@ -60,8 +60,12 @@ func player_left_Lobby():
 		multiplayer.multiplayer_peer = null
 		GameManager.players.clear()
 	else:
+		#Remove peer from the player list
 		if GameManager.players.has(player_id):
 			GameManager.players.erase(player_id)
+		
+		#Remove the player model from the lobby player list
+		get_tree().root.get_node("Lobby").set_players_to_spots.rpc()
 
 
 #Gets called only from client-side
