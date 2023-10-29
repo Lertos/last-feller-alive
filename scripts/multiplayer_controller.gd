@@ -40,16 +40,18 @@ func peer_disconnected(id):
 	print("Peer disconnected: " + str(id))
 
 
+#Will send players back to the title screen and allow them to reconnect or host a new server
 func server_disconnected():
-	self.show()
+	show()
 	get_tree().root.get_node("Arena").queue_free()
+	
 	multiplayer.multiplayer_peer = null
+	GameManager.players.clear()
 	
 	show_help_msg("Server has been disconnected!", "Guess I'll Go")
-	
-	GameManager.players.clear()
 
 
+#Handles a "disconnect" from the lobby so other players can remove them from their lobby
 @rpc("any_peer", "call_local")
 func player_left_Lobby():
 	var player_id = multiplayer.get_remote_sender_id()
