@@ -79,12 +79,12 @@ func start_game(difficulty: Enum.DIFFICULTY):
 
 func _on_start_button_pressed():
 	var difficulty = Enum.DIFFICULTY.EASY
-	var chosen = $VB/Difficulty/VB/OptionButton.get_selectable_item().text
+	var chosen = $VB/Difficulty/VB/OptionButton.get_item_text($VB/Difficulty/VB/OptionButton.get_selected_id())
 	
 	match chosen:
-		"Easy": difficulty = Enum.DIFFICULTY.EASY
 		"Medium": difficulty = Enum.DIFFICULTY.MEDIUM
 		"Hard": difficulty = Enum.DIFFICULTY.HARD
+		_: difficulty = Enum.DIFFICULTY.EASY
 		
 	start_game.rpc(difficulty)
 
