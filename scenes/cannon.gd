@@ -41,7 +41,7 @@ func find_closest_player():
 			closest_player = player
 		
 	targeted_player = closest_player
-	
+
 
 func _on_timer_timeout():
 	if targeted_player == null:
