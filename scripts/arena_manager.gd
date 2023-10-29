@@ -1,6 +1,5 @@
 extends Node2D
 
-enum DIFFICULTY {EASY, MEDIUM, HARD}
 enum EVENT_TYPE {NONE, BEAM, BOMB, GRAVITY_FIELD} #PULL_FIELD
 enum SPECIAL_EVENT_TYPE {NONE, MULTI_BEAM, BOMB_STRING, ZERO_GRAVITY} #CANNON_PULL
 
@@ -19,7 +18,7 @@ var available_coordinates_for_cannons: Array[Vector2] = []
 
 #Used to dynamically grab the correct settings for the difficulty
 var difficulty_settings = {
-	DIFFICULTY.EASY: {
+	Enum.DIFFICULTY.EASY: {
 		"initial_spawn_time": 3.0,
 		"time_decrease_per_cannon": 0.5,
 		"events_before_cannon": 4,
@@ -29,7 +28,6 @@ var difficulty_settings = {
 }
 
 #Arena configuration variables
-var chosen_difficulty: DIFFICULTY = DIFFICULTY.EASY
 var distance_from_walls = Config.wall_width
 
 #Variables to keep track of game state
@@ -47,7 +45,7 @@ var next_beam_angles = []
 
 func _ready():
 	#Set the initial time for spawning to start
-	$SpawnerTimer.wait_time = difficulty_settings[chosen_difficulty]["initial_spawn_time"]
+	$SpawnerTimer.wait_time = difficulty_settings[Config.chosen_difficulty]["initial_spawn_time"]
 	$SpawnerTimer.timeout.connect(spawn_object)
 	
 	setup_arena_walls()
@@ -72,7 +70,7 @@ func queue_next_event():
 		#Figure out if it's a special event or normal event, then spawn it
 		var is_special_event: bool = (rng.randi() % 2 == 0)
 		
-		if special_events_since_cannon >= difficulty_settings[chosen_difficulty]["special_events_per_cannon"]:
+		if special_events_since_cannon >= difficulty_settings[Config.chosen_difficulty]["special_events_per_cannon"]:
 			is_special_event = false
 		
 		#If special event
@@ -106,7 +104,7 @@ func queue_next_event():
 				#	queue_event_at_random(distance_from_walls * 2)
 
 		#Increase the counters
-		if total_events_since_cannon >= difficulty_settings[chosen_difficulty]["events_before_cannon"]:
+		if total_events_since_cannon >= difficulty_settings[Config.chosen_difficulty]["events_before_cannon"]:
 			total_events_since_cannon = 0
 			special_events_since_cannon = 0
 		else:
@@ -189,7 +187,7 @@ func spawn_cannon():
 	cannon_list.append(new_cannon)
 	
 	$SpawnerTimer.stop()
-	$SpawnerTimer.wait_time = max($SpawnerTimer.wait_time - difficulty_settings[chosen_difficulty]["time_decrease_per_cannon"], 1.0)
+	$SpawnerTimer.wait_time = max($SpawnerTimer.wait_time - difficulty_settings[Config.chosen_difficulty]["time_decrease_per_cannon"], 1.0)
 	$SpawnerTimer.start()
 
 

@@ -7,6 +7,7 @@ const SPACE_BETWEEN = 16
 
 func _ready():
 	$VB/Buttons/StartButton.visible = multiplayer.is_server()
+	$VB/Difficulty.visible = multiplayer.is_server()
 	
 	setup_player_spots()
 	set_players_to_spots.rpc()
@@ -66,7 +67,10 @@ func change_players_skin(id, skin_index):
 
 
 @rpc("any_peer", "call_local")
-func start_game():
+func start_game(difficulty: Enum.DIFFICULTY):
+	#Set the difficult chosen before you load the arena
+	Config.chosen_difficulty = difficulty
+	
 	var scene = load("res://main.tscn").instantiate()
 
 	get_tree().root.add_child(scene)
@@ -74,7 +78,15 @@ func start_game():
 
 
 func _on_start_button_pressed():
-	start_game.rpc()
+	var difficulty = Enum.DIFFICULTY.EASY
+	var chosen = $VB/Difficulty/VB/OptionButton.get_selectable_item().text
+	
+	match chosen:
+		"Easy": difficulty = Enum.DIFFICULTY.EASY
+		"Medium": difficulty = Enum.DIFFICULTY.MEDIUM
+		"Hard": difficulty = Enum.DIFFICULTY.HARD
+		
+	start_game.rpc(difficulty)
 
 
 func _on_leave_button_pressed():

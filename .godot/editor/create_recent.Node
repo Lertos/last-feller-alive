@@ -1,5 +1,7 @@
-HBoxContainer
+VBoxContainer
+OptionButton
 Button
+HBoxContainer
 MultiplayerSynchronizer
 Timer
 TileMap
@@ -11,7 +13,6 @@ AnimationPlayer
 ProgressBar
 TextureRect
 Label
-VBoxContainer
 ColorRect
 AcceptDialog
 LineEdit

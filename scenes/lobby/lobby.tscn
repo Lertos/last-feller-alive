@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b22m0k38ym652"]
+[gd_scene load_steps=19 format=3 uid="uid://b22m0k38ym652"]
 
 [ext_resource type="Script" path="res://scenes/lobby/lobby.gd" id="1_4a36r"]
 [ext_resource type="PackedScene" uid="uid://cwcdyhatvgvvu" path="res://scenes/lobby/lobby_player.tscn" id="2_nlr6n"]
@@ -117,7 +117,7 @@ subpixel_positioning = 0
 
 [sub_resource type="Theme" id="Theme_mjwgn"]
 default_font = SubResource("SystemFont_n85o1")
-default_font_size = 40
+default_font_size = 26
 AcceptDialog/constants/buttons_separation = 10
 AcceptDialog/styles/panel = SubResource("StyleBoxFlat_p4tc8")
 Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
@@ -165,6 +165,10 @@ font_color = Color(0, 0.831373, 0.286275, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_4bsjc"]
 font_size = 50
 font_color = Color(0, 0.423529, 0.129412, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ucnmm"]
+font_size = 22
+font_color = Color(0, 0.831373, 0.286275, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_nn031"]
 font_size = 10
@@ -235,23 +239,60 @@ layout_mode = 2
 theme_override_constants/separation = 122
 alignment = 1
 
+[node name="Difficulty" type="HBoxContainer" parent="VB"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="VB" type="VBoxContainer" parent="VB/Difficulty"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VB/Difficulty/VB"]
+layout_mode = 2
+text = "Difficulty"
+label_settings = SubResource("LabelSettings_ucnmm")
+horizontal_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="VB/Difficulty/VB"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+alignment = 1
+icon_alignment = 1
+item_count = 3
+selected = 0
+popup/item_0/text = "Easy"
+popup/item_0/id = 0
+popup/item_1/text = "Medium"
+popup/item_1/id = 1
+popup/item_2/text = "Hard"
+popup/item_2/id = 2
+
+[node name="Spacer3" type="HBoxContainer" parent="VB"]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
 [node name="Buttons" type="HBoxContainer" parent="VB"]
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
 [node name="StartButton" type="Button" parent="VB/Buttons"]
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_font_sizes/font_size = 28
 text = "Start"
 
 [node name="LeaveButton" type="Button" parent="VB/Buttons"]
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_font_sizes/font_size = 28
 text = "Leave"
 
 [node name="Spacer2" type="Label" parent="VB"]

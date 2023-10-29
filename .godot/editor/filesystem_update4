@@ -10,3 +10,5 @@ res://scripts/arena_manager.gd
 res://scenes/lobby/lobby.tscn
 res://scenes/lobby/lobby.gd
 res://scripts/multiplayer_controller.gd
+res://scripts/global/enums.gd
+res://scripts/global/config.gd
