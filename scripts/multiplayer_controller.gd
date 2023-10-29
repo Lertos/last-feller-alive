@@ -40,6 +40,18 @@ func peer_disconnected(id):
 	print("Peer disconnected: " + str(id))
 
 
+@rpc("any_peer", "call_local")
+func player_left_Lobby():
+	var player_id = multiplayer.get_remote_sender_id()
+	
+	if player_id == multiplayer.get_unique_id():
+		multiplayer.multiplayer_peer = null
+		GameManager.players.clear()
+	else:
+		if GameManager.players.has(player_id):
+			GameManager.players.erase(player_id)
+
+
 #Gets called only from client-side
 func connected_to_server():
 	send_player_info.rpc_id(1, $VB/PlayerName.text, multiplayer.get_unique_id(), 0)

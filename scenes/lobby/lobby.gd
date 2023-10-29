@@ -6,7 +6,7 @@ const SPACE_BETWEEN = 16
 
 
 func _ready():
-	$VB/StartButton.visible = multiplayer.is_server()
+	$VB/Buttons/StartButton.visible = multiplayer.is_server()
 	
 	setup_player_spots()
 	set_players_to_spots.rpc()
@@ -71,3 +71,13 @@ func start_game():
 
 func _on_start_button_pressed():
 	start_game.rpc()
+
+
+func _on_leave_button_pressed():
+	var multiplayer_manager = get_tree().root.get_node("MultiplayerManager")
+	
+	multiplayer_manager.show()
+	multiplayer_manager.player_left_Lobby.rpc()
+
+	queue_free()
+	

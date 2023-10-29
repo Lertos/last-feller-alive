@@ -1,3 +1,5 @@
+HBoxContainer
+Button
 MultiplayerSynchronizer
 Timer
 TileMap
@@ -7,10 +9,8 @@ Node2D
 Sprite2D
 AnimationPlayer
 ProgressBar
-Button
 TextureRect
 Label
-HBoxContainer
 VBoxContainer
 ColorRect
 AcceptDialog

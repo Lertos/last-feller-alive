@@ -7,3 +7,6 @@ res://main.tscn
 res://scenes/player.tscn
 res://scenes/beam.tscn
 res://scripts/arena_manager.gd
+res://scenes/lobby/lobby.tscn
+res://scenes/lobby/lobby.gd
+res://scripts/multiplayer_controller.gd
