@@ -385,7 +385,7 @@ func _process(delta):
 \"\"\"
 "
 
-[node name="Node2D" type="Node2D"]
+[node name="Arena" type="Node2D"]
 script = ExtResource("1_uqrx8")
 
 [node name="SpawnerTimer" type="Timer" parent="."]

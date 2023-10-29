@@ -28,7 +28,7 @@ func _ready():
 	multiplayer.peer_disconnected.connect(peer_disconnected)
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.connection_failed.connect(connection_failed)
-
+	multiplayer.server_disconnected.connect(server_disconnected)
 
 #Gets called on the server and clients when someone connects
 func peer_connected(id):
@@ -38,6 +38,16 @@ func peer_connected(id):
 #Gets called on the server and clients when someone disconnects
 func peer_disconnected(id):
 	print("Peer disconnected: " + str(id))
+
+
+func server_disconnected():
+	self.show()
+	get_tree().root.get_node("Arena").queue_free()
+	multiplayer.multiplayer_peer = null
+	
+	show_help_msg("Server has been disconnected!", "Guess I'll Go")
+	
+	GameManager.players.clear()
 
 
 @rpc("any_peer", "call_local")
