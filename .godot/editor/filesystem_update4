@@ -1,8 +1,9 @@
-res://main.tscn
-res://scripts/arena_manager.gd
-res://scenes/player.tscn
-res://scripts/multiplayer_controller.tscn
-res://scenes/beam.tscn
 res://scenes/cannon.tscn
+res://scripts/multiplayer_controller.tscn
+res://scenes/cannons.gd
+res://scenes/cannon.gd
 res://scenes/pull_field.tscn
-res://scenes/beam.gd
+res://main.tscn
+res://scenes/player.tscn
+res://scenes/beam.tscn
+res://scripts/arena_manager.gd

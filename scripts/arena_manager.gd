@@ -20,7 +20,7 @@ var available_coordinates_for_cannons: Array[Vector2] = []
 #Used to dynamically grab the correct settings for the difficulty
 var difficulty_settings = {
 	DIFFICULTY.EASY: {
-		"initial_spawn_time": 4.0,
+		"initial_spawn_time": 3.0,
 		"time_decrease_per_cannon": 0.5,
 		"events_before_cannon": 4,
 		"special_events_per_cannon": 1

@@ -3,7 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://emvstyxbefry" path="res://scenes/wall.tscn" id="1_s44hn"]
 [ext_resource type="Script" path="res://scripts/arena_manager.gd" id="1_uqrx8"]
 [ext_resource type="Texture2D" uid="uid://1ymduvleth3y" path="res://assets/tiles_dungeon_v1.1.png" id="2_03o01"]
-[ext_resource type="Script" path="res://scenes/cannons.gd" id="2_mstii"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_muvsu"]
 texture = ExtResource("2_03o01")
@@ -366,6 +365,26 @@ texture = ExtResource("2_03o01")
 [sub_resource type="TileSet" id="TileSet_4u2cv"]
 sources/0 = SubResource("TileSetAtlasSource_muvsu")
 
+[sub_resource type="GDScript" id="GDScript_7uybb"]
+script/source = "extends Node2D
+
+@export var player_list: Node
+
+
+func _ready():
+	pass
+
+\"\"\"
+func _process(delta):
+	for child in get_children():
+		if player_list.get_child_count() > 0:
+			#TODO: Need to do this inside the cannon to see which player is closest
+			var player = player_list.get_child(0)
+			child.look_at(player.position)
+			child.set_target(player)
+\"\"\"
+"
+
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_uqrx8")
 
@@ -405,7 +424,7 @@ layer_0/tile_data = PackedInt32Array(0, 589824, 0, 65536, 589824, 1, 131072, 589
 [node name="Bullets" type="Node2D" parent="."]
 
 [node name="Cannons" type="Node2D" parent="." node_paths=PackedStringArray("player_list")]
-script = ExtResource("2_mstii")
+script = SubResource("GDScript_7uybb")
 player_list = NodePath("../Players")
 
 [node name="Players" type="Node2D" parent="."]
