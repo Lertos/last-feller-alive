@@ -430,3 +430,5 @@ player_list = NodePath("../Players")
 [node name="Players" type="Node2D" parent="."]
 
 [node name="Beams" type="Node2D" parent="."]
+
+[connection signal="child_exiting_tree" from="Players" to="." method="_on_players_child_exiting_tree"]

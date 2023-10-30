@@ -12,6 +12,8 @@ const SCENE_CANNON = preload("res://scenes/cannon.tscn")
 const SCENE_GRAVITY_FIELD = preload("res://scenes/gravity_field.tscn")
 const SCENE_PULL_FIELD = preload("res://scenes/pull_field.tscn")
 
+const SCENE_WIN_TEXT = preload("res://win_text.tscn")
+
 var cannon_list: Array[Node] = []
 var coordinates_for_cannons: Array[Vector2] = []
 var available_coordinates_for_cannons: Array[Vector2] = []
@@ -384,3 +386,17 @@ func setup_cannon_spots():
 	
 	#Duplicate cannon spots so we can see where they originally were, and which are left to take
 	available_coordinates_for_cannons = coordinates_for_cannons.duplicate()
+
+
+func _on_players_child_exiting_tree(node):
+	if $Players.get_child_count() == 1:
+		$SpawnerTimer.stop()
+		
+		var win_text = SCENE_WIN_TEXT.instantiate()
+		var player_name = GameManager.players[int(str(node.name))].name
+		
+		win_text.change_name(player_name)
+		win_text.position = Vector2(Config.arena_width / 2, Config.arena_height / 2)
+		
+		add_child(win_text)
+		

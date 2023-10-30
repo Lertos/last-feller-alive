@@ -12,3 +12,5 @@ res://scenes/lobby/lobby.gd
 res://scripts/multiplayer_controller.gd
 res://scripts/global/enums.gd
 res://scripts/global/config.gd
+res://win_text.tscn
+res://win_text.gd
