@@ -405,8 +405,18 @@ func _on_players_child_exiting_tree(node):
 		
 
 func _on_lobby_button_pressed():
-	print("Lobby")
+	var multiplayer_manager = get_tree().root.get_node("MultiplayerManager")
+	
+	multiplayer_manager.show()
+	multiplayer_manager.load_lobby()
+
+	queue_free()
 	
 	
 func _on_exit_button_pressed():
-	print("Exit")
+	var multiplayer_manager = get_tree().root.get_node("MultiplayerManager")
+	
+	multiplayer_manager.show()
+	multiplayer_manager.player_left_Lobby.rpc()
+
+	queue_free()
