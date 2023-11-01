@@ -398,5 +398,15 @@ func _on_players_child_exiting_tree(node):
 		win_text.change_name(player_name)
 		win_text.position = Vector2(Config.arena_width / 2, Config.arena_height / 2)
 		
+		win_text.get_lobby_button().pressed.connect(_on_lobby_button_pressed)
+		win_text.get_exit_button().pressed.connect(_on_exit_button_pressed)
+		
 		add_child(win_text)
 		
+
+func _on_lobby_button_pressed():
+	print("Lobby")
+	
+	
+func _on_exit_button_pressed():
+	print("Exit")
