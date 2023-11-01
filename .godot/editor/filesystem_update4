@@ -14,3 +14,4 @@ res://scripts/global/enums.gd
 res://scripts/global/config.gd
 res://win_text.tscn
 res://win_text.gd
+res://scenes/bullet.gd

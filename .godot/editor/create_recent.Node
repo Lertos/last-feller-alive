@@ -1,9 +1,9 @@
+HBoxContainer
+Button
 AnimationPlayer
 Label
 VBoxContainer
 OptionButton
-Button
-HBoxContainer
 MultiplayerSynchronizer
 Timer
 TileMap

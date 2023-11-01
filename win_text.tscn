@@ -48,3 +48,18 @@ theme_override_font_sizes/font_size = 50
 text = "WINS!"
 label_settings = SubResource("LabelSettings_l7c8e")
 horizontal_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="VB"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Lobby" type="Button" parent="VB/Buttons"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Lobby"
+
+[node name="Exit" type="Button" parent="VB/Buttons"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Exit"
