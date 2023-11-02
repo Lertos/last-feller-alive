@@ -1,3 +1,4 @@
+Timer
 HBoxContainer
 Button
 AnimationPlayer
@@ -5,7 +6,6 @@ Label
 VBoxContainer
 OptionButton
 MultiplayerSynchronizer
-Timer
 TileMap
 CollisionShape2D
 Area2D

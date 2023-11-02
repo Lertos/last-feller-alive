@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://4gn3y8vfghc8"]
+[gd_scene load_steps=20 format=3 uid="uid://4gn3y8vfghc8"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_qk3kd"]
 [ext_resource type="Texture2D" uid="uid://kh0e801gsx1l" path="res://assets/player.png" id="2_rpojb"]
@@ -291,6 +291,34 @@ corner_detail = 6
 ProgressBar/styles/background = SubResource("StyleBoxFlat_4rdga")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_elqhp")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_scjha"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0, 0.145098, 0.286275, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uxx13"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.172549, 0.6, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 6
+
+[sub_resource type="Theme" id="Theme_t6jkl"]
+ProgressBar/styles/background = SubResource("StyleBoxFlat_scjha")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_uxx13")
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_mask = 6
 script = ExtResource("1_qk3kd")
@@ -341,5 +369,15 @@ offset_top = 50.0
 offset_right = 35.0
 offset_bottom = 60.0
 theme = SubResource("Theme_uyo60")
+value = 100.0
+show_percentage = false
+
+[node name="StaminaBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(70, 0)
+offset_left = -35.0
+offset_top = 62.0
+offset_right = 35.0
+offset_bottom = 72.0
+theme = SubResource("Theme_t6jkl")
 value = 100.0
 show_percentage = false

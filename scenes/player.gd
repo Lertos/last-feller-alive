@@ -3,6 +3,7 @@ extends CharacterBody2D
 enum DIRECTION {LEFT, RIGHT}
 
 var dir: DIRECTION = DIRECTION.RIGHT
+var can_dash: bool = true
 var is_dashing: bool = false
 var is_being_pulled: bool = false
 var is_dead: bool = false
@@ -14,6 +15,9 @@ var is_slowed: bool = false
 @export var dashing_speed = 900
 @export var speed: float
 @export var health: float = 100.0
+
+var time_between_dashes: float = 2.0
+var time_since_dash: float = 0.0
 
 var pull_point: Vector2
 
@@ -31,6 +35,18 @@ func _ready():
 	speed = normal_speed
 
 
+func _process(delta):
+	if not can_dash:
+		time_since_dash += delta
+		
+		if time_since_dash >= time_between_dashes:
+			$StaminaBar.value = 100.0
+			time_since_dash = 0.0
+			can_dash = true
+		else:
+			$StaminaBar.value = (time_since_dash / time_between_dashes) * 100.0
+
+
 func get_input():
 	if is_dashing or is_dead:
 		if not $AnimationPlayer.is_playing():
@@ -43,13 +59,15 @@ func get_input():
 	
 	var input_direction = Input.get_vector("left", "right", "up", "down")
 	
-	if Input.is_action_just_pressed("dash"):
+	if Input.is_action_just_pressed("dash") and can_dash:
 		is_dashing = true
+		can_dash = false
 		speed = dashing_speed
 		
 		velocity = input_direction * speed
 		
 		$AnimationPlayer.play("dash")
+		
 		return
 	
 	velocity = input_direction * speed
