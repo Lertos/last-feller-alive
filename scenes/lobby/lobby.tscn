@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b22m0k38ym652"]
+[gd_scene load_steps=20 format=3 uid="uid://b22m0k38ym652"]
 
 [ext_resource type="Script" path="res://scenes/lobby/lobby.gd" id="1_4a36r"]
 [ext_resource type="PackedScene" uid="uid://cwcdyhatvgvvu" path="res://scenes/lobby/lobby_player.tscn" id="2_nlr6n"]
@@ -166,6 +166,11 @@ font_color = Color(0, 0.831373, 0.286275, 1)
 font_size = 44
 font_color = Color(0, 0.423529, 0.129412, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_306jr"]
+line_spacing = 1.0
+font_size = 8
+font_color = Color(0, 0.831373, 0.286275, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_ucnmm"]
 font_size = 18
 font_color = Color(0, 0.831373, 0.286275, 1)
@@ -218,6 +223,11 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "Awaiting the Host to Start"
 label_settings = SubResource("LabelSettings_af8tq")
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="VB"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_306jr")
 horizontal_alignment = 1
 
 [node name="Player" type="VBoxContainer" parent="VB"]
