@@ -419,3 +419,11 @@ func _on_exit_button_pressed():
 	multiplayer_manager.player_left_Lobby.rpc()
 
 	queue_free()
+
+
+func play_sound(sound_type: Enum.SOUND):
+	match sound_type:
+		Enum.SOUND.BEAM: $AudioBeam.play()
+		Enum.SOUND.BOMB: $AudioBomb.play()
+		Enum.SOUND.SHOT: $AudioShot.play()
+		Enum.SOUND.DEATH: $AudioDeath.play()

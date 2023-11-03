@@ -31,12 +31,16 @@ func _ready():
 	tween_scale.tween_property(self, "scale", Vector2(beam_width_scale, beam_length_scale), startup_time)
 	tween_scale.tween_property(self, "scale", Vector2(beam_width_active_scale, beam_length_scale), active_time)
 	tween_scale.tween_property(self, "scale", Vector2(0, beam_length_scale), disappear_time)
+	
 
 	#Tween the color changes to emphasize when the beam actually goes off
 	var tween_modulate = create_tween()
 	tween_modulate.tween_property($Sprite2D, "modulate", Color.html("#e50b00"), startup_time)
 	tween_modulate.tween_property($Sprite2D, "modulate", Color.html("#ffffff"), active_time)
 	tween_modulate.tween_property($Sprite2D, "modulate", Color.html("#740200"), disappear_time)
+
+	await get_tree().create_timer(startup_time).timeout
+	get_tree().get_root().get_node("Arena").play_sound(Enum.SOUND.BEAM)
 
 
 func on_active_beam():

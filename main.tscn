@@ -1,8 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://gafs07waarae"]
+[gd_scene load_steps=11 format=3 uid="uid://gafs07waarae"]
 
 [ext_resource type="PackedScene" uid="uid://emvstyxbefry" path="res://scenes/wall.tscn" id="1_s44hn"]
 [ext_resource type="Script" path="res://scripts/arena_manager.gd" id="1_uqrx8"]
 [ext_resource type="Texture2D" uid="uid://1ymduvleth3y" path="res://assets/tiles_dungeon_v1.1.png" id="2_03o01"]
+[ext_resource type="AudioStream" uid="uid://hx7qeictfp2u" path="res://assets/sound/beam.mp3" id="4_y8tq3"]
+[ext_resource type="AudioStream" uid="uid://bkw5g5h5u3d3o" path="res://assets/sound/shot.mp3" id="5_7jbhb"]
+[ext_resource type="AudioStream" uid="uid://dg5uiv6o0l6op" path="res://assets/sound/bomb.mp3" id="6_30ifm"]
+[ext_resource type="AudioStream" uid="uid://culn6stcgrsa0" path="res://assets/sound/death.mp3" id="7_bx7cl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_muvsu"]
 texture = ExtResource("2_03o01")
@@ -430,5 +434,21 @@ player_list = NodePath("../Players")
 [node name="Players" type="Node2D" parent="."]
 
 [node name="Beams" type="Node2D" parent="."]
+
+[node name="AudioBeam" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_y8tq3")
+max_polyphony = 6
+
+[node name="AudioShot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_7jbhb")
+max_polyphony = 6
+
+[node name="AudioBomb" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_30ifm")
+max_polyphony = 6
+
+[node name="AudioDeath" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_bx7cl")
+max_polyphony = 6
 
 [connection signal="child_exiting_tree" from="Players" to="." method="_on_players_child_exiting_tree"]

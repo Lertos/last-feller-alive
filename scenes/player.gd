@@ -96,9 +96,11 @@ func add_health(hp: int):
 	if health <= 0:
 		is_dead = true
 		$AnimationPlayer.play("death")
+		get_tree().get_root().get_node("Arena").play_sound(Enum.SOUND.DEATH)
 	else:
 		is_hurt = true
 		$AnimationPlayer.play("hurt")
+		get_tree().get_root().get_node("Arena").play_sound(Enum.SOUND.SHOT)
 
 
 func reset_state():

@@ -34,6 +34,9 @@ func _ready():
 	var tween_bomb_modulate = $Bomb.create_tween().set_loops()
 	tween_bomb_modulate.tween_property($Bomb, "modulate", Color.html("#d72400"), half_prime_anim_time)
 	tween_bomb_modulate.tween_property($Bomb, "modulate", Color.html("#ffffff"), half_prime_anim_time)
+	
+	await get_tree().create_timer(time_to_explode).timeout
+	get_tree().get_root().get_node("Arena").play_sound(Enum.SOUND.BOMB)
 
 
 func on_explosion():
