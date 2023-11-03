@@ -9,7 +9,7 @@ func _ready():
 
 
 func change_skin(skin_index):
-	$Sprite2D.texture = GameManager.skins[skin_index]
+	$Sprite2D.texture = GameManager.skins[skin_index][0]
 
 
 func set_player_name(name: String):

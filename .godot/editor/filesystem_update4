@@ -14,3 +14,7 @@ res://scenes/bomb.gd
 res://scenes/player.gd
 res://scenes/bullet.gd
 res://scenes/bullet.tscn
+res://scripts/global/game_manager.gd
+res://scenes/lobby/lobby_player.gd
+res://scenes/lobby/lobby_player_other.gd
+res://scenes/lobby/lobby_player.tscn

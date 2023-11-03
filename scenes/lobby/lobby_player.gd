@@ -7,7 +7,10 @@ func _ready():
 	$AnimationPlayer.play("idle")
 
 	$Name.text = GameManager.players[multiplayer.get_unique_id()].name
-
+	
+	#Set the default
+	$Sprite2D.texture = GameManager.skins[0][0]
+	$HB/SkinName.text = GameManager.skins[0][1]
 
 func _on_previous_pressed():
 	if skin_index == 0:
@@ -30,7 +33,7 @@ func _on_next_pressed():
 func change_skin():
 	GameManager.players[multiplayer.get_unique_id()].skin_index = skin_index
 
-	$Sprite2D.texture = GameManager.skins[skin_index]
-	$HB/SkinName.text = "Skin " + str(skin_index + 1)
+	$Sprite2D.texture = GameManager.skins[skin_index][0]
+	$HB/SkinName.text = GameManager.skins[skin_index][1]
 	
 	get_tree().root.get_node("Lobby").change_players_skin.rpc(multiplayer.get_unique_id(), skin_index)
