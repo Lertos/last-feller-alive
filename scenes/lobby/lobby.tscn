@@ -159,15 +159,15 @@ LineEdit/styles/normal = SubResource("StyleBoxFlat_a8mda")
 LineEdit/styles/read_only = SubResource("StyleBoxFlat_a8mda")
 
 [sub_resource type="LabelSettings" id="LabelSettings_af8tq"]
-font_size = 30
+font_size = 26
 font_color = Color(0, 0.831373, 0.286275, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_4bsjc"]
-font_size = 50
+font_size = 44
 font_color = Color(0, 0.423529, 0.129412, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ucnmm"]
-font_size = 22
+font_size = 18
 font_color = Color(0, 0.831373, 0.286275, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_nn031"]
