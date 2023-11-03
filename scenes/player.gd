@@ -100,7 +100,10 @@ func add_health(hp: int):
 	else:
 		is_hurt = true
 		$AnimationPlayer.play("hurt")
-		get_tree().get_root().get_node("Arena").play_sound(Enum.SOUND.SHOT)
+		
+		#If this player object is NOT our player, then simply return
+		if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+			get_tree().get_root().get_node("Arena").play_sound(Enum.SOUND.SHOT)
 
 
 func reset_state():
