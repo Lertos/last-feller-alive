@@ -15,6 +15,8 @@ func activate(position_to_target: Vector2):
 	var direction = global_position.direction_to(position_to_target)
 	vel = direction * speed
 	
+	$Area2D/CollisionShape2D.disabled = false
+	
 	is_active = true
 
 

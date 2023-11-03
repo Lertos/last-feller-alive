@@ -13,3 +13,4 @@ res://scripts/global/enums.gd
 res://scenes/bomb.gd
 res://scenes/player.gd
 res://scenes/bullet.gd
+res://scenes/bullet.tscn

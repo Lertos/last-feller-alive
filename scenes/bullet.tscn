@@ -17,6 +17,7 @@ script = ExtResource("1_0w3j6")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_l4eby")
+disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5708
