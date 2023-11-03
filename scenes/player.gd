@@ -27,6 +27,10 @@ func _ready():
 	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 	$AnimationPlayer.play("idle")
 	
+	#If this player object is NOT our player, then hide the stamina bar
+	if $MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
+		$StaminaBar.visible = false
+	
 	#setup the proper skin chosen in the lobby for this player object
 	var skin_index = GameManager.players[self.name.to_int()].skin_index
 	$Sprite2D.texture = GameManager.skins[skin_index]
