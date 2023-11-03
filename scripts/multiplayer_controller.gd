@@ -74,7 +74,7 @@ func player_left_Lobby():
 
 #Gets called only from client-side
 func connected_to_server():
-	send_player_info.rpc_id(1, $VB/PlayerName.text, multiplayer.get_unique_id(), 0)
+	send_player_info.rpc_id(1, $VB/PlayerName.text.lstrip(" ").rstrip(" "), multiplayer.get_unique_id(), 0)
 	
 	print("Connected to server")
 
@@ -134,7 +134,7 @@ func _on_host_button_down():
 	
 	print("Server has been created. Waiting for players")
 	
-	send_player_info($VB/PlayerName.text, multiplayer.get_unique_id(), 0)
+	send_player_info($VB/PlayerName.text.lstrip(" ").rstrip(" "), multiplayer.get_unique_id(), 0)
 	
 	if DEBUG:
 		load_lobby()
@@ -172,8 +172,8 @@ func _on_join_button_down():
 
 func is_valid_address_and_port() -> bool:
 	#Get IP address and port, or assign defaults if debugging
-	address = $VB/ServerIP.text
-	port = $VB/Port.text
+	address = $VB/ServerIP.text.lstrip(" ").rstrip(" ")
+	port = $VB/Port.text.lstrip(" ").rstrip(" ")
 	
 	if address == "":
 		address = "localhost"
@@ -193,7 +193,7 @@ func is_name_empty() -> bool:
 	if DEBUG:
 		return true
 
-	player_name = $VB/PlayerName.text
+	player_name = $VB/PlayerName.text.lstrip(" ").rstrip(" ")
 	
 	if player_name == "":
 		show_help_msg("You need a name dude", "Be Obedient")
