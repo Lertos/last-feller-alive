@@ -279,6 +279,7 @@ layout_mode = 2
 
 [node name="HB" type="HBoxContainer" parent="VB"]
 layout_mode = 2
+theme_override_constants/separation = 12
 alignment = 1
 
 [node name="Host" type="Button" parent="VB/HB"]
@@ -292,12 +293,6 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Join"
-
-[node name="Start" type="Button" parent="VB/HB"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Start"
 
 [node name="PopupHelper" type="ColorRect" parent="."]
 visible = false
@@ -338,4 +333,3 @@ libraries = {
 [connection signal="visibility_changed" from="AcceptDialog" to="." method="_on_accept_dialog_visibility_changed"]
 [connection signal="button_down" from="VB/HB/Host" to="." method="_on_host_button_down"]
 [connection signal="button_down" from="VB/HB/Join" to="." method="_on_join_button_down"]
-[connection signal="button_down" from="VB/HB/Start" to="." method="_on_start_button_down"]
