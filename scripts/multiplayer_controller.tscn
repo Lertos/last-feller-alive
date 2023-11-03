@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cglls2e1in3mg"]
+[gd_scene load_steps=17 format=3 uid="uid://cglls2e1in3mg"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer_controller.gd" id="1_s8ha2"]
 [ext_resource type="Texture2D" uid="uid://qvegsautc40h" path="res://assets/title-background.png" id="2_p1vvx"]
@@ -157,6 +157,43 @@ LineEdit/styles/focus = SubResource("StyleBoxFlat_a8mda")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_a8mda")
 LineEdit/styles/read_only = SubResource("StyleBoxFlat_a8mda")
 
+[sub_resource type="Animation" id="Animation_r10fl"]
+resource_name = "fade"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.5, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_me4lj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o8l0c"]
+_data = {
+"RESET": SubResource("Animation_me4lj"),
+"fade": SubResource("Animation_r10fl")
+}
+
 [node name="MultiplayerManager" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -271,6 +308,32 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.686275)
+
+[node name="SceneChanger" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="SceneChanger"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="SceneChanger/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SceneChanger"]
+libraries = {
+"": SubResource("AnimationLibrary_o8l0c")
+}
 
 [connection signal="visibility_changed" from="AcceptDialog" to="." method="_on_accept_dialog_visibility_changed"]
 [connection signal="button_down" from="VB/HB/Host" to="." method="_on_host_button_down"]

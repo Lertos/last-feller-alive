@@ -4,6 +4,7 @@ const SCENE_LOBBY_PLAYER_OTHER = preload("res://scenes/lobby/lobby_player_other.
 const MAX_PLAYERS = 8
 const SPACE_BETWEEN = 16
 
+@onready var multiplayer_manager = get_tree().root.get_node("MultiplayerManager")
 
 func _ready():
 	$VB/Buttons/StartButton.visible = multiplayer.is_server()
@@ -73,6 +74,8 @@ func start_game(difficulty: Enum.DIFFICULTY):
 	
 	var scene = load("res://main.tscn").instantiate()
 
+	await multiplayer_manager.start_fade()
+
 	get_tree().root.add_child(scene)
 	self.hide()
 
@@ -90,7 +93,7 @@ func _on_start_button_pressed():
 
 
 func _on_leave_button_pressed():
-	var multiplayer_manager = get_tree().root.get_node("MultiplayerManager")
+	await multiplayer_manager.start_fade()
 	
 	multiplayer_manager.show()
 	multiplayer_manager.player_left_Lobby.rpc()

@@ -14,6 +14,8 @@ const SCENE_PULL_FIELD = preload("res://scenes/pull_field.tscn")
 
 const SCENE_WIN_TEXT = preload("res://win_text.tscn")
 
+@onready var multiplayer_manager = get_tree().root.get_node("MultiplayerManager")
+
 var cannon_list: Array[Node] = []
 var coordinates_for_cannons: Array[Vector2] = []
 var available_coordinates_for_cannons: Array[Vector2] = []
@@ -405,16 +407,13 @@ func _on_players_child_exiting_tree(node):
 		
 
 func _on_lobby_button_pressed():
-	var multiplayer_manager = get_tree().root.get_node("MultiplayerManager")
-	
-	multiplayer_manager.show()
 	multiplayer_manager.load_lobby()
 
 	queue_free()
 	
 	
 func _on_exit_button_pressed():
-	var multiplayer_manager = get_tree().root.get_node("MultiplayerManager")
+	await multiplayer_manager.start_fade()
 	
 	multiplayer_manager.show()
 	multiplayer_manager.player_left_Lobby.rpc()

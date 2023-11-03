@@ -143,6 +143,8 @@ func _on_host_button_down():
 func load_lobby():
 	var scene = load("res://scenes/lobby/lobby.tscn").instantiate()
 	
+	await start_fade()
+
 	get_tree().root.add_child(scene)
 	self.hide()
 
@@ -209,3 +211,8 @@ func show_help_msg(message: String, button_text: String):
 	$AcceptDialog.ok_button_text = button_text
 	$AcceptDialog.reset_size()
 	$AcceptDialog.popup_centered()
+
+
+func start_fade():
+	$SceneChanger/AnimationPlayer.play("fade")
+	await get_tree().create_timer(0.5).timeout
