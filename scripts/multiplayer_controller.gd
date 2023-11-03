@@ -104,7 +104,7 @@ func send_player_info(name, id, skin_index):
 
 @rpc("call_local")
 func goto_lobby():
-	load_lobby()
+	await load_lobby()
 	get_tree().root.get_node("Lobby").set_players_to_spots()
 
 
