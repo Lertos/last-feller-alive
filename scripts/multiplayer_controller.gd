@@ -71,16 +71,30 @@ func server_disconnected():
 func player_left_lobby():
 	var player_id = multiplayer.get_remote_sender_id()
 	
-	if player_id == multiplayer.get_unique_id():
-		multiplayer.multiplayer_peer = null
-		GameManager.players.clear()
+	#If the server host disconnected; remove all players
+	if player_id == 1:
+		disconnect_and_remove_from_lobby()
+	#If a client disconnects, remove their player info from the player list
 	else:
-		#Remove peer from the player list
 		if GameManager.players.has(player_id):
 			GameManager.players.erase(player_id)
-		
-		#Remove the player model from the lobby player list
-		get_tree().root.get_node("Lobby").set_players_to_spots.rpc()
+			
+			#Remove the player model from the lobby player list
+			get_tree().root.get_node("Lobby").set_players_to_spots.rpc()
+			
+		if player_id == multiplayer.get_unique_id():
+			disconnect_and_remove_from_lobby()
+
+
+func disconnect_and_remove_from_lobby():
+	if get_tree().root.get_node("Lobby") != null:
+		await start_fade()
+				
+		show()
+		get_tree().root.get_node("Lobby").queue_free()
+
+	multiplayer.multiplayer_peer = null
+	GameManager.players.clear()
 
 
 #Gets called only from client-side

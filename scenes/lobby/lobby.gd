@@ -93,10 +93,10 @@ func _on_start_button_pressed():
 
 
 func _on_leave_button_pressed():
-	await multiplayer_manager.start_fade()
+	#await multiplayer_manager.start_fade()
 	
-	multiplayer_manager.show()
+	#multiplayer_manager.show()
 	multiplayer_manager.player_left_lobby.rpc()
 
-	queue_free()
+	#queue_free()
 	
