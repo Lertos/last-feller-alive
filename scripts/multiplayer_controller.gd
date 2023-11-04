@@ -68,7 +68,7 @@ func server_disconnected():
 
 #Handles a "disconnect" from the lobby so other players can remove them from their lobby
 @rpc("any_peer", "call_local")
-func player_left_Lobby():
+func player_left_lobby():
 	var player_id = multiplayer.get_remote_sender_id()
 	
 	if player_id == multiplayer.get_unique_id():

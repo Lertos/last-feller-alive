@@ -416,7 +416,7 @@ func _on_exit_button_pressed():
 	await multiplayer_manager.start_fade()
 	
 	multiplayer_manager.show()
-	multiplayer_manager.player_left_Lobby.rpc()
+	multiplayer_manager.player_left_lobby.rpc()
 
 	queue_free()
 
