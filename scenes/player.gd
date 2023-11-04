@@ -33,7 +33,7 @@ func _ready():
 	
 	#setup the proper skin chosen in the lobby for this player object
 	var skin_index = GameManager.players[self.name.to_int()].skin_index
-	$Sprite2D.texture = GameManager.skins[skin_index]
+	$Sprite2D.texture = GameManager.skins[skin_index][0]
 	
 	#Set the default speed so we can update it later
 	speed = normal_speed
