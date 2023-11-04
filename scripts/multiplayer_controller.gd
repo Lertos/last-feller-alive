@@ -30,6 +30,17 @@ func _ready():
 	multiplayer.connection_failed.connect(connection_failed)
 	multiplayer.server_disconnected.connect(server_disconnected)
 
+
+func _process(delta):
+	$Node2D/A.position.x -= 1
+	$Node2D/B.position.x -= 1
+	
+	if $Node2D/A.position.x <= -1280:
+		$Node2D/A.position.x += 1280 * 2
+	elif $Node2D/B.position.x <= -1280:
+		$Node2D/B.position.x += 1280 * 2
+
+
 #Gets called on the server and clients when someone connects
 func peer_connected(id):
 	print("Peer connected: " + str(id))

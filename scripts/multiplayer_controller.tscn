@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://cglls2e1in3mg"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer_controller.gd" id="1_s8ha2"]
-[ext_resource type="Texture2D" uid="uid://qvegsautc40h" path="res://assets/title-background.png" id="2_p1vvx"]
+[ext_resource type="Texture2D" uid="uid://esb4e6hi4brs" path="res://assets/parallax.png" id="2_5r40g"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p4tc8"]
 content_margin_left = 16.0
@@ -210,17 +210,17 @@ initial_position = 1
 size = Vector2i(83, 180)
 always_on_top = true
 
-[node name="TextureRect" type="TextureRect" parent="."]
-modulate = Color(1, 1, 1, 0.498039)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_p1vvx")
-expand_mode = 1
-stretch_mode = 4
+[node name="Node2D" type="Node2D" parent="."]
+modulate = Color(1, 1, 1, 0.431373)
+
+[node name="A" type="Sprite2D" parent="Node2D"]
+texture = ExtResource("2_5r40g")
+centered = false
+
+[node name="B" type="Sprite2D" parent="Node2D"]
+position = Vector2(1280, 0)
+texture = ExtResource("2_5r40g")
+centered = false
 
 [node name="VB" type="VBoxContainer" parent="."]
 layout_mode = 1
