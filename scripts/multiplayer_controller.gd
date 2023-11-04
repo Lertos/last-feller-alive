@@ -74,6 +74,7 @@ func player_left_lobby():
 	#If the server host disconnected; remove all players
 	if player_id == 1:
 		disconnect_and_remove_from_lobby()
+	
 	#If a client disconnects, remove their player info from the player list
 	else:
 		if GameManager.players.has(player_id):
@@ -87,12 +88,14 @@ func player_left_lobby():
 
 
 func disconnect_and_remove_from_lobby():
-	if get_tree().root.get_node("Lobby") != null:
+	if get_tree().root.has_node("Lobby"):
 		await start_fade()
 				
 		show()
-		get_tree().root.get_node("Lobby").queue_free()
+		if get_tree().root.has_node("Lobby"):
+			get_tree().root.get_node("Lobby").queue_free()
 
+	peer = null
 	multiplayer.multiplayer_peer = null
 	GameManager.players.clear()
 
@@ -135,15 +138,12 @@ func goto_lobby():
 
 func _on_host_button_down():
 	peer = ENetMultiplayerPeer.new()
-
-	if not is_valid_address_and_port():
-		return
-		
-	if not is_name_empty():
-		return
+	
+	if not is_valid_address_and_port(): return
+	if not is_name_empty(): return
 
 	var error = peer.create_server(port, 8)
-	
+
 	if error != OK:
 		show_help_msg("Server creation failed!", "Have Mercy")
 		return
@@ -161,8 +161,7 @@ func _on_host_button_down():
 	
 	send_player_info($VB/PlayerName.text.lstrip(" ").rstrip(" "), multiplayer.get_unique_id(), 0)
 	
-	if DEBUG:
-		load_lobby()
+	if DEBUG: load_lobby()
 
 
 func load_lobby():
@@ -177,11 +176,8 @@ func load_lobby():
 func _on_join_button_down():
 	peer = ENetMultiplayerPeer.new()
 	
-	if not is_valid_address_and_port():
-		return
-	
-	if not is_name_empty():
-		return
+	if not is_valid_address_and_port(): return
+	if not is_name_empty(): return
 		
 	peer.create_client(address, port)
 
@@ -200,10 +196,8 @@ func is_valid_address_and_port() -> bool:
 	address = $VB/ServerIP.text.lstrip(" ").rstrip(" ")
 	port = $VB/Port.text.lstrip(" ").rstrip(" ")
 	
-	if address == "":
-		address = "localhost"
-	if port == "":
-		port = "8910"
+	if address == "": address = "localhost"
+	if port == "": port = "8910"
 		
 	#Check that the port is a valid integer or show an error
 	if not port.is_valid_int():
@@ -215,8 +209,7 @@ func is_valid_address_and_port() -> bool:
 
 
 func is_name_empty() -> bool:
-	if DEBUG:
-		return true
+	if DEBUG: return true
 
 	player_name = $VB/PlayerName.text.lstrip(" ").rstrip(" ")
 	
