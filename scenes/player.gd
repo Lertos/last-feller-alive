@@ -141,7 +141,7 @@ func remove_pull():
 	is_being_pulled = false
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if is_dead:
 		return
 		

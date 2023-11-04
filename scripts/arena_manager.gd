@@ -247,8 +247,8 @@ func spawn_special_multi_beam():
 
 #Spawns bombs in a square pattern - direction is based on whether it's in the middle or not
 func queue_special_bomb_string():
-	var x = Config.arena_width / 2
-	var y = Config.arena_height / 2
+	var x = Config.arena_width / 2.0
+	var y = Config.arena_height / 2.0
 	
 	var x_to_add = 64 * (1 if rng.randi() % 2 == 0 else -1)
 	var y_to_add = 64 * (1 if rng.randi() % 2 == 0 else -1)
@@ -268,8 +268,8 @@ func spawn_special_bomb_string():
 
 #Spawns gravity in the outer ring, or the inner ring - randomly
 func queue_special_zero_gravity():
-	var x = Config.arena_width / 2
-	var y = Config.arena_height / 2
+	var x = Config.arena_width / 2.0
+	var y = Config.arena_height / 2.0
 	var to_add = 140
 	
 	next_event_pos.append(Vector2(x, y - to_add))
@@ -305,14 +305,14 @@ func spawn_special_cannon_pull():
 
 
 func setup_arena_walls():
-	create_wall($WallLeft, -Config.wall_width / 2, Config.arena_height / 2, Config.wall_width, Config.arena_height)
-	create_wall($WallRight, Config.arena_width + Config.wall_width / 2, Config.arena_height / 2, Config.wall_width, Config.arena_height)
-	create_wall($WallTop, Config.arena_width / 2, -Config.wall_width / 2, Config.arena_width, Config.wall_width)
-	create_wall($WallBottom, Config.arena_width / 2, Config.arena_height + Config.wall_width / 2, Config.arena_width, Config.wall_width)
+	create_wall($WallLeft, -Config.wall_width / 2.0, Config.arena_height / 2.0, Config.wall_width, Config.arena_height)
+	create_wall($WallRight, Config.arena_width + Config.wall_width / 2.0, Config.arena_height / 2.0, Config.wall_width, Config.arena_height)
+	create_wall($WallTop, Config.arena_width / 2.0, -Config.wall_width / 2.0, Config.arena_width, Config.wall_width)
+	create_wall($WallBottom, Config.arena_width / 2.0, Config.arena_height + Config.wall_width / 2.0, Config.arena_width, Config.wall_width)
 
 
 func setup_players():
-	var center_pos = Vector2(Config.arena_width / 2, Config.arena_height / 2)
+	var center_pos = Vector2(Config.arena_width / 2.0, Config.arena_height / 2.0)
 	var player_size = SCENE_PLAYER.instantiate().get_node("Sprite2D").texture.get_size()
 	
 	var spot_index = 0
@@ -339,7 +339,7 @@ func setup_players():
 		spot_index += 1
 
 
-func create_wall(wall_node: Node, posx: int, posy: int, scalex: int, scaley: int):
+func create_wall(wall_node: Node, posx: float, posy: float, scalex: float, scaley: float):
 	wall_node.position.x = posx
 	wall_node.position.y = posy
 	
@@ -361,8 +361,8 @@ func setup_cannon_spots():
 
 	#Find the distance between each cannon, assuming 8 cannons in the outer ring
 	#We are measuring the adjacent empty spots (x's); o's are cannons, x's are empty: (o x o x o )
-	var width_between = empty_non_cannon_width / 2
-	var height_between = empty_non_cannon_height / 2
+	var width_between = empty_non_cannon_width / 2.0
+	var height_between = empty_non_cannon_height / 2.0
 
 	#Start populating the cannons
 	var x_coord = distance_from_walls
@@ -398,7 +398,7 @@ func _on_players_child_exiting_tree(node):
 		var player_name = GameManager.players[int(str(node.name))].name
 		
 		win_text.change_name(player_name)
-		win_text.position = Vector2(Config.arena_width / 2, Config.arena_height / 2)
+		win_text.position = Vector2(Config.arena_width / 2.0, Config.arena_height / 2.0)
 		
 		win_text.get_lobby_button().pressed.connect(_on_lobby_button_pressed)
 		win_text.get_exit_button().pressed.connect(_on_exit_button_pressed)

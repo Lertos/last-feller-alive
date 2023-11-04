@@ -22,7 +22,7 @@ func _ready():
 	player_target_timer.start()
 
 
-func _process(delta):
+func _process(_delta):
 	if targeted_player == null:
 		return
 		

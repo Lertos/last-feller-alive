@@ -5,8 +5,6 @@ var beam_width_active_scale: float = 10.0
 var beam_damage: float = 18.0
 
 func _ready():
-	var rng = RandomNumberGenerator.new()
-	
 	var startup_time: float = 2.0
 	var active_time: float = 0.1
 	var disappear_time: float = 0.1
@@ -23,7 +21,6 @@ func _ready():
 	timer.start()
 	
 	#Set the original roitation randomly, and the scale so you can't see it's width
-	#rotation = rng.randf_range(0.0, 359.9)
 	scale = Vector2(0, beam_length_scale)
 
 	#Tween the different width increases/decreases

@@ -18,3 +18,6 @@ res://scripts/global/game_manager.gd
 res://scenes/lobby/lobby_player.gd
 res://scenes/lobby/lobby_player_other.gd
 res://scenes/lobby/lobby_player.tscn
+res://scenes/lobby/lobby.gd
+res://scenes/wall.gd
+res://scenes/cannon.gd

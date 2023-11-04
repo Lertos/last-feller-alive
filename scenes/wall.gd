@@ -18,7 +18,7 @@ var is_growing: bool = false
 var is_initially_growing: bool = true
 
 
-func setup_wall(dir: Enum.GROW_DIRECTION, is_static: bool):
+func setup_wall(dir: Enum.GROW_DIRECTION):
 	if is_static:
 		return
 	
@@ -76,7 +76,7 @@ func reset_growth():
 	is_growing = false
 	is_initially_growing = true
 	
-	$Timer.wait_time = rng.randi_range(min_time_inbetween, max_time_inbetween)
+	$Timer.wait_time = rng.randf_range(min_time_inbetween, max_time_inbetween)
 	$Timer.start()
 
 

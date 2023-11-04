@@ -26,9 +26,9 @@ func setup_player_spots():
 		$VB/Others/Players.add_child(new_player)
 		
 		if i % 2 == 0:
-			new_player.position.x = (i / 2) * space_per_player
+			new_player.position.x = (i / 2.0) * space_per_player
 		elif i % 2 != 0:
-			new_player.position.x -= (floor(i / 2) + 1) * space_per_player
+			new_player.position.x -= (floor(i / 2.0) + 1) * space_per_player
 
 
 @rpc("any_peer", "call_local")

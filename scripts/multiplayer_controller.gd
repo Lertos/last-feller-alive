@@ -31,7 +31,7 @@ func _ready():
 	multiplayer.server_disconnected.connect(server_disconnected)
 
 
-func _process(delta):
+func _process(_delta):
 	$Node2D/A.position.x -= 1
 	$Node2D/B.position.x -= 1
 	
@@ -97,10 +97,10 @@ func connection_failed():
 
 #Sends info to all players when connected
 @rpc("any_peer")
-func send_player_info(name, id, skin_index):
+func send_player_info(new_player_name, id, skin_index):
 	if !GameManager.players.has(id):
 		GameManager.players[id] = {
-			"name": name,
+			"name": new_player_name,
 			"id": id,
 			"skin_index": skin_index
 		}
