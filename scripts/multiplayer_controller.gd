@@ -31,6 +31,7 @@ func _ready():
 	multiplayer.server_disconnected.connect(server_disconnected)
 
 
+#Simply here to move the parallax background
 func _process(_delta):
 	$Node2D/A.position.x -= 1
 	$Node2D/B.position.x -= 1
@@ -51,25 +52,42 @@ func peer_disconnected(id):
 	print("Peer disconnected: " + str(id))
 
 
+#Gets called only from client-side
+func connected_to_server():
+	send_player_info.rpc_id(1, $VB/PlayerName.text.lstrip(" ").rstrip(" "), multiplayer.get_unique_id(), 0)
+	
+	print("Connected to server")
+
+
+#Gets called only from client-side
+func connection_failed():
+	print("Connection failed")
+
+
 #Will send players back to the title screen and allow them to reconnect or host a new server
 func server_disconnected():
 	show()
 	
+	#If they are in the game or the lobby, remove them from it and put them back to the landing page
 	if get_tree().root.has_node("Arena"):
 		get_tree().root.get_node("Arena").queue_free()
 	elif get_tree().root.has_node("Lobby"):
 		get_tree().root.get_node("Lobby").queue_free()
 
+	#Clear their multiplayer objects so it can be re-established
+	peer = null
 	multiplayer.multiplayer_peer = null
 	GameManager.players.clear()
 	
-	show_help_msg("Server has been disconnected!", "Guess I'll Go")
+	show_help_msg("Server has been disconnected!", "See Ya!")
 
 
+#Called when someone new enters the lobby
 @rpc("any_peer")
 func update_lobby_with_player():
 	if get_tree().root.has_node("Lobby"):
 		get_tree().root.get_node("Lobby").set_players_to_spots()
+
 
 #Handles a "disconnect" from the lobby so other players can remove them from their lobby
 @rpc("any_peer")
@@ -92,6 +110,7 @@ func player_left_lobby():
 			get_tree().root.get_node("Lobby").set_players_to_spots.rpc()
 
 
+#Remove the lobby node and reset all multiplayer objects
 func disconnect_and_remove_from_lobby():
 	if get_tree().root.has_node("Lobby"):
 		await start_fade()
@@ -103,18 +122,6 @@ func disconnect_and_remove_from_lobby():
 	peer = null
 	multiplayer.multiplayer_peer = null
 	GameManager.players.clear()
-
-
-#Gets called only from client-side
-func connected_to_server():
-	send_player_info.rpc_id(1, $VB/PlayerName.text.lstrip(" ").rstrip(" "), multiplayer.get_unique_id(), 0)
-	
-	print("Connected to server")
-
-
-#Gets called only from client-side
-func connection_failed():
-	print("Connection failed")
 
 
 #Sends info to all players when connected
@@ -139,6 +146,15 @@ func send_player_info(new_player_name, id, skin_index):
 func goto_lobby():
 	await load_lobby()
 	get_tree().root.get_node("Lobby").set_players_to_spots()
+
+
+func load_lobby():
+	var scene = load("res://scenes/lobby/lobby.tscn").instantiate()
+	
+	await start_fade()
+
+	get_tree().root.add_child(scene)
+	hide()
 
 
 func _on_host_button_down():
@@ -167,15 +183,6 @@ func _on_host_button_down():
 	send_player_info($VB/PlayerName.text.lstrip(" ").rstrip(" "), multiplayer.get_unique_id(), 0)
 	
 	if DEBUG: load_lobby()
-
-
-func load_lobby():
-	var scene = load("res://scenes/lobby/lobby.tscn").instantiate()
-	
-	await start_fade()
-
-	get_tree().root.add_child(scene)
-	hide()
 
 
 func _on_join_button_down():
