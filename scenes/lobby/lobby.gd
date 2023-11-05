@@ -51,7 +51,6 @@ func set_players_to_spots():
 			filled_spots += 1
 
 
-@rpc("any_peer")
 func change_players_skin(id, skin_index):
 	if id == multiplayer.get_unique_id():
 		return

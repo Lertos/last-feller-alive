@@ -83,14 +83,28 @@ func server_disconnected():
 
 
 #Called when someone new enters the lobby
-@rpc("any_peer")
+@rpc("any_peer", "call_local")
 func update_lobby_with_player():
 	if get_tree().root.has_node("Lobby"):
 		get_tree().root.get_node("Lobby").set_players_to_spots()
 
 
-#Handles a "disconnect" from the lobby so other players can remove them from their lobby
+#Called when someone changes their skin
 @rpc("any_peer")
+func update_player_skin(skin_index: int):
+	var player_id = multiplayer.get_remote_sender_id()
+	
+	#Update their skin index so it will load properly when you join the lobby next
+	if GameManager.players.has(player_id):
+		GameManager.players[player_id].skin_index = skin_index
+	
+	#If this client is in the lobby, also update it there
+	if get_tree().root.has_node("Lobby"):
+		get_tree().root.get_node("Lobby").set_players_to_spots()
+
+
+#Handles a "disconnect" from the lobby so other players can remove them from their lobby
+@rpc("any_peer", "call_local")
 func player_left_lobby():
 	var player_id = multiplayer.get_remote_sender_id()
 	
@@ -105,9 +119,9 @@ func player_left_lobby():
 			
 		if player_id == multiplayer.get_unique_id():
 			disconnect_and_remove_from_lobby()
-		else:
-			#Remove the player model from the lobby player list
-			get_tree().root.get_node("Lobby").set_players_to_spots.rpc()
+		#Remove the player model from the lobby player list
+		elif get_tree().root.has_node("Lobby"):
+			get_tree().root.get_node("Lobby").set_players_to_spots()
 
 
 #Remove the lobby node and reset all multiplayer objects
