@@ -11,7 +11,7 @@ func _ready():
 	$VB/Difficulty.visible = multiplayer.is_server()
 	
 	setup_player_spots()
-	set_players_to_spots.rpc()
+	multiplayer_manager.update_lobby_with_player.rpc()
 	
 
 func setup_player_spots():
@@ -31,7 +31,7 @@ func setup_player_spots():
 			new_player.position.x -= (floor(i / 2.0) + 1) * space_per_player
 
 
-@rpc("any_peer", "call_local")
+#@rpc("any_peer", "call_local")
 func set_players_to_spots():
 	#Hide all of the player models first, to make sure disconnected players get removed
 	for i in $VB/Others/Players.get_children():

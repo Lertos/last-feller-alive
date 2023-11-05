@@ -35,5 +35,5 @@ func change_skin():
 
 	$Sprite2D.texture = GameManager.skins[skin_index][0]
 	$HB/SkinName.text = GameManager.skins[skin_index][1]
-	
+
 	get_tree().root.get_node("Lobby").change_players_skin.rpc(multiplayer.get_unique_id(), skin_index)

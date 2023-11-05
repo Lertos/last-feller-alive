@@ -66,6 +66,11 @@ func server_disconnected():
 	show_help_msg("Server has been disconnected!", "Guess I'll Go")
 
 
+@rpc("any_peer")
+func update_lobby_with_player():
+	if get_tree().root.has_node("Lobby"):
+		get_tree().root.get_node("Lobby").set_players_to_spots()
+
 #Handles a "disconnect" from the lobby so other players can remove them from their lobby
 @rpc("any_peer")
 func player_left_lobby():
