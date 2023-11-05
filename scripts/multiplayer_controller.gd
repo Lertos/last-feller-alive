@@ -67,7 +67,7 @@ func server_disconnected():
 
 
 #Handles a "disconnect" from the lobby so other players can remove them from their lobby
-@rpc("any_peer", "call_local")
+@rpc("any_peer")
 func player_left_lobby():
 	var player_id = multiplayer.get_remote_sender_id()
 	
@@ -80,11 +80,11 @@ func player_left_lobby():
 		if GameManager.players.has(player_id):
 			GameManager.players.erase(player_id)
 			
-			#Remove the player model from the lobby player list
-			get_tree().root.get_node("Lobby").set_players_to_spots.rpc()
-			
 		if player_id == multiplayer.get_unique_id():
 			disconnect_and_remove_from_lobby()
+		else:
+			#Remove the player model from the lobby player list
+			get_tree().root.get_node("Lobby").set_players_to_spots.rpc()
 
 
 func disconnect_and_remove_from_lobby():
@@ -170,7 +170,7 @@ func load_lobby():
 	await start_fade()
 
 	get_tree().root.add_child(scene)
-	self.hide()
+	hide()
 
 
 func _on_join_button_down():

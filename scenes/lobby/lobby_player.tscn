@@ -27,6 +27,7 @@ _data = {
 
 [sub_resource type="SystemFont" id="SystemFont_yibyy"]
 font_weight = 100
+subpixel_positioning = 0
 
 [sub_resource type="Theme" id="Theme_ndyq3"]
 default_font = SubResource("SystemFont_yibyy")

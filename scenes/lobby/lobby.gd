@@ -77,7 +77,7 @@ func start_game(difficulty: Enum.DIFFICULTY):
 	await multiplayer_manager.start_fade()
 
 	get_tree().root.add_child(scene)
-	self.hide()
+	queue_free()
 
 
 func _on_start_button_pressed():
@@ -93,10 +93,4 @@ func _on_start_button_pressed():
 
 
 func _on_leave_button_pressed():
-	#await multiplayer_manager.start_fade()
-	
-	#multiplayer_manager.show()
 	multiplayer_manager.player_left_lobby.rpc()
-
-	#queue_free()
-	
