@@ -64,10 +64,17 @@ func _ready():
 	$SpawnerTimer.timeout.connect(spawn_object)
 	
 	setup_arena_walls()
-	setup_players()
 	setup_cannon_spots()
+	setup_players()
 	
 	$SpawnerTimer.start()
+
+	#To ensure the synchronizers have enough time to create themselves
+	await get_tree().create_timer(2.0).timeout
+	
+	for player_node in $Players.get_children():
+		player_node.get_node("MultiplayerSynchronizer").public_visibility = true
+		player_node.is_paused = false
 
 
 func queue_next_event():
@@ -324,8 +331,6 @@ func setup_players():
 		current_player.name = str(GameManager.players[i].id)
 		current_player.get_node("Name").text = str(GameManager.players[i].name)
 		
-		$Players.add_child(current_player)
-		
 		match spot_index:
 			0: current_player.position = center_pos + Vector2(-player_size.x, 0)
 			1: current_player.position = center_pos + Vector2(-player_size.x, -player_size.y)
@@ -335,6 +340,8 @@ func setup_players():
 			5: current_player.position = center_pos + Vector2(player_size.x, player_size.y)
 			6: current_player.position = center_pos + Vector2(0, player_size.y)
 			7: current_player.position = center_pos + Vector2(-player_size.x, player_size.y)
+		
+		$Players.add_child(current_player)
 		
 		spot_index += 1
 

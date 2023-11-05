@@ -3,6 +3,7 @@ extends CharacterBody2D
 enum DIRECTION {LEFT, RIGHT}
 
 var dir: DIRECTION = DIRECTION.RIGHT
+var is_paused: bool = true
 var can_dash: bool = true
 var is_dashing: bool = false
 var is_being_pulled: bool = false
@@ -24,11 +25,11 @@ var pull_point: Vector2
 
 func _ready():
 	#Set the authority so we can do checks on if this is the local players object
-	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
+	set_multiplayer_authority(str(name).to_int())
 	$AnimationPlayer.play("idle")
 	
 	#If this player object is NOT our player, then hide the stamina bar
-	if $MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
+	if get_multiplayer_authority() != multiplayer.get_unique_id():
 		$StaminaBar.visible = false
 	
 	#setup the proper skin chosen in the lobby for this player object
@@ -52,13 +53,13 @@ func _process(delta):
 
 
 func get_input():
-	if is_dashing or is_dead:
+	if is_dashing or is_dead or is_paused:
 		if not $AnimationPlayer.is_playing():
 			$AnimationPlayer.play("idle")
 		return
 		
 	#If this player object is NOT our player, then simply return
-	if $MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
+	if get_multiplayer_authority() != multiplayer.get_unique_id():
 		return
 	
 	var input_direction = Input.get_vector("left", "right", "up", "down")
@@ -102,7 +103,7 @@ func add_health(hp: int):
 		$AnimationPlayer.play("hurt")
 		
 		#If this player object is NOT our player, then simply return
-		if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		if get_multiplayer_authority() == multiplayer.get_unique_id():
 			get_tree().get_root().get_node("Arena").play_sound(Enum.SOUND.SHOT)
 
 

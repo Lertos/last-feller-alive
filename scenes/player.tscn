@@ -343,6 +343,7 @@ libraries = {
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_djuyl")
+public_visibility = false
 
 [node name="Name" type="Label" parent="."]
 anchors_preset = 8
