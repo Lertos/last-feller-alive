@@ -1,7 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://cglls2e1in3mg"]
+[gd_scene load_steps=20 format=3 uid="uid://cglls2e1in3mg"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer_controller.gd" id="1_s8ha2"]
 [ext_resource type="Texture2D" uid="uid://esb4e6hi4brs" path="res://assets/parallax.png" id="2_5r40g"]
+[ext_resource type="AudioStream" uid="uid://bvgy4ji80yxvd" path="res://assets/sound/music_lobby.mp3" id="3_aumok"]
+[ext_resource type="AudioStream" uid="uid://7mhgb70ox1wa" path="res://assets/sound/music_title_screen.mp3" id="4_rtths"]
+[ext_resource type="AudioStream" uid="uid://dh8kf1gg06yb8" path="res://assets/sound/music_arena.mp3" id="5_73xro"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p4tc8"]
 content_margin_left = 16.0
@@ -332,6 +335,22 @@ color = Color(0, 0, 0, 0)
 libraries = {
 "": SubResource("AnimationLibrary_o8l0c")
 }
+
+[node name="AudioMusicLobby" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_aumok")
+volume_db = -20.0
+max_polyphony = 6
+
+[node name="AudioMusicTitle" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_rtths")
+volume_db = -20.0
+autoplay = true
+max_polyphony = 6
+
+[node name="AudioMusicArena" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_73xro")
+volume_db = -20.0
+max_polyphony = 6
 
 [connection signal="visibility_changed" from="AcceptDialog" to="." method="_on_accept_dialog_visibility_changed"]
 [connection signal="button_down" from="VB/HB/Host" to="." method="_on_host_button_down"]
