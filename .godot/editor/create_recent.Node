@@ -1,4 +1,6 @@
+HSlider
 Label
+MarginContainer
 Timer
 MultiplayerSpawner
 Node2D

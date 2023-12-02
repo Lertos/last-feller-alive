@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cglls2e1in3mg"]
+[gd_scene load_steps=21 format=3 uid="uid://cglls2e1in3mg"]
 
 [ext_resource type="Script" path="res://scripts/multiplayer_controller.gd" id="1_s8ha2"]
 [ext_resource type="Texture2D" uid="uid://esb4e6hi4brs" path="res://assets/parallax.png" id="2_5r40g"]
@@ -160,6 +160,9 @@ LineEdit/styles/focus = SubResource("StyleBoxFlat_a8mda")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_a8mda")
 LineEdit/styles/read_only = SubResource("StyleBoxFlat_a8mda")
 
+[sub_resource type="LabelSettings" id="LabelSettings_ajcai"]
+font_size = 22
+
 [sub_resource type="Animation" id="Animation_me4lj"]
 length = 0.001
 tracks/0/type = "value"
@@ -299,6 +302,32 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Join"
+
+[node name="Spacer3" type="VBoxContainer" parent="VB"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VB"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="HB" type="HBoxContainer" parent="VB/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Label" type="Label" parent="VB/MarginContainer/HB"]
+layout_mode = 2
+text = "MUSIC VOLUME:"
+label_settings = SubResource("LabelSettings_ajcai")
+
+[node name="HSlider" type="HSlider" parent="VB/MarginContainer/HB"]
+custom_minimum_size = Vector2(200, 57)
+layout_mode = 2
 
 [node name="PopupHelper" type="ColorRect" parent="."]
 visible = false
