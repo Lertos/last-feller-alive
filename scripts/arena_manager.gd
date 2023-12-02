@@ -431,7 +431,7 @@ func _on_players_child_exiting_tree(node):
 
 func _on_lobby_button_pressed():
 	multiplayer_manager.load_lobby()
-	multiplayer_manager.update_current_stage(false)
+	multiplayer_manager.update_current_stage.rpc(false)
 
 	queue_free()
 	

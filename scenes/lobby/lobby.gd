@@ -3,6 +3,7 @@ extends Control
 const SCENE_LOBBY_PLAYER_OTHER = preload("res://scenes/lobby/lobby_player_other.tscn")
 const MAX_PLAYERS = 8
 const SPACE_BETWEEN = 16
+const MODULATE_NOT_READY = 0.2
 
 @onready var multiplayer_manager = get_tree().root.get_node("MultiplayerManager")
 
@@ -31,7 +32,6 @@ func setup_player_spots():
 			new_player.position.x -= (floor(i / 2.0) + 1) * space_per_player
 
 
-#@rpc("any_peer", "call_local")
 func set_players_to_spots():
 	#Hide all of the player models first, to make sure disconnected players get removed
 	for i in $VB/Others/Players.get_children():
@@ -47,6 +47,12 @@ func set_players_to_spots():
 			player_spot.set_player_name(GameManager.players[i].name)
 			player_spot.change_skin(GameManager.players[i].skin_index)
 			player_spot.visible = true
+			
+			#Dim the player if they are not in the lobby yet
+			if GameManager.players[i].is_in_arena:
+				player_spot.modulate.a = MODULATE_NOT_READY
+			else:
+				player_spot.modulate.a = 1.0
 			
 			filled_spots += 1
 
@@ -66,9 +72,15 @@ func change_players_skin(id, skin_index):
 			return
 
 
+#Have the player stop being invisible in the lobby, to signify they are now ready
 func set_player_ready(player_id: int):
-	print("heyo")
-	print(str(GameManager.players[player_id].name))
+	for i in $VB/Others/Players.get_children():
+		#If we find an invisible child we know there are no spots left to change
+		if not i.visible:
+			return
+		
+		if i.name == str(player_id):
+			i.modulate.a = 1.0
 
 
 @rpc("any_peer", "call_local")
@@ -78,7 +90,7 @@ func start_game(difficulty: Enum.DIFFICULTY):
 	
 	var scene = load("res://main.tscn").instantiate()
 	
-	multiplayer_manager.update_current_stage(true)
+	multiplayer_manager.update_current_stage.rpc(true)
 
 	await multiplayer_manager.start_fade()
 
