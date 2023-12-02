@@ -54,7 +54,7 @@ func peer_disconnected(id):
 
 #Gets called only from client-side
 func connected_to_server():
-	send_player_info.rpc_id(1, $VB/PlayerName.text.lstrip(" ").rstrip(" "), multiplayer.get_unique_id(), 0)
+	send_player_info.rpc_id(1, $VB/PlayerName.text.lstrip(" ").rstrip(" "), multiplayer.get_unique_id(), 0, false)
 	
 	print("Connected to server")
 
@@ -103,6 +103,20 @@ func update_player_skin(skin_index: int):
 		get_tree().root.get_node("Lobby").set_players_to_spots()
 
 
+#Called when someone changes what screen they are in (lobby/arena)
+@rpc("any_peer")
+func update_current_stage(is_in_arena: bool):
+	var player_id = multiplayer.get_remote_sender_id()
+	
+	#Update whether they are in the arena or not
+	if GameManager.players.has(player_id):
+		GameManager.players[player_id].is_in_arena = is_in_arena
+		
+	#If this client is in the lobby, also update it there
+	if get_tree().root.has_node("Lobby"):
+		get_tree().root.get_node("Lobby").set_player_ready(player_id)
+
+
 #Handles a "disconnect" from the lobby so other players can remove them from their lobby
 @rpc("any_peer", "call_local")
 func player_left_lobby():
@@ -140,17 +154,18 @@ func disconnect_and_remove_from_lobby():
 
 #Sends info to all players when connected
 @rpc("any_peer")
-func send_player_info(new_player_name, id, skin_index):
+func send_player_info(new_player_name, id, skin_index, is_in_arena):
 	if !GameManager.players.has(id):
 		GameManager.players[id] = {
 			"name": new_player_name,
 			"id": id,
-			"skin_index": skin_index
+			"skin_index": skin_index,
+			"is_in_arena": is_in_arena
 		}
 	
 	if multiplayer.is_server():
 		for i in GameManager.players:
-			send_player_info.rpc(GameManager.players[i].name, i, GameManager.players[i].skin_index)
+			send_player_info.rpc(GameManager.players[i].name, i, GameManager.players[i].skin_index, GameManager.players[i].is_in_arena)
 		#After sending all the new player info, then let the client know they can proceed to the lobby
 		if id != 1:
 			goto_lobby.rpc_id(id)
@@ -194,7 +209,7 @@ func _on_host_button_down():
 	
 	print("Server has been created. Waiting for players")
 	
-	send_player_info($VB/PlayerName.text.lstrip(" ").rstrip(" "), multiplayer.get_unique_id(), 0)
+	send_player_info($VB/PlayerName.text.lstrip(" ").rstrip(" "), multiplayer.get_unique_id(), 0, false)
 	
 	if DEBUG: load_lobby()
 

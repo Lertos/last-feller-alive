@@ -66,12 +66,19 @@ func change_players_skin(id, skin_index):
 			return
 
 
+func set_player_ready(player_id: int):
+	print("heyo")
+	print(str(GameManager.players[player_id].name))
+
+
 @rpc("any_peer", "call_local")
 func start_game(difficulty: Enum.DIFFICULTY):
 	#Set the difficult chosen before you load the arena
 	Config.chosen_difficulty = difficulty
 	
 	var scene = load("res://main.tscn").instantiate()
+	
+	multiplayer_manager.update_current_stage(true)
 
 	await multiplayer_manager.start_fade()
 
