@@ -74,8 +74,6 @@ func _ready():
 	$StartCountdown.wait_time = 1.0
 	$StartCountdown.timeout.connect(start_timer_countdown)
 	$StartCountdown.start()
-	
-	#await get_tree().create_timer(2.0).timeout
 
 
 func start_timer_countdown():
