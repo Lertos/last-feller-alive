@@ -68,6 +68,9 @@ func connection_failed():
 func server_disconnected():
 	show()
 	
+	#Start the new song for this stage
+	start_song("AudioMusicTitle")
+	
 	#If they are in the game or the lobby, remove them from it and put them back to the landing page
 	if get_tree().root.has_node("Arena"):
 		get_tree().root.get_node("Arena").queue_free()
@@ -146,6 +149,9 @@ func disconnect_and_remove_from_lobby():
 		show()
 		if get_tree().root.has_node("Lobby"):
 			get_tree().root.get_node("Lobby").queue_free()
+
+	#Start the new song for this stage
+	start_song("AudioMusicTitle")
 
 	peer = null
 	multiplayer.multiplayer_peer = null
@@ -247,6 +253,15 @@ func is_valid_address_and_port() -> bool:
 	
 	port = port.to_int()
 	return true
+
+
+func start_song(song_node_name: String):
+	$AudioMusicTitle.stop()
+	$AudioMusicArena.stop()
+	$AudioMusicLobby.stop()
+
+	if has_node(song_node_name):
+		get_node(song_node_name).play()
 
 
 func is_name_empty() -> bool:

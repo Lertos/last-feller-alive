@@ -60,6 +60,9 @@ var next_beam_angles = []
 
 
 func _ready():
+	#Start the new song for this stage
+	multiplayer_manager.start_song("AudioMusicArena")
+	
 	#Set the initial time for spawning to start
 	$SpawnerTimer.wait_time = difficulty_settings[Config.chosen_difficulty]["initial_spawn_time"]
 	$SpawnerTimer.timeout.connect(spawn_object)

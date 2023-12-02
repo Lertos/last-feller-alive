@@ -8,6 +8,9 @@ const MODULATE_NOT_READY = 0.2
 @onready var multiplayer_manager = get_tree().root.get_node("MultiplayerManager")
 
 func _ready():
+	#Start the new song for this stage
+	multiplayer_manager.start_song("AudioMusicLobby")
+	
 	$VB/Buttons/StartButton.visible = multiplayer.is_server()
 	$VB/Difficulty.visible = multiplayer.is_server()
 	
