@@ -52,6 +52,7 @@ var special_events_since_cannon: int = 0
 var rng = RandomNumberGenerator.new()
 
 #Keep track of the next event
+var countdown_timer: int = 4
 var next_normal_event_enum: EVENT_TYPE = EVENT_TYPE.NONE
 var next_special_event_enum: SPECIAL_EVENT_TYPE = SPECIAL_EVENT_TYPE.NONE
 var next_event_pos = []
@@ -70,11 +71,28 @@ func _ready():
 	$SpawnerTimer.start()
 
 	#To ensure the synchronizers have enough time to create themselves
-	await get_tree().create_timer(2.0).timeout
+	$StartCountdown.wait_time = 1.0
+	$StartCountdown.timeout.connect(start_timer_countdown)
+	$StartCountdown.start()
 	
-	for player_node in $Players.get_children():
-		player_node.get_node("MultiplayerSynchronizer").public_visibility = true
-		player_node.is_paused = false
+	#await get_tree().create_timer(2.0).timeout
+
+
+func start_timer_countdown():
+	countdown_timer -= 1
+	
+	#When the game starts, initialize and set the synchronizers to active
+	if countdown_timer == 0:
+			$CountdownLabel.text = "GO"
+	elif countdown_timer > 0:
+		$CountdownLabel.text = str(countdown_timer)
+	elif countdown_timer < 0:
+		for player_node in $Players.get_children():
+			player_node.get_node("MultiplayerSynchronizer").public_visibility = true
+			player_node.is_paused = false
+			
+		$StartCountdown.stop()
+		$CountdownLabel.visible = false
 
 
 func queue_next_event():

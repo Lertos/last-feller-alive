@@ -1,3 +1,5 @@
+Label
+Timer
 MultiplayerSpawner
 Node2D
 Sprite2D
@@ -10,10 +12,8 @@ AnimationTree
 ColorRect
 Control
 CanvasLayer
-Timer
 HBoxContainer
 Button
-Label
 VBoxContainer
 OptionButton
 MultiplayerSynchronizer

@@ -6,8 +6,4 @@ res://scenes/cannon.tscn
 res://scenes/pull_field.tscn
 res://scenes/lobby/lobby.tscn
 res://scenes/lobby/lobby_player.tscn
-res://scripts/multiplayer_controller.gd
-res://scenes/lobby/lobby.gd
-res://scenes/lobby/lobby_player.gd
 res://scripts/arena_manager.gd
-res://scenes/player.gd
