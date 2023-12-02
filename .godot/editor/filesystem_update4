@@ -10,3 +10,4 @@ res://scripts/arena_manager.gd
 res://scripts/multiplayer_controller.gd
 res://scenes/lobby/lobby.gd
 res://scenes/lobby/lobby_player_other.tscn
+res://scenes/lobby/lobby_player.gd

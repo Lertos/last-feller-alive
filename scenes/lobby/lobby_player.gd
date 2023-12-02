@@ -1,6 +1,6 @@
 extends Node2D
 
-var skin_index = 0
+var skin_index
 
 
 func _ready():
@@ -8,9 +8,11 @@ func _ready():
 
 	$Name.text = GameManager.players[multiplayer.get_unique_id()].name
 	
-	#Set the default
-	$Sprite2D.texture = GameManager.skins[0][0]
-	$HB/SkinName.text = GameManager.skins[0][1]
+	#Get the current skin_index
+	skin_index = GameManager.players[multiplayer.get_unique_id()].skin_index
+
+	change_skin()
+
 
 func _on_previous_pressed():
 	if skin_index == 0:
