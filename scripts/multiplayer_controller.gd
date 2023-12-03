@@ -10,7 +10,7 @@ unreliable - uses UDP; fast but unreliable
 unreliable_ordered - same as unreliable - but each piece of data comes in the correct order
 """
 
-const DEBUG = true
+const DEBUG = false
 
 var address
 var port
