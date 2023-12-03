@@ -203,9 +203,6 @@ func _on_host_button_down():
 	if error != OK:
 		show_help_msg("Server creation failed!", "Have Mercy")
 		return
-	else:
-		if not DEBUG:
-			show_help_msg("Server created! Press Start", "Woohoo!")
 	
 	#Makes bandwidth usage a little more efficient
 	peer.get_host().compress(compression_type)
@@ -217,7 +214,7 @@ func _on_host_button_down():
 	
 	send_player_info($VB/PlayerName.text.lstrip(" ").rstrip(" "), multiplayer.get_unique_id(), 0, false)
 	
-	if DEBUG: load_lobby()
+	load_lobby()
 
 
 func _on_join_button_down():
