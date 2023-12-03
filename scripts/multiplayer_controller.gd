@@ -290,3 +290,9 @@ func show_help_msg(message: String, button_text: String):
 func start_fade():
 	$SceneChanger/AnimationPlayer.play("fade")
 	await get_tree().create_timer(0.5).timeout
+
+
+func _on_h_slider_value_changed(value):
+	$AudioMusicArena.volume_db = value
+	$AudioMusicTitle.volume_db = value
+	$AudioMusicLobby.volume_db = value

@@ -328,6 +328,10 @@ label_settings = SubResource("LabelSettings_ajcai")
 [node name="HSlider" type="HSlider" parent="VB/MarginContainer/HB"]
 custom_minimum_size = Vector2(200, 57)
 layout_mode = 2
+min_value = -60.0
+max_value = 10.0
+step = 0.1
+value = -20.0
 
 [node name="PopupHelper" type="ColorRect" parent="."]
 visible = false
@@ -367,7 +371,7 @@ libraries = {
 
 [node name="AudioMusicLobby" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_aumok")
-volume_db = -20.0
+volume_db = -80.0
 max_polyphony = 6
 
 [node name="AudioMusicTitle" type="AudioStreamPlayer" parent="."]
@@ -384,3 +388,4 @@ max_polyphony = 6
 [connection signal="visibility_changed" from="AcceptDialog" to="." method="_on_accept_dialog_visibility_changed"]
 [connection signal="button_down" from="VB/HB/Host" to="." method="_on_host_button_down"]
 [connection signal="button_down" from="VB/HB/Join" to="." method="_on_join_button_down"]
+[connection signal="value_changed" from="VB/MarginContainer/HB/HSlider" to="." method="_on_h_slider_value_changed"]
