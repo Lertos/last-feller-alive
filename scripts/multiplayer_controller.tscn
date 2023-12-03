@@ -331,7 +331,7 @@ layout_mode = 2
 min_value = -60.0
 max_value = 10.0
 step = 0.1
-value = -20.0
+value = -30.0
 
 [node name="PopupHelper" type="ColorRect" parent="."]
 visible = false
@@ -371,18 +371,18 @@ libraries = {
 
 [node name="AudioMusicLobby" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_aumok")
-volume_db = -80.0
+volume_db = -30.0
 max_polyphony = 6
 
 [node name="AudioMusicTitle" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_rtths")
-volume_db = -20.0
+volume_db = -30.0
 autoplay = true
 max_polyphony = 6
 
 [node name="AudioMusicArena" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_73xro")
-volume_db = -20.0
+volume_db = -30.0
 max_polyphony = 6
 
 [connection signal="visibility_changed" from="AcceptDialog" to="." method="_on_accept_dialog_visibility_changed"]
